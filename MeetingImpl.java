@@ -7,9 +7,12 @@ import java.util.Set;
  */
 public class MeetingImpl implements Meeting {
 
+    private final int id = 0;
+
     @Override
     public int getId() {
-	return -1;
+
+	return id;
     }
 
     @Override

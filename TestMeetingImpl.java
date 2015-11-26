@@ -1,9 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
-//
-//	Don't forget org.junit.runner.JUnitCore !
-//
+
 public class TestMeetingImpl {
 
 	private Meeting instance;
@@ -11,12 +9,15 @@ public class TestMeetingImpl {
 	@Before
 	public void init() {
 		
-//		instance = new IntegerBinarySearchImpl();
+		instance = new MeetingImpl();
 	}
 	
 	@Test
-	public void standardMethodTest() {
-		
+	public void getIdWhenNotSetTest() {
+
+		int expectedId = 0;
+		int resultId = instance.getId();
+		assertEquals(expectedId, resultId);
 	}
 }
 
