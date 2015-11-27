@@ -56,5 +56,51 @@ public class TestContactManagerImpl {
 		assertNotNull(resultSet);
 		int resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);
+		// Check the returned contact
+		Contact resultContact = getContactSetItem(0, resultSet);
+		assertNotNull(resultContact);
+		assertEquals(name, resultContact.getName() );
+		assertEquals(notes, resultContact.getNotes() );
+	}
+
+	@Test
+	public void addNewContactDuplicateAddTest() {
+
+		int expectedSetSize = 2;
+		String name = "name";
+		String notes = "notes";
+		instance.addNewContact(name, notes);
+		instance.addNewContact(name, notes);
+		Set<Contact> resultSet = instance.getContacts(name);
+		assertNotNull(resultSet);
+		int resultSetSize = resultSet.size();
+		assertEquals(expectedSetSize, resultSetSize);
+
+	}
+	//
+	//	Utility methods
+	//
+	private boolean assertContactSetContainsContactName(String contactName, Set<Contact> contacts) {
+
+		for (Contact contact: contacts) {
+			if (contact.getName().equals(contactName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private Contact getContactSetItem(int index, Set<Contact> contacts) {
+
+		int count = 0;
+		for (Contact contact: contacts) {
+			if (index == count) {
+				return contact;
+			}
+			count++;
+		}
+		return null;
 	}
 }
+
+
+
