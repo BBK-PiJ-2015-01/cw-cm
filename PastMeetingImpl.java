@@ -20,6 +20,7 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 	}
 
 	public void setNotes(String notes) {
-		throw new UnsupportedOperationException("Not implemented.");
+
+		this.notes = notes;
 	}
 }

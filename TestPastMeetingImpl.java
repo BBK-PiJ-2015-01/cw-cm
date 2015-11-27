@@ -19,4 +19,31 @@ public class TestPastMeetingImpl extends TestMeetingImpl {
 		String resultNotes = thisInstance.getNotes();
 		assertEquals(expectedNotes, resultNotes);
 	}
+
+	@Test
+	public void setNotesNullValueTest() {
+
+		String expectedNotes = new String();
+		thisInstance.setNotes(null);
+		String resultNotes = thisInstance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+	}
+
+	@Test
+	public void setNotesEmptyValueTest() {
+
+		String expectedNotes = new String();
+		thisInstance.setNotes(expectedNotes);
+		String resultNotes = thisInstance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+	}
+
+	@Test
+	public void setNotesValidValueTest() {
+
+		String expectedNotes = "PastMeetingImpl";
+		thisInstance.setNotes(expectedNotes);
+		String resultNotes = thisInstance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+	}
 }
