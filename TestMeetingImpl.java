@@ -4,7 +4,7 @@ import java.util.*;
 
 public class TestMeetingImpl {
 
-	private MeetingImpl instance;
+	protected MeetingImpl instance;
 	private int defaultId;
 	private Random r = new Random();
 	
