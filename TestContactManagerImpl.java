@@ -77,7 +77,32 @@ public class TestContactManagerImpl {
 		resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);		
 	}
+	@Test
+	public void getContactByIdSubsetMultipleTest() {
 
+		int expectedSetSize = 5;
+		int expectedSubSetSize = 4;
+		String expectedName = "name";
+		for (int i = 0; i < expectedSetSize; i++) {
+			instance.addNewContact(expectedName, "Notes: " + i);
+		}
+		Set<Contact> resultSet = instance.getContacts(expectedName);
+		assertNotNull(resultSet);
+		int resultSetSize = resultSet.size();
+		assertEquals(expectedSetSize, resultSetSize);
+		// Get the ids from the retured Set
+		int[] ids = new int[expectedSetSize];
+		int count = 0;
+		for(Contact contact: resultSet) {
+			ids[count++] = contact.getId();
+			if (count >= expectedSubSetSize) {	// Only add subset# items
+				break;
+			}
+		}
+		resultSet = instance.getContacts(ids);
+		resultSetSize = resultSet.size();
+		assertEquals(expectedSubSetSize, resultSetSize);		
+	}
 	@Test(expected=IllegalArgumentException.class)
 	public void getContactByIdMultipleWithAnInvalidValueTest() {
 
