@@ -9,6 +9,9 @@ import java.util.*;
 public class ContactManagerImpl implements ContactManager {
 
 	private final String NULL_PARAM_MSG = "A null param was supplied";
+	private final String INVALID_ID_MSG = "Supplied id was invalid";
+
+
 	private Set<Contact> contacts = new HashSet<>();
 
 	@Override
@@ -71,7 +74,8 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Set<Contact> getContacts(int... ids) {
-	throw new UnsupportedOperationException("Not implemented.");
+
+		throw new IllegalArgumentException(INVALID_ID_MSG);
 	}
 
 	@Override

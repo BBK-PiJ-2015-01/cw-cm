@@ -29,6 +29,12 @@ public class TestContactManagerImpl {
 		assertArrayEquals(expectedSet.toArray(), resultSet.toArray());	
 	}
 
+	@Test(expected=IllegalArgumentException.class)
+	public void getContactsByIdNameTest() {
+
+		int id = 1;
+		Set<Contact> resultSet = instance.getContacts(id);		
+	}
 
 	@Test(expected=NullPointerException.class)
 	public void addNewContactNameNullTest() {
@@ -72,6 +78,19 @@ public class TestContactManagerImpl {
 			instance.addNewContact("Name: "  + i, "Notes: " + i);
 		}
 		Set<Contact> resultSet = instance.getContacts(testName);
+		assertNotNull(resultSet);
+		int resultSetSize = resultSet.size();
+		assertEquals(expectedSetSize, resultSetSize);
+	}
+	@Test
+	public void addNewContactSameNameMultipleTest() {
+
+		int expectedSetSize = 5;
+		String expectedName = "name";
+		for (int i = 0; i < expectedSetSize; i++) {
+			instance.addNewContact(expectedName, "Notes: " + i);
+		}
+		Set<Contact> resultSet = instance.getContacts(expectedName);
 		assertNotNull(resultSet);
 		int resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);
