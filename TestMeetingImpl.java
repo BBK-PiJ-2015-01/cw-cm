@@ -11,7 +11,6 @@ public class TestMeetingImpl {
 	@Before
 	public void init() {
 		
-//		defaultId = r.nextInt(Integer.MAX_VALUE);
 		instance = new MeetingImpl(generateDefaultId());
 	}
 	
