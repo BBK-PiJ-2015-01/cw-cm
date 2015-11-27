@@ -37,5 +37,24 @@ public class TestContactManagerImpl {
 		instance.addNewContact(nullString, nullString);
 	}
 
+	@Test(expected=NullPointerException.class)
+	public void addNewContactNotesNullTest() {
 
+		String nullString = null;
+		String notNullString = "notNullString";
+		instance.addNewContact(notNullString, nullString);
+	}
+
+	@Test
+	public void addNewContactValidParamsTest() {
+
+		int expectedSetSize = 1;
+		String name = "name";
+		String notes = "notes";
+		instance.addNewContact(name, notes);
+		Set<Contact> resultSet = instance.getContacts(name);
+		assertNotNull(resultSet);
+		int resultSetSize = resultSet.size();
+		assertEquals(expectedSetSize, resultSetSize);
+	}
 }

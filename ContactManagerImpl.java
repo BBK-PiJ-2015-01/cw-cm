@@ -9,6 +9,7 @@ import java.util.*;
 public class ContactManagerImpl implements ContactManager {
 
 	private final String NULL_PARAM_MSG = "A null param was supplied";
+	private Set<Contact> contacts = new HashSet<>();
 
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
@@ -57,7 +58,15 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void addNewContact(String name, String notes) {
-	throw new UnsupportedOperationException("Not implemented."); 
+
+		if (name == null || notes == null) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
+		// TO DO: Replace with factory implementation
+		ContactImpl newContact = new ContactImpl(getNextContactId());
+		newContact.setName(name);
+		newContact.addNotes(notes);
+		contacts.add(newContact);
 	}
 
 	@Override
@@ -71,13 +80,21 @@ public class ContactManagerImpl implements ContactManager {
 		if (name == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		return Collections.emptySet();
+		return contacts;
 	}
 
 	@Override
 	public void flush() {
 	throw new UnsupportedOperationException("Not implemented.");
 	}
+	//
+	//
+	//
+	private int getNextContactId() {
+	
+		return contacts.size() + 1;
+	}	
+	
 
 }
 
