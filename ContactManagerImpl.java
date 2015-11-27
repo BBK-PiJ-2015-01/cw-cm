@@ -79,10 +79,10 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException(INVALID_ID_MSG);
 		}
 		Set<Contact> returnContacts = new HashSet<>();
-		for (int i : ints) {
+		for(int id : ids) {
 			boolean found = false;
 			for (Contact contact: contacts) {
-				if (i == contact.getId()) {
+				if (id == contact.getId()) {
 					found = true;
 					returnContacts.add(contact);
 					break;
