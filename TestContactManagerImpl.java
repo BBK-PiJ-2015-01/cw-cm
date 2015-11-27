@@ -78,7 +78,28 @@ public class TestContactManagerImpl {
 		assertEquals(expectedSetSize, resultSetSize);		
 	}
 
+	@Test
+	public void getContactByIdMultipleWithAnInvalidValueTest() {
 
+		int expectedSetSize = 5;
+		String expectedName = "name";
+		for (int i = 0; i < expectedSetSize; i++) {
+			instance.addNewContact(expectedName, "Notes: " + i);
+		}
+		Set<Contact> resultSet = instance.getContacts(expectedName);
+		assertNotNull(resultSet);
+		int resultSetSize = resultSet.size();
+		assertEquals(expectedSetSize, resultSetSize);
+		// Get the ids from the retured Set
+		int[] ids = new int[expectedSetSize+1];	// Start ids at index = 1
+		int count = 1;				// so that array starts with a 0
+		for(Contact contact: resultSet) {
+			ids[count++] = contact.getId();
+		}
+		resultSet = instance.getContacts(ids);
+		resultSetSize = resultSet.size();
+		assertEquals(expectedSetSize, resultSetSize);		
+	}
 
 	@Test(expected=NullPointerException.class)
 	public void addNewContactNameNullTest() {
