@@ -31,6 +31,41 @@ public class TestContactImpl {
 		assertEquals(expectedName, resultName);
 	}
 
+	@Test
+	public void setNameTest() {
+
+		String expectedName = null;
+		instance.setName(expectedName);
+		String resultName = instance.getName();
+		assertEquals(expectedName, resultName);
+		//
+		expectedName = "Valid string";
+		instance.setName(expectedName);
+		resultName = instance.getName();
+		assertEquals(expectedName, resultName);
+	}
+
+	@Test
+	public void getNotesNotSetTest() {
+
+		String expectedNotes = new String();
+		String resultNotes = instance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+	}
+
+	@Test
+	public void addNotesTest() {
+
+		String expectedNotes = new String();
+		instance.addNotes(null);
+		String resultNotes = instance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+		//
+		expectedNotes = "Valid string";
+		instance.addNotes(expectedNotes);
+		resultNotes = instance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+	}
 
 	protected int generateDefaultId() {
 

@@ -8,6 +8,7 @@ public class ContactImpl implements Contact {
 
 	private final int id;
 	private String name;
+	private String notes;
 
 
 	public ContactImpl(int id) {
@@ -29,13 +30,20 @@ public class ContactImpl implements Contact {
 		return name;
 	}
 
-	@Override
-	public String getNotes() {
-	throw new UnsupportedOperationException("Not implemented.");
+	public void setName(String name) {
+	
+		this.name = name;
 	}
 
 	@Override
-	public void addNotes(String note) {
-	throw new UnsupportedOperationException("Not implemented.");
+	public String getNotes() {
+
+		return notes == null ? new String() : notes;
+	}
+
+	@Override
+	public void addNotes(String notes) {
+
+		this.notes = notes;
 	}
 }
