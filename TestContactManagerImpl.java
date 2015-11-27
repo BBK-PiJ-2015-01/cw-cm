@@ -64,18 +64,17 @@ public class TestContactManagerImpl {
 	}
 
 	@Test
-	public void addNewContactDuplicateAddTest() {
+	public void addNewContactMultipleTest() {
 
-		int expectedSetSize = 2;
-		String name = "name";
-		String notes = "notes";
-		instance.addNewContact(name, notes);
-		instance.addNewContact(name, notes);
-		Set<Contact> resultSet = instance.getContacts(name);
+		int expectedSetSize = 1;
+		String testName = "Name: " + 1;
+		for (int i = 0; i < 5; i++) {
+			instance.addNewContact("Name: "  + i, "Notes: " + i);
+		}
+		Set<Contact> resultSet = instance.getContacts(testName);
 		assertNotNull(resultSet);
 		int resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);
-
 	}
 	//
 	//	Utility methods

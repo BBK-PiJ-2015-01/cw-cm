@@ -80,7 +80,13 @@ public class ContactManagerImpl implements ContactManager {
 		if (name == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		return contacts;
+		Set<Contact> returnContacts = new HashSet<>();
+		for (Contact contact: contacts) {
+			if (name.equals(contact.getName())) {
+				returnContacts.add(contact);
+			}
+		}
+		return returnContacts;
 	}
 
 	@Override
