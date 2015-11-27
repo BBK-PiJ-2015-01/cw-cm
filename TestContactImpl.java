@@ -67,11 +67,13 @@ public class TestContactImpl {
 		assertEquals(expectedNotes, resultNotes);
 	}
 
+	@Test
 	public void testContactSetContainsContact() {
 
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(instance);
-		assertTrue(contacts.contains(instance));
+		Contact instanceCopy = new ContactImpl(instance.getId());
+		assertTrue(contacts.contains(instanceCopy));
 
 	}
 	protected int generateDefaultId() {
