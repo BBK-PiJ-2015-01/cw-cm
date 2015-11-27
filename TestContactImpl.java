@@ -67,6 +67,13 @@ public class TestContactImpl {
 		assertEquals(expectedNotes, resultNotes);
 	}
 
+	public void testContactSetContainsContact() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(instance);
+		assertTrue(contacts.contains(instance));
+
+	}
 	protected int generateDefaultId() {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
