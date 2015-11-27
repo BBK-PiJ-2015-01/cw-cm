@@ -6,6 +6,7 @@ import java.util.*;
  */
 public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
+	private String notes;
 
 	public PastMeetingImpl(int id) {
 
@@ -14,7 +15,8 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
 	@Override
 	public String getNotes() {
-		throw new UnsupportedOperationException("Not implemented.");
+
+		return notes == null ? new String() : notes;
 	}
 
 	public void setNotes(String notes) {

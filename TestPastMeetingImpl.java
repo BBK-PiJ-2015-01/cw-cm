@@ -11,4 +11,12 @@ public class TestPastMeetingImpl extends TestMeetingImpl {
 		instance = new PastMeetingImpl(generateDefaultId());
 		thisInstance = (PastMeetingImpl) instance;
 	}
+
+	@Test
+	public void getNotesNotSetTest() {
+
+		String expectedNotes = new String();
+		String resultNotes = thisInstance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+	}
 }
