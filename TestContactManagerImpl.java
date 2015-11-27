@@ -78,7 +78,7 @@ public class TestContactManagerImpl {
 		assertEquals(expectedSetSize, resultSetSize);		
 	}
 
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void getContactByIdMultipleWithAnInvalidValueTest() {
 
 		int expectedSetSize = 5;
