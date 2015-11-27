@@ -104,6 +104,7 @@ public class TestContactManagerImpl {
 		resultSetSize = resultSet.size();
 		assertEquals(expectedSubSetSize, resultSetSize);		
 	}
+
 	@Test(expected=IllegalArgumentException.class)
 	public void getContactByIdMultipleWithAnInvalidValueTest() {
 

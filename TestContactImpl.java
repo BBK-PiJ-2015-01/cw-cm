@@ -74,7 +74,6 @@ public class TestContactImpl {
 		contacts.add(instance);
 		Contact instanceCopy = new ContactImpl(instance.getId());
 		assertTrue(contacts.contains(instanceCopy));
-
 	}
 
 	@Test
@@ -83,7 +82,6 @@ public class TestContactImpl {
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(instance);
 		assertFalse(contacts.contains(new ContactImpl(instance.getId()-1)));
-
 	}
 
 	protected int generateDefaultId() {

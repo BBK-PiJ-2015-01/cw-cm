@@ -106,15 +106,15 @@ public class TestMeetingImpl {
 	@Test(expected=IllegalArgumentException.class)
 	public void setContactsWithEmptyValueTest() {
 		
-		Set<Contact> contacts = new TreeSet<>();
+		Set<Contact> contacts = new HashSet<>();
 		instance.setContacts(contacts);
 	}
 
 	@Test
 	public void setContactsTest() {
 		
-		Set<Contact> expectedContacts = new TreeSet<>();
-		expectedContacts.add(new ContactImpl());
+		Set<Contact> expectedContacts = new HashSet<>();
+		expectedContacts.add(new ContactImpl(1));
 		instance.setContacts(expectedContacts);
 		Set<Contact> resultContacts = instance.getContacts();
 		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());	
@@ -126,9 +126,9 @@ public class TestMeetingImpl {
 		//
 		//	Create 2 equal contacts Sets
 		//
-		Set<Contact> expectedContacts = new TreeSet<>();
-		Set<Contact> copyContacts = new TreeSet<>();
-		Contact singleContact = new ContactImpl();
+		Set<Contact> expectedContacts = new HashSet<>();
+		Set<Contact> copyContacts = new HashSet<>();
+		Contact singleContact = new ContactImpl(1);
 		expectedContacts.add(singleContact);
 		copyContacts.add(singleContact);
 		assertArrayEquals(expectedContacts.toArray(), copyContacts.toArray());
@@ -153,9 +153,9 @@ public class TestMeetingImpl {
 		//
 		//	Create 2 equal contacts Sets
 		//
-		Set<Contact> expectedContacts = new TreeSet<>();
-		Set<Contact> copyContacts = new TreeSet<>();
-		Contact singleContact = new ContactImpl();
+		Set<Contact> expectedContacts = new HashSet<>();
+		Set<Contact> copyContacts = new HashSet<>();
+		Contact singleContact = new ContactImpl(1);
 		expectedContacts.add(singleContact);
 		copyContacts.add(singleContact);
 		assertArrayEquals(expectedContacts.toArray(), copyContacts.toArray());
@@ -179,36 +179,6 @@ public class TestMeetingImpl {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
 		return defaultId;
-	}
-
-
-	class ContactImpl implements Contact, Comparable<Contact> {
-
-		@Override
-		public int getId() {
-		throw new UnsupportedOperationException("Not implemented.");
-		}
-
-		@Override
-		public String getName() {
-		throw new UnsupportedOperationException("Not implemented.");
-		}
-
-		@Override
-		public String getNotes() {
-		throw new UnsupportedOperationException("Not implemented.");
-		}
-
-		@Override
-		public void addNotes(String note) {
-		throw new UnsupportedOperationException("Not implemented.");
-		}
-
-		@Override
-		public int compareTo(Contact o) {
-			
-			return o == null ? -1 : hashCode() - o.hashCode();
-		}
 	}
 }
 
