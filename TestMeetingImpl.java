@@ -5,14 +5,14 @@ import java.util.*;
 public class TestMeetingImpl {
 
 	protected MeetingImpl instance;
-	private int defaultId;
-	private Random r = new Random();
+	protected int defaultId;
+	protected Random r = new Random();
 	
 	@Before
 	public void init() {
 		
-		defaultId = r.nextInt(Integer.MAX_VALUE);
-		instance = new MeetingImpl(defaultId);
+//		defaultId = r.nextInt(Integer.MAX_VALUE);
+		instance = new MeetingImpl(generateDefaultId());
 	}
 	
 	@Test
@@ -176,10 +176,14 @@ public class TestMeetingImpl {
 	}
 
 
+	protected int generateDefaultId() {
+
+		defaultId = r.nextInt(Integer.MAX_VALUE);
+		return defaultId;
+	}
 
 
-
-	private class ContactImpl implements Contact, Comparable<Contact> {
+	class ContactImpl implements Contact, Comparable<Contact> {
 
 		@Override
 		public int getId() {
