@@ -28,4 +28,14 @@ public class TestContactManagerImpl {
 		Set<Contact> resultSet = instance.getContacts(emptyName);
 		assertArrayEquals(expectedSet.toArray(), resultSet.toArray());	
 	}
+
+
+	@Test(expected=NullPointerException.class)
+	public void addNewContactNameNullTest() {
+
+		String nullString = null;
+		instance.addNewContact(nullString, nullString);
+	}
+
+
 }
