@@ -71,7 +71,7 @@ public class TestContactManagerImpl {
 		int[] ids = new int[expectedSetSize];
 		int count = 0;
 		for(Contact contact: resultSet) {
-			ids[count] = contact.getId();
+			ids[count++] = contact.getId();
 		}
 		resultSet = instance.getContacts(ids);
 		resultSetSize = resultSet.size();

@@ -89,7 +89,7 @@ public class ContactManagerImpl implements ContactManager {
 				}
 			}
 			if (!found) {
-				throw new IllegalArgumentException(INVALID_ID_MSG);
+				throw new IllegalArgumentException(INVALID_ID_MSG + ": " + id);
 			}
 		}
 		return returnContacts;		
