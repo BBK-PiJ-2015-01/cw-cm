@@ -30,11 +30,32 @@ public class TestContactManagerImpl {
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void getContactsByIdNameTest() {
+	public void getContactsByIdNotSetTest() {
 
 		int id = 1;
 		Set<Contact> resultSet = instance.getContacts(id);		
 	}
+
+	@Test
+	public void getContactsByValidIdTest() {
+
+		int expectedSetSize = 1;
+		String name = "name";
+		String notes = "notes";
+		instance.addNewContact(name, notes);
+		Set<Contact> resultSet = instance.getContacts(name);
+		// Get the returned contact
+		Contact resultContact = getContactSetItem(0, resultSet);
+		assertNotNull(resultContact);
+		// Use the return Contact id to return a Contacts set
+		int resultId = resultContact.getId();
+		resultSet = instance.getContacts(resultId);
+		assertFalse(resultSet.isEmpty());
+		int resultSetSize = resultSet.size();
+		assertEquals(expectedSetSize, resultSetSize);			
+	}
+
+
 
 	@Test(expected=NullPointerException.class)
 	public void addNewContactNameNullTest() {
