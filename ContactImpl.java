@@ -46,4 +46,27 @@ public class ContactImpl implements Contact {
 
 		this.notes = notes;
 	}
+
+	/**
+	*	Allow equality on id
+	*
+	*/
+	@Override
+	public boolean equals(Object other) {
+
+		if (other == null || this.getClass() != other.getClass()) {
+		    return false;
+		}
+		ContactImpl otherContactImpl = (ContactImpl) other;
+		return this.id == otherContactImpl.id;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 16381;
+		hash = 83 * hash + id;
+		hash = 83 * hash + Objects.hashCode(name);
+		hash = 83 * hash + Objects.hashCode(notes);
+		return hash;
+	}
 }
