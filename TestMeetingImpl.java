@@ -11,7 +11,8 @@ public class TestMeetingImpl {
 	@Before
 	public void init() {
 		
-		instance = new MeetingImpl(generateDefaultId());
+//		instance = new MeetingImpl(generateDefaultId());
+		instance = getInstance(generateDefaultId());
 	}
 	
 	@Test
@@ -179,7 +180,7 @@ public class TestMeetingImpl {
 
 		List<Meeting> meetings = new ArrayList<>();
 		meetings.add(instance);
-		Meeting instanceCopy = new MeetingImpl(instance.getId());
+		Meeting instanceCopy = getInstance(instance.getId());
 		assertTrue(meetings.contains(instanceCopy));
 	}
 
@@ -189,6 +190,10 @@ public class TestMeetingImpl {
 		List<Meeting> meetings = new ArrayList<>();
 		meetings.add(instance);
 		assertFalse(meetings.contains(new MeetingImpl(instance.getId()-1)));
+	}
+
+	protected MeetingImpl getInstance(int id) {
+		return new MeetingImpl(id);
 	}
 
 	protected int generateDefaultId() {

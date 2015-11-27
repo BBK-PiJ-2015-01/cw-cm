@@ -76,4 +76,28 @@ public class MeetingImpl implements Meeting {
 		contacts.addAll(backingList);
 		return contacts;
 	}  
+
+	/**
+	*	Allow equality on id
+	*
+	*/
+	@Override
+	public boolean equals(Object other) {
+
+		if (other == null || this.getClass() != other.getClass()) {
+		    return false;
+		}
+		MeetingImpl otherMeetingImpl = (MeetingImpl) other;
+		return this.id == otherMeetingImpl.id;
+	}
+
+	@Override
+	public int hashCode() {
+
+		int hash = 16381;
+		hash = 97 * hash + id;
+		hash = 97 * hash + Objects.hashCode(date);
+		hash = 97 * hash + Objects.hashCode(backingList);
+		return hash;
+	}
 }

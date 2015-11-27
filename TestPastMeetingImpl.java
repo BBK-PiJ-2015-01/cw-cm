@@ -8,7 +8,7 @@ public class TestPastMeetingImpl extends TestMeetingImpl {
 	@Before
 	public void init() {
 		
-		instance = new PastMeetingImpl(generateDefaultId());
+		instance = getInstance(generateDefaultId());
 		thisInstance = (PastMeetingImpl) instance;
 	}
 
@@ -46,4 +46,9 @@ public class TestPastMeetingImpl extends TestMeetingImpl {
 		String resultNotes = thisInstance.getNotes();
 		assertEquals(expectedNotes, resultNotes);
 	}
+
+	protected MeetingImpl getInstance(int id) {
+		return new PastMeetingImpl(id);
+	}
+
 }

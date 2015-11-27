@@ -10,7 +10,11 @@ public class TestFutureMeetingImpl extends TestMeetingImpl {
 	@Before
 	public void init() {
 		
-		instance = new FutureMeetingImpl(generateDefaultId());
+		instance = getInstance(generateDefaultId());
 		thisInstance = (FutureMeetingImpl) instance;
+	}
+
+	protected MeetingImpl getInstance(int id) {
+		return new FutureMeetingImpl(id);
 	}
 }
