@@ -74,8 +74,25 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Set<Contact> getContacts(int... ids) {
-
-		throw new IllegalArgumentException(INVALID_ID_MSG);
+		
+		if (contacts.isEmpty()) {
+			throw new IllegalArgumentException(INVALID_ID_MSG);
+		}
+		Set<Contact> returnContacts = new HashSet<>();
+		for (int i : ints) {
+			boolean found = false;
+			for (Contact contact: contacts) {
+				if (i == contact.getId()) {
+					found = true;
+					returnContacts.add(contact);
+					break;
+				}
+			}
+			if (!found) {
+				throw new IllegalArgumentException(INVALID_ID_MSG);
+			}
+		}
+		return returnContacts;		
 	}
 
 	@Override
