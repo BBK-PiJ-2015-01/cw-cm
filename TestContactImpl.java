@@ -76,6 +76,16 @@ public class TestContactImpl {
 		assertTrue(contacts.contains(instanceCopy));
 
 	}
+
+	@Test
+	public void testContactSetDoesNotContainsContact() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(instance);
+		assertFalse(contacts.contains(new ContactImpl(instance.getId()-1)));
+
+	}
+
 	protected int generateDefaultId() {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
