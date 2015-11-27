@@ -77,6 +77,7 @@ public class TestContactManagerImpl {
 		resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);		
 	}
+
 	@Test
 	public void getContactByIdSubsetMultipleTest() {
 
@@ -91,7 +92,7 @@ public class TestContactManagerImpl {
 		int resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);
 		// Get the ids from the retured Set
-		int[] ids = new int[expectedSetSize];
+		int[] ids = new int[expectedSubSetSize];
 		int count = 0;
 		for(Contact contact: resultSet) {
 			ids[count++] = contact.getId();
