@@ -174,6 +174,22 @@ public class TestMeetingImpl {
 		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());
 	}
 
+	@Test
+	public void testMeetingListContainsMeeting() {
+
+		List<Meeting> meetings = new ArrayList<>();
+		meetings.add(instance);
+		Meeting instanceCopy = new MeetingImpl(instance.getId());
+		assertTrue(meetings.contains(instanceCopy));
+	}
+
+	@Test
+	public void testMeetingListDoesNotContainsMeeting() {
+
+		List<Meeting> meetings = new ArrayList<>();
+		meetings.add(instance);
+		assertFalse(meetings.contains(new MeetingImpl(instance.getId()-1)));
+	}
 
 	protected int generateDefaultId() {
 
