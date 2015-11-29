@@ -16,6 +16,7 @@ public class ContactManagerImpl implements ContactManager {
 
 
 	private Set<Contact> contacts = new HashSet<>();
+	private Set<Meeting> meetings = new HashSet<>();
 
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
@@ -29,7 +30,12 @@ public class ContactManagerImpl implements ContactManager {
 		if (!date.after(Calendar.getInstance())) {
 			throw new IllegalArgumentException(INVALID_DATE_MSG);
 		}
-		return -1;
+		// TO DO: Replace with factory implementation
+		MeetingImpl m = new MeetingImpl(getNextMeetingId());
+		m.setDate(date);
+		m.setContacts(contacts);
+		meetings.add(m);
+		return m.getId();
 	}
 
 	@Override
@@ -44,6 +50,12 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Meeting getMeeting(int id) {
+		
+		for (Meeting meeting: meetings) {
+			if (meeting.getId() == id) {
+				return meeting;
+			}
+		}
 		return null;
 	}
 
@@ -135,5 +147,9 @@ public class ContactManagerImpl implements ContactManager {
 	
 		return contacts.size() + 1;
 	}	
+	private int getNextMeetingId() {
+	
+		return meetings.size() + 1;
+	}
 }
 
