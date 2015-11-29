@@ -67,11 +67,21 @@ public class TestContactManagerImplMeeting {
 	}
 
 	//	*********************************************************************************************
+	//	Test getMeeting by id
+	//	*********************************************************************************************
+	@Test
+	public void getFutureMeetingListByIdEmptyTest() {
+
+		Meeting meeting = instance.getMeeting(-1);
+		assertNotNull(meeting);	
+	}
+
+	//	*********************************************************************************************
 	//	Test getFutureMeetingList by Date
 	//	*********************************************************************************************
 
 	@Test
-	public void getFutureMeetingListEmptyTest() {
+	public void getFutureMeetingListByDateEmptyTest() {
 
 		List<Meeting> meetings = instance.getFutureMeetingList(Calendar.getInstance());
 		assertNotNull(meetings);
