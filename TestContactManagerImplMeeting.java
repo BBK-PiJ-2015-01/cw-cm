@@ -55,6 +55,16 @@ public class TestContactManagerImplMeeting {
 		instance.addFutureMeeting(contacts, Calendar.getInstance());		
 	}
 
+	
+	@Test
+	public void addFutureMeetingTest() {
+
+		// Use a valid contact
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		// Use a future date
+		instance.addFutureMeeting(contacts, getFutureCalendar());		
+	}
 
 
 	//
