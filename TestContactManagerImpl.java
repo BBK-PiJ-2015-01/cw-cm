@@ -13,6 +13,10 @@ public class TestContactManagerImpl {
 		instance = new ContactManagerImpl();
 	}
 
+	//	*********************************************************************************************
+	//	Tests for Contacts
+	//	*********************************************************************************************
+
 	@Test(expected=NullPointerException.class)
 	public void getContactsByNameDataNullNameTest() {
 
@@ -187,6 +191,10 @@ public class TestContactManagerImpl {
 		int resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);
 	}
+	//	*********************************************************************************************
+	//	Tests for Meetings
+	//	*********************************************************************************************
+
 	//
 	//	Utility methods
 	//

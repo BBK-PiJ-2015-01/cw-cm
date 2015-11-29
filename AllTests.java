@@ -9,5 +9,6 @@ import org.junit.runners.Suite;
 ,	TestPastMeetingImpl.class  
 ,	TestStub.class
 ,	TestContactImpl.class
-,	TestContactManagerImpl.class})
+,	TestContactManagerImpl.class
+,	TestContactManagerImplMeeting.class})
 public class AllTests {}
