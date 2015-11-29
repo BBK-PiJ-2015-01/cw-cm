@@ -17,12 +17,13 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 	
-	if (contacts == null || date == null) {
-		throw new NullPointerException(NULL_PARAM_MSG);
-	}
-	if (contacts.isEmpty()) {
-		throw new IllegalArgumentException(INVALID_ID_MSG);
-	}
+		if (contacts == null || date == null) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
+		if (contacts.isEmpty() || !this.contacts.containsAll(contacts)) {
+			throw new IllegalArgumentException(INVALID_ID_MSG);
+		}
+		
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 
