@@ -29,7 +29,7 @@ public class ContactManagerImpl implements ContactManager {
 		if (!date.after(Calendar.getInstance())) {
 			throw new IllegalArgumentException(INVALID_DATE_MSG);
 		}
-	throw new UnsupportedOperationException("Not implemented.");
+		return -1;
 	}
 
 	@Override
@@ -54,7 +54,8 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
-	throw new UnsupportedOperationException("Not implemented."); 
+
+		return Collections.emptyList();
 	}
 
 	@Override
