@@ -20,9 +20,13 @@ public class TestContactManagerImplMeeting {
 	@Test(expected=NullPointerException.class)
 	public void addFutureMeetingNullDateTest() {
 
-		instance.addFutureMeeting(null, null);		
+		instance.addFutureMeeting( Collections.emptySet(), null);		
 	}	
+	@Test(expected=NullPointerException.class)
+	public void addFutureMeetingNullContactSetTest() {
 
+		instance.addFutureMeeting( null, Calendar.getInstance());		
+	}
 	//
 	//	Utility methods
 	//
