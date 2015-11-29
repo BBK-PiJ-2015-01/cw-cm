@@ -73,7 +73,7 @@ public class TestContactManagerImplMeeting {
 	public void getFutureMeetingListByIdEmptyTest() {
 
 		Meeting meeting = instance.getMeeting(-1);
-		assertNotNull(meeting);	
+		assertNull(meeting);	
 	}
 
 	//	*********************************************************************************************
