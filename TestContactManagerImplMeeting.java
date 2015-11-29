@@ -63,7 +63,9 @@ public class TestContactManagerImplMeeting {
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(getValidContact());
 		// Use a future date
-		instance.addFutureMeeting(contacts, getFutureCalendar());		
+		int meetingId = instance.addFutureMeeting(contacts, getFutureCalendar());	
+		Meeting meeting = instance.getMeeting(meetingId);	
+		assertNotNull(meeting);
 	}
 
 	//	*********************************************************************************************
