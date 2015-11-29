@@ -66,6 +66,17 @@ public class TestContactManagerImplMeeting {
 		instance.addFutureMeeting(contacts, getFutureCalendar());		
 	}
 
+	//	*********************************************************************************************
+	//	Test getFutureMeetingList by Date
+	//	*********************************************************************************************
+
+	@Test
+	public void getFutureMeetingListEmptyTest() {
+
+		List<Meeting> meetings = instance.getFutureMeetingList(Calendar.getInstance());
+		assertNotNull(meetings);
+		assertTrue(meetings.isEmpty());		
+	}
 
 	//
 	//	Utility methods
