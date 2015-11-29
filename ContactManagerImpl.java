@@ -16,6 +16,10 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
+	
+	if (date == null) {
+		throw new NullPointerException(NULL_PARAM_MSG);
+	}
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 
