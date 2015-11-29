@@ -10,6 +10,9 @@ public class ContactManagerImpl implements ContactManager {
 
 	private final String NULL_PARAM_MSG = "A null param was supplied";
 	private final String INVALID_ID_MSG = "Supplied id was invalid";
+	private final String INVALID_DATE_MSG = "Supplied date was invalid";
+	private final String INVALID_PARAM_MSG = "Supplied param was invalid";
+	private final TimeZone tz = new SimpleTimeZone(0, "GMT");
 
 
 	private Set<Contact> contacts = new HashSet<>();
@@ -21,9 +24,11 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
 		if (contacts.isEmpty() || !this.contacts.containsAll(contacts)) {
-			throw new IllegalArgumentException(INVALID_ID_MSG);
+			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-		
+		if (!date.after(Calendar.getInstance())) {
+			throw new IllegalArgumentException(INVALID_DATE_MSG);
+		}
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 
@@ -129,7 +134,5 @@ public class ContactManagerImpl implements ContactManager {
 	
 		return contacts.size() + 1;
 	}	
-	
-
 }
 
