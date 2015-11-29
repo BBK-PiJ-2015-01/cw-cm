@@ -22,10 +22,17 @@ public class TestContactManagerImplMeeting {
 
 		instance.addFutureMeeting( Collections.emptySet(), null);		
 	}	
+
 	@Test(expected=NullPointerException.class)
 	public void addFutureMeetingNullContactSetTest() {
 
 		instance.addFutureMeeting( null, Calendar.getInstance());		
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void addFutureMeetingEmptyContactSetTest() {
+
+		instance.addFutureMeeting(Collections.emptySet(), Calendar.getInstance());		
 	}
 	//
 	//	Utility methods
