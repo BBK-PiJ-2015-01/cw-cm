@@ -34,6 +34,14 @@ public class TestContactManagerImplMeeting {
 
 		instance.addFutureMeeting(Collections.emptySet(), Calendar.getInstance());		
 	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void addFutureMeetingUnknownContactSetTest() {
+		
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(new ContactImpl(-1));
+		instance.addFutureMeeting(contacts, Calendar.getInstance());		
+	}
 	//
 	//	Utility methods
 	//
