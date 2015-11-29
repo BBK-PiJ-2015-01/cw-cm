@@ -53,12 +53,8 @@ public class TestContactManagerImplMeeting {
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(new ContactImpl(-1));
 		instance.addFutureMeeting(contacts, Calendar.getInstance());		
-		//
-		//	Add a different contact 
-		//
-		instance.addNewContact("Name", "Notes");
-		instance.addFutureMeeting(contacts, Calendar.getInstance());	
 	}
+
 
 
 	//
@@ -73,6 +69,13 @@ public class TestContactManagerImplMeeting {
 		return contacts.iterator().next();
 	}
 
+	private Calendar getFutureCalendar() {
+	
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		return calendar;
+	}
+
 	private boolean assertContactSetContainsContactName(String contactName, Set<Contact> contacts) {
 
 		for (Contact contact: contacts) {
@@ -82,6 +85,7 @@ public class TestContactManagerImplMeeting {
 		}
 		return false;
 	}
+
 	private Contact getContactSetItem(int index, Set<Contact> contacts) {
 
 		int count = 0;
