@@ -44,7 +44,7 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public Meeting getMeeting(int id) {
-	throw new UnsupportedOperationException("Not implemented."); 
+		return null;
 	}
 
 	@Override
