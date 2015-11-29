@@ -23,6 +23,18 @@ public class TestContactManagerImplMeeting {
 		instance.addFutureMeeting( Collections.emptySet(), null);		
 	}	
 
+	@Test(expected=IllegalArgumentException.class)
+	public void addFutureMeetingInvalidDateTest() {
+
+		Calendar now = Calendar.getInstance();
+		// Make sure the contacts are valid
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		// Use a non-future date
+		instance.addFutureMeeting(contacts, now);		
+	}
+
+
 	@Test(expected=NullPointerException.class)
 	public void addFutureMeetingNullContactSetTest() {
 
@@ -41,10 +53,26 @@ public class TestContactManagerImplMeeting {
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(new ContactImpl(-1));
 		instance.addFutureMeeting(contacts, Calendar.getInstance());		
+		//
+		//	Add a different contact 
+		//
+		instance.addNewContact("Name", "Notes");
+		instance.addFutureMeeting(contacts, Calendar.getInstance());	
 	}
+
+
 	//
 	//	Utility methods
 	//
+	private Contact getValidContact() {
+	
+		final String validName = "validName";
+		instance.addNewContact(validName, "Notes");
+		Set<Contact> contacts = instance.getContacts(validName);
+		assertFalse(contacts.isEmpty());
+		return contacts.iterator().next();
+	}
+
 	private boolean assertContactSetContainsContactName(String contactName, Set<Contact> contacts) {
 
 		for (Contact contact: contacts) {
