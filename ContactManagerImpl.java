@@ -80,7 +80,7 @@ public class ContactManagerImpl implements ContactManager {
 		if (!contacts.contains(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-	throw new UnsupportedOperationException("Not implemented.");
+		return Collections.emptyList();
 	}
 
 	@Override
