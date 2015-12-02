@@ -164,12 +164,41 @@ public class TestContactManagerImplMeeting {
 		contacts.add(getValidContact());
 		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
 	}
+
+	//	*********************************************************************************************
+	//	Test getPastMeetingList by Contact
+	//	*********************************************************************************************
+	@Test
+	public void getPastMeetingListByNullContactTest() {
+
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(null);
+		assertNotNull(pastMeetings);
+		assertTrue(pastMeetings.isEmpty());		
+	}
+	@Test
+	public void getPastMeetingListByInvalidContactTest() {
+
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(new ContactImpl(-1));
+		assertNotNull(pastMeetings);
+		assertTrue(pastMeetings.isEmpty());		
+	}
+
 	//	*********************************************************************************************
 	//	Test getPastMeeting by id
 	//	*********************************************************************************************
 	@Test
-	public void getPastMeetingListByIdEmptyTest() {
+	public void getPastMeetingByIdEmptyTest() {
 
+		Meeting meeting = instance.getPastMeeting(-1);
+		assertNull(meeting);	
+	}
+
+//	@Test
+	public void getPastMeetingByIdValidTest() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		instance.addNewPastMeeting( contacts, getPastCalendar(), "");
 		Meeting meeting = instance.getPastMeeting(-1);
 		assertNull(meeting);	
 	}
