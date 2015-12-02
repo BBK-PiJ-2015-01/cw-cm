@@ -110,9 +110,9 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 
 	@Test(expected=NullPointerException.class)
-	public void addNewPastMeetingNullDateNullTextTest() {
+	public void addNewPastMeetingNullDateTest() {
 
-		instance.addNewPastMeeting( Collections.emptySet(), null, null);		
+		instance.addNewPastMeeting( Collections.emptySet(), null, "");		
 	}	
 
 
