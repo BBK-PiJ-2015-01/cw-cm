@@ -54,7 +54,6 @@ public class TestContactManagerImplMeeting {
 		contacts.add(new ContactImpl(-1));
 		instance.addFutureMeeting(contacts, Calendar.getInstance());		
 	}
-
 	
 	@Test
 	public void addFutureMeetingTest() {
@@ -63,17 +62,33 @@ public class TestContactManagerImplMeeting {
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(getValidContact());
 		// Use a future date
-		int meetingId = instance.addFutureMeeting(contacts, getFutureCalendar());	
+		Calendar expectedDate = getFutureCalendar();
+		int meetingId = instance.addFutureMeeting(contacts, expectedDate);	
 		Meeting meeting = instance.getMeeting(meetingId);	
 		assertNotNull(meeting);
+		Calendar resultDate = meeting.getDate();
+		assertEquals(expectedDate, resultDate);
 	}
 
 	//	*********************************************************************************************
-	//	Test getMeeting by id
+	//	Test getFutureMeeting by id
 	//	*********************************************************************************************
 	@Test
 	public void getFutureMeetingListByIdEmptyTest() {
 
+		Meeting meeting = instance.getMeeting(-1);
+		assertNull(meeting);	
+	}
+
+	@Test
+	public void getFutureMeetingListInvalidIdPopulatedTest() {
+
+		// Use a valid contact
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		// Use a future date
+		Calendar expectedDate = getFutureCalendar();
+		int meetingId = instance.addFutureMeeting(contacts, expectedDate);
 		Meeting meeting = instance.getMeeting(-1);
 		assertNull(meeting);	
 	}
@@ -89,6 +104,20 @@ public class TestContactManagerImplMeeting {
 		assertNotNull(meetings);
 		assertTrue(meetings.isEmpty());		
 	}
+
+	//	*********************************************************************************************
+	//	Test addPastMeeting
+	//	*********************************************************************************************
+
+	@Test(expected=NullPointerException.class)
+	public void addNewPastMeetingNullDateNullTextTest() {
+
+		instance.addNewPastMeeting( Collections.emptySet(), null, null);		
+	}	
+
+
+
+
 
 	//
 	//	Utility methods
