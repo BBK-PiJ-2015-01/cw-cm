@@ -87,8 +87,6 @@ public class ContactManagerImpl implements ContactManager {
 		if (isFutureDate(date)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-
-	throw new UnsupportedOperationException("Not implemented."); 
 	}
 
 	@Override

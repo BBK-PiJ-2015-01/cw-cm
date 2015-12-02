@@ -157,6 +157,22 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( contacts, Calendar.getInstance(), "");		
 	}
 
+	@Test
+	public void addNewPastMeetingValidTest() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
+	}
+	//	*********************************************************************************************
+	//	Test getPastMeeting by id
+	//	*********************************************************************************************
+	@Test
+	public void getPastMeetingListByIdEmptyTest() {
+
+		Meeting meeting = instance.getPastMeeting(-1);
+		assertNull(meeting);	
+	}
 
 	//	*********************************************************************************************
 	//	Utility methods
@@ -176,8 +192,12 @@ public class TestContactManagerImplMeeting {
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		return calendar;
 	}
-
-
+	private Calendar getPastCalendar() {
+	
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, -1);
+		return calendar;
+	}
 
 	private boolean assertContactSetContainsContactName(String contactName, Set<Contact> contacts) {
 
