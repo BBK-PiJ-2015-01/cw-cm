@@ -133,6 +133,13 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( Collections.emptySet(), Calendar.getInstance(), "");		
 	}
 
+	@Test(expected=IllegalArgumentException.class)
+	public void addNewPastMeetingInvalidContactsTest() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(new ContactImpl(-1));
+		instance.addNewPastMeeting( contacts, Calendar.getInstance(), "");		
+	}
 
 	//
 	//	Utility methods
