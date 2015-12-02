@@ -73,6 +73,13 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public List<PastMeeting> getPastMeetingList(Contact contact) {
+
+		if (contact == null ) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
+		if (!contacts.contains(contact)) {
+			throw new IllegalArgumentException(INVALID_PARAM_MSG);
+		}
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 

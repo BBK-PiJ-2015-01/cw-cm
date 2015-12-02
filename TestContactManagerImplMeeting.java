@@ -168,19 +168,19 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 	//	Test getPastMeetingList by Contact
 	//	*********************************************************************************************
-	@Test
+	@Test(expected=NullPointerException.class)
 	public void getPastMeetingListByNullContactTest() {
 
 		List<PastMeeting> pastMeetings = instance.getPastMeetingList(null);
-		assertNotNull(pastMeetings);
-		assertTrue(pastMeetings.isEmpty());		
+//		assertNotNull(pastMeetings);
+//		assertTrue(pastMeetings.isEmpty());		
 	}
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void getPastMeetingListByInvalidContactTest() {
 
 		List<PastMeeting> pastMeetings = instance.getPastMeetingList(new ContactImpl(-1));
-		assertNotNull(pastMeetings);
-		assertTrue(pastMeetings.isEmpty());		
+//		assertNotNull(pastMeetings);
+//		assertTrue(pastMeetings.isEmpty());		
 	}
 
 	//	*********************************************************************************************
