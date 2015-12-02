@@ -1,7 +1,6 @@
 
 import java.util.*;
 
-
 /**
  *
  * @author user0001
@@ -54,6 +53,7 @@ public class ContactManagerImpl implements ContactManager {
 		
 		for (Meeting meeting: meetings) {
 			if (meeting.getId() == id) {
+				// TO DO: Return copy, not original
 				return meeting;
 			}
 		}
@@ -80,7 +80,21 @@ public class ContactManagerImpl implements ContactManager {
 		if (!contacts.contains(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-		return Collections.emptyList();
+		if (meetings.isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<PastMeeting> pastMeetings = new LinkedList<>();
+		for (Meeting meeting: meetings) {
+			if (meeting.getContacts().contains(contact) && isPastDate(meeting.getDate())) {
+				// TO DO: Replace with factory implementation
+				// TO DO: Make defensive copy
+				PastMeetingImpl m = new PastMeetingImpl(meeting.getId());
+				m.setDate(meeting.getDate());
+				m.setContacts(meeting.getContacts());
+				pastMeetings.add(m);
+			}
+		}
+		return pastMeetings;
 	}
 
 	@Override
@@ -95,6 +109,12 @@ public class ContactManagerImpl implements ContactManager {
 		if (isFutureDate(date)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
+		// TO DO: Replace with factory implementation
+		PastMeetingImpl m = new PastMeetingImpl(getNextMeetingId());
+		m.setDate(date);
+		m.setContacts(contacts);
+		m.setNotes(text);
+		meetings.add(m);
 	}
 
 	@Override
@@ -170,6 +190,10 @@ public class ContactManagerImpl implements ContactManager {
 	}
 	private boolean isFutureDate(Calendar date) {
 		return Calendar.getInstance().compareTo(date) < 0;
+	}
+
+	private boolean isPastDate(Calendar date) {
+		return Calendar.getInstance().compareTo(date) > 0;
 	}
 }
 
