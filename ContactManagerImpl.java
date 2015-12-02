@@ -81,6 +81,9 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null || text == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
+		if (contacts.isEmpty() ) {
+			throw new IllegalArgumentException(INVALID_PARAM_MSG);
+		}
 	}
 
 	@Override
