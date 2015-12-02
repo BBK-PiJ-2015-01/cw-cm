@@ -120,9 +120,7 @@ public class TestContactManagerImplMeeting {
 
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(getValidContact());
-		Calendar futureDate = Calendar.getInstance();
-		futureDate.add(Calendar.HOUR, 1);
-		instance.addNewPastMeeting( contacts, futureDate, "");	
+		instance.addNewPastMeeting( contacts, getFutureCalendar(), "");	
 	}
 
 	@Test(expected=NullPointerException.class)
@@ -178,6 +176,8 @@ public class TestContactManagerImplMeeting {
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		return calendar;
 	}
+
+
 
 	private boolean assertContactSetContainsContactName(String contactName, Set<Contact> contacts) {
 

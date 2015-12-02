@@ -84,6 +84,10 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts.isEmpty() || !this.contacts.containsAll(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
+		if (isFutureDate(date)) {
+			throw new IllegalArgumentException(INVALID_PARAM_MSG);
+		}
+
 	throw new UnsupportedOperationException("Not implemented."); 
 	}
 
@@ -157,6 +161,9 @@ public class ContactManagerImpl implements ContactManager {
 	private int getNextMeetingId() {
 	
 		return meetings.size() + 1;
+	}
+	private boolean isFutureDate(Calendar date) {
+		return Calendar.getInstance().compareTo(date) < 0;
 	}
 }
 
