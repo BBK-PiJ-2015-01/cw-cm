@@ -189,6 +189,22 @@ public class TestContactManagerImplMeeting {
 		assertTrue(pastMeetings.isEmpty());
 	}
 
+	@Test
+	public void getPastMeetingListByValidContactSingleItemListTest() {
+
+		// Valid params
+		Set<Contact> contacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		contacts.add(validContact);
+		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
+		// Get the list
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
+		assertNotNull(pastMeetings);	
+		int expectedListSize = 1;
+		int resultListSize = pastMeetings.size();
+		assertEquals(expectedListSize, resultListSize);
+	}
+
 	//	*********************************************************************************************
 	//	Test getPastMeeting by id
 	//	*********************************************************************************************
