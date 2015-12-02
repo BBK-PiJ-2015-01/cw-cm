@@ -127,6 +127,12 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( null, Calendar.getInstance(), "");		
 	}	
 
+	@Test(expected=IllegalArgumentException.class)
+	public void addNewPastMeetingEmptyContactsTest() {
+
+		instance.addNewPastMeeting( Collections.emptySet(), Calendar.getInstance(), "");		
+	}
+
 
 	//
 	//	Utility methods
