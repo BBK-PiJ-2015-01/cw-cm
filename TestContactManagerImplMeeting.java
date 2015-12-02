@@ -115,6 +115,16 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( Collections.emptySet(), null, "");		
 	}	
 
+	@Test(expected=IllegalArgumentException.class)
+	public void addNewPastMeetingInvalidDateTest() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		Calendar futureDate = Calendar.getInstance();
+		futureDate.add(Calendar.HOUR, 1);
+		instance.addNewPastMeeting( contacts, futureDate, "");	
+	}
+
 	@Test(expected=NullPointerException.class)
 	public void addNewPastMeetingNullTextTest() {
 
@@ -141,9 +151,18 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( contacts, Calendar.getInstance(), "");		
 	}
 
-	//
+	@Test(expected=IllegalArgumentException.class)
+	public void addNewPastMeetingValidContactsTest() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(new ContactImpl(-1));
+		instance.addNewPastMeeting( contacts, Calendar.getInstance(), "");		
+	}
+
+
+	//	*********************************************************************************************
 	//	Utility methods
-	//
+	//	*********************************************************************************************
 	private Contact getValidContact() {
 	
 		final String validName = "validName";
