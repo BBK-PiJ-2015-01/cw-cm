@@ -115,6 +115,11 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( Collections.emptySet(), null, "");		
 	}	
 
+	@Test(expected=NullPointerException.class)
+	public void addNewPastMeetingNullTextTest() {
+
+		instance.addNewPastMeeting( Collections.emptySet(), Calendar.getInstance(), null);		
+	}	
 
 
 
