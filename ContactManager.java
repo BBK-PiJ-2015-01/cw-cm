@@ -77,7 +77,7 @@ public interface ContactManager {
      * Returns the list of past meetings in which this contact has participated.
      *
      * If there are none, the returned list will be empty. Otherwise, the list
-     * will be chronologically sorted and will not contain any 2* duplicates.
+     * will be chronologically sorted and will not contain any duplicates.
      *
      * @param contact one of the user’s contacts
      * @return the list of future meeting(s) scheduled with this contact (maybe

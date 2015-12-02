@@ -205,6 +205,38 @@ public class TestContactManagerImplMeeting {
 		assertEquals(expectedListSize, resultListSize);
 	}
 
+	@Test
+	public void getPastMeetingListByValidContactMultipleItemsOrderTest() {
+
+		// Valid params
+		Set<Contact> contacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		contacts.add(validContact);
+		// Date - 1 day
+		Calendar date1DayAgo = Calendar.getInstance();
+		date1DayAgo.add(Calendar.DAY_OF_YEAR, -1);
+		// Date - 2 days
+		Calendar date2DaysAgo = Calendar.getInstance();
+		date1DayAgo.add(Calendar.DAY_OF_YEAR, -1);
+		//	
+		// Add in reverse order
+		//
+		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
+		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
+		// Get the list
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
+		assertNotNull(pastMeetings);	
+		int expectedListSize = 2;
+		int resultListSize = pastMeetings.size();
+		assertEquals(expectedListSize, resultListSize);
+		// 1st item date should be newest i.e. 1 day ago
+		Calendar resultDate = pastMeetings.get(0).getDate();
+		assertEquals(date1DayAgo, resultDate);
+		// 2nd item date should be oldest i.e. 2 days ago
+		resultDate = pastMeetings.get(1).getDate();
+		assertEquals(date2DaysAgo, resultDate);
+	}
+
 	//	*********************************************************************************************
 	//	Test getPastMeeting by id
 	//	*********************************************************************************************
