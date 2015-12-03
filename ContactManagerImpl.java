@@ -40,7 +40,19 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public PastMeeting getPastMeeting(int id) {
 
-		return null;
+		Meeting m = getMeeting(id);
+		if (m == null) {
+			return null;
+		}
+		if (isFutureDate(m.getDate())) {
+			throw new IllegalArgumentException(INVALID_PARAM_MSG);
+		}
+		// TO DO: Replace with factory implementation
+		// TO DO: Make defensive copy
+		PastMeetingImpl pm = new PastMeetingImpl(m.getId());
+		pm.setDate(m.getDate());
+		pm.setContacts(m.getContacts());	
+		return pm;
 	}
 
 	@Override
@@ -84,9 +96,10 @@ public class ContactManagerImpl implements ContactManager {
 			return Collections.emptyList();
 		}
 		List<PastMeeting> pastMeetings = new LinkedList<>();
-//		System.out.println("Meetings size: " + meetings.size());
+//		System.out.println("Search through Meetings size: " + meetings.size());
 		for (Meeting meeting: meetings) {
 			if (meeting.getContacts().contains(contact) && isPastDate(meeting.getDate())) {
+//				System.out.println("Add " + meeting.getId() + " to outgoing mail");
 				// TO DO: Replace with factory implementation
 				// TO DO: Make defensive copy
 				PastMeetingImpl m = new PastMeetingImpl(meeting.getId());
@@ -96,7 +109,7 @@ public class ContactManagerImpl implements ContactManager {
 			}
 		}
 		// Sort meetings on meeting date
-		Collections.sort(pastMeetings, (m1,m2) -> m1.getDate().compareTo(m2.getDate()));
+		Collections.sort(pastMeetings, (m1,m2) -> m2.getDate().compareTo(m1.getDate()));
 		return pastMeetings;
 	}
 
@@ -114,10 +127,12 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		// TO DO: Replace with factory implementation
 		PastMeetingImpl m = new PastMeetingImpl(getNextMeetingId());
+//		System.out.println("Add meeting with id: " + m.getId());
 		m.setDate(date);
 		m.setContacts(contacts);
 		m.setNotes(text);
 		meetings.add(m);
+//		System.out.println("Meetings size: " + meetings.size());
 	}
 
 	@Override

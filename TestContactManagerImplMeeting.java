@@ -189,21 +189,7 @@ public class TestContactManagerImplMeeting {
 		assertTrue(pastMeetings.isEmpty());
 	}
 
-	@Test
-	public void getPastMeetingListByValidContactSingleItemListTest() {
 
-		// Valid params
-		Set<Contact> contacts = new HashSet<>();
-		Contact validContact = getValidContact();
-		contacts.add(validContact);
-		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
-		// Get the list
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
-		assertNotNull(pastMeetings);	
-		int expectedListSize = 1;
-		int resultListSize = pastMeetings.size();
-		assertEquals(expectedListSize, resultListSize);
-	}
 
 	@Test
 	public void getPastMeetingListByValidContactMultipleItemsOrderTest() {
@@ -217,10 +203,11 @@ public class TestContactManagerImplMeeting {
 		date1DayAgo.add(Calendar.DAY_OF_YEAR, -1);
 		// Date - 2 days
 		Calendar date2DaysAgo = Calendar.getInstance();
-		date1DayAgo.add(Calendar.DAY_OF_YEAR, -1);
+		date2DaysAgo.add(Calendar.DAY_OF_YEAR, -2);
 		//	
 		// Add in reverse order
 		//
+//		System.out.println("Adding Past Meetings");
 		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
 		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
 		// Get the list
@@ -247,14 +234,37 @@ public class TestContactManagerImplMeeting {
 		assertNull(meeting);	
 	}
 
-//	@Test
-	public void getPastMeetingByIdValidTest() {
+	@Test(expected=IllegalArgumentException.class)
+	public void getPastMeetingByIdWhichIsActuallyAFutureMeetingTest() {
 
+		// Add a valid future meeting
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(getValidContact());
-		instance.addNewPastMeeting( contacts, getPastCalendar(), "");
-		Meeting meeting = instance.getPastMeeting(-1);
-		assertNull(meeting);	
+		int meetingId = instance.addFutureMeeting(contacts, getFutureCalendar());	
+		// Get the meeting by id
+		PastMeeting resultMeeting = instance.getPastMeeting(meetingId);
+	}
+
+	@Test
+	public void getPastMeetingByIdValidTest() {
+
+		// Valid params
+		Set<Contact> contacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		contacts.add(validContact);
+		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
+		// Get the list
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
+		assertNotNull(pastMeetings);	
+		int expectedListSize = 1;
+		int resultListSize = pastMeetings.size();
+		assertEquals(expectedListSize, resultListSize);
+		// 
+		PastMeeting expectedMeeting = pastMeetings.get(0);
+		int validId = expectedMeeting.getId();
+		// Get the meeting by id
+		PastMeeting resultMeeting = instance.getPastMeeting(validId);
+		assertEquals(expectedMeeting, resultMeeting);
 	}
 
 	//	*********************************************************************************************
