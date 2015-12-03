@@ -61,8 +61,7 @@ public class ContactManagerImpl implements ContactManager {
 		if (isPastDate(m.getDate())) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-	throw new UnsupportedOperationException("Not implemented.");
-//		return cloneAsFutureMeeting(m);
+		return cloneAsFutureMeeting(m);
 	}
 
 	@Override
