@@ -97,17 +97,22 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		List<PastMeeting> pastMeetings = new LinkedList<>();
 //		System.out.println("Search through Meetings size: " + meetings.size());
-		for (Meeting meeting: meetings) {
-			if (meeting.getContacts().contains(contact) && isPastDate(meeting.getDate())) {
+		meetings.stream()
+			.filter((m) -> m.getContacts().contains(contact))
+			.filter((m) -> isPastDate(m.getDate()))
+			.forEach((m) -> pastMeetings.add(cloneAsPastMeeting(m)));
+
+//		for (Meeting meeting: meetings) {
+//			if (meeting.getContacts().contains(contact) && isPastDate(meeting.getDate())) {
 //				System.out.println("Add " + meeting.getId() + " to outgoing mail");
 				// TO DO: Replace with factory implementation
 				// TO DO: Make defensive copy
-				PastMeetingImpl m = new PastMeetingImpl(meeting.getId());
-				m.setDate(meeting.getDate());
-				m.setContacts(meeting.getContacts());
-				pastMeetings.add(m);
-			}
-		}
+//				PastMeetingImpl m = new PastMeetingImpl(meeting.getId());
+//				m.setDate(meeting.getDate());
+//				m.setContacts(meeting.getContacts());
+//				pastMeetings.add(m);
+//			}
+//		}
 		// Sort meetings on meeting date
 		Collections.sort(pastMeetings, (m1,m2) -> m2.getDate().compareTo(m1.getDate()));
 		return pastMeetings;
@@ -212,6 +217,14 @@ public class ContactManagerImpl implements ContactManager {
 
 	private boolean isPastDate(Calendar date) {
 		return Calendar.getInstance().compareTo(date) > 0;
+	}
+
+	private PastMeeting cloneAsPastMeeting(Meeting m) {
+
+		PastMeetingImpl pm = new PastMeetingImpl(m.getId());
+		pm.setDate(m.getDate());
+		pm.setContacts(m.getContacts());
+		return pm;
 	}
 }
 
