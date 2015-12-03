@@ -70,6 +70,10 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public List<Meeting> getFutureMeetingList(Contact contact) {
+
+		if (contact == null ) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 
