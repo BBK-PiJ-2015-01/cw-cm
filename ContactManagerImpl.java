@@ -74,6 +74,9 @@ public class ContactManagerImpl implements ContactManager {
 		if (contact == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
+		if (!contacts.contains(contact)) {
+			throw new IllegalArgumentException(INVALID_PARAM_MSG);
+		}
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 
