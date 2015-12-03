@@ -14,41 +14,41 @@ public class TestContactManagerImplMeeting {
 	}
 
 	//	*********************************************************************************************
-	//	Tests for Meetings
+	//	Test add Future Meeting
 	//	*********************************************************************************************
 
 	@Test(expected=NullPointerException.class)
-	public void addFutureMeetingNullDateTest() {
+	public void addFutureMeeting_NullDate() {
 
 		instance.addFutureMeeting( Collections.emptySet(), null);		
 	}	
 
 	@Test(expected=IllegalArgumentException.class)
-	public void addFutureMeetingInvalidDateTest() {
+	public void addFutureMeeting_PastDate() {
 
 		Calendar now = Calendar.getInstance();
 		// Make sure the contacts are valid
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(getValidContact());
-		// Use a non-future date
-		instance.addFutureMeeting(contacts, now);		
+		// Use a past date
+		instance.addFutureMeeting(contacts, getPastCalendar());		
 	}
 
 
 	@Test(expected=NullPointerException.class)
-	public void addFutureMeetingNullContactSetTest() {
+	public void addFutureMeeting_NullContacts() {
 
 		instance.addFutureMeeting( null, Calendar.getInstance());		
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void addFutureMeetingEmptyContactSetTest() {
+	public void addFutureMeeting_EmptyContacts() {
 
 		instance.addFutureMeeting(Collections.emptySet(), Calendar.getInstance());		
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void addFutureMeetingUnknownContactSetTest() {
+	public void addFutureMeeting_UnknownContacts() {
 		
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(new ContactImpl(-1));
@@ -56,7 +56,7 @@ public class TestContactManagerImplMeeting {
 	}
 	
 	@Test
-	public void addFutureMeetingTest() {
+	public void addFutureMeeting_ValidParams() {
 
 		// Use a valid contact
 		Set<Contact> contacts = new HashSet<>();
@@ -74,14 +74,14 @@ public class TestContactManagerImplMeeting {
 	//	Test getFutureMeeting by id
 	//	*********************************************************************************************
 	@Test
-	public void getFutureMeetingListByIdEmptyTest() {
+	public void getFutureMeetingListById_EmptyMeetings() {
 
 		Meeting meeting = instance.getMeeting(-1);
 		assertNull(meeting);	
 	}
 
 	@Test
-	public void getFutureMeetingListInvalidIdPopulatedTest() {
+	public void getFutureMeetingListById_UnknownMeetingId() {
 
 		// Use a valid contact
 		Set<Contact> contacts = new HashSet<>();
@@ -98,11 +98,18 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 
 	@Test
-	public void getFutureMeetingListByDateEmptyTest() {
+	public void getFutureMeetingListByDate_NoMeetings() {
 
 		List<Meeting> meetings = instance.getFutureMeetingList(Calendar.getInstance());
 		assertNotNull(meetings);
 		assertTrue(meetings.isEmpty());		
+	}
+
+	@Test(expected=NullPointerException.class)
+	public void getFutureMeetingListByDate_NullDate() {
+
+		Calendar nullDate = null;
+		List<Meeting> meetings = instance.getFutureMeetingList(nullDate);	
 	}
 
 	//	*********************************************************************************************
@@ -110,13 +117,13 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 
 	@Test(expected=NullPointerException.class)
-	public void addNewPastMeetingNullDateTest() {
+	public void addNewPastMeeting_NullDate() {
 
 		instance.addNewPastMeeting( Collections.emptySet(), null, "");		
 	}	
 
 	@Test(expected=IllegalArgumentException.class)
-	public void addNewPastMeetingInvalidDateTest() {
+	public void addNewPastMeeting_FutureDate() {
 
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(getValidContact());
@@ -124,33 +131,25 @@ public class TestContactManagerImplMeeting {
 	}
 
 	@Test(expected=NullPointerException.class)
-	public void addNewPastMeetingNullTextTest() {
+	public void addNewPastMeeting_NullText() {
 
-		instance.addNewPastMeeting( Collections.emptySet(), Calendar.getInstance(), null);		
+		instance.addNewPastMeeting( Collections.emptySet(), getPastCalendar(), null);		
 	}	
 
 	@Test(expected=NullPointerException.class)
-	public void addNewPastMeetingNullContactsTest() {
+	public void addNewPastMeeting_NullContacts() {
 
 		instance.addNewPastMeeting( null, Calendar.getInstance(), "");		
 	}	
 
 	@Test(expected=IllegalArgumentException.class)
-	public void addNewPastMeetingEmptyContactsTest() {
+	public void addNewPastMeeting_EmptyContacts() {
 
 		instance.addNewPastMeeting( Collections.emptySet(), Calendar.getInstance(), "");		
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void addNewPastMeetingInvalidContactsTest() {
-
-		Set<Contact> contacts = new HashSet<>();
-		contacts.add(new ContactImpl(-1));
-		instance.addNewPastMeeting( contacts, Calendar.getInstance(), "");		
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void addNewPastMeetingValidContactsTest() {
+	public void addNewPastMeeting_ContactDoesNotExist() {
 
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(new ContactImpl(-1));
@@ -158,7 +157,7 @@ public class TestContactManagerImplMeeting {
 	}
 
 	@Test
-	public void addNewPastMeetingValidTest() {
+	public void addNewPastMeeting_ValidParams() {
 
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(getValidContact());
@@ -270,14 +269,14 @@ public class TestContactManagerImplMeeting {
 	//	Test getPastMeeting by id
 	//	*********************************************************************************************
 	@Test
-	public void getPastMeetingByIdEmptyTest() {
+	public void getPastMeetingById_Empty() {
 
 		Meeting meeting = instance.getPastMeeting(-1);
 		assertNull(meeting);	
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void getPastMeetingByIdWhichIsActuallyAFutureMeetingTest() {
+	public void getPastMeetingById_MeetingIsActuallyAFutureMeeting() {
 
 		// Add a valid future meeting
 		Set<Contact> contacts = new HashSet<>();
@@ -288,7 +287,7 @@ public class TestContactManagerImplMeeting {
 	}
 
 	@Test
-	public void getPastMeetingByIdValidTest() {
+	public void getPastMeetingById_ValidPastMeeting() {
 
 		// Valid params
 		Set<Contact> contacts = new HashSet<>();
