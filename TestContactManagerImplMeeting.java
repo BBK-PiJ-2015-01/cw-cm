@@ -212,7 +212,6 @@ public class TestContactManagerImplMeeting {
 		List<Meeting> meetings = instance.getFutureMeetingList(nullContact);	
 	}
 
-
 	@Test(expected=IllegalArgumentException.class)
 	public void getFutureMeetingListByContact_UnknownContact() {
 
@@ -230,6 +229,31 @@ public class TestContactManagerImplMeeting {
 		List<Meeting> meetings = instance.getFutureMeetingList(validContact);	
 		assertNotNull(meetings);
 		assertTrue(meetings.isEmpty());		
+	}
+
+	@Test
+	public void getFutureMeetingListByDate_ValidContactSingleMeeting() {
+
+		// Use a valid contact
+		Set<Contact> expectedContacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		expectedContacts.add(validContact);
+		// Use a future date
+		Calendar expectedDate = getFutureCalendar();
+		// Add the meeting
+		instance.addFutureMeeting(expectedContacts, expectedDate);	
+		// Get the list
+		List<Meeting> meetings = instance.getFutureMeetingList(validContact);	
+		assertNotNull(meetings);
+		int expectedListSize = 1;
+		int resultListSize = meetings.size();
+		assertEquals(expectedListSize, resultListSize);
+		// Get the only item
+		Meeting resultMeeting = meetings.get(0);	
+		Calendar resultDate = resultMeeting.getDate();
+		Set<Contact> resultContacts = resultMeeting.getContacts();
+		assertEquals(expectedDate, resultDate);
+		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());
 	}
 
 	//	*********************************************************************************************
