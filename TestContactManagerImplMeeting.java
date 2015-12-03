@@ -512,6 +512,20 @@ public class TestContactManagerImplMeeting {
 		instance.addMeetingNotes(id, null);	
 	}
 
+	@Test(expected=IllegalStateException.class)
+	public void addMeetingNotes_FutureMeeting() {
+
+		// Use a valid contact
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		// Use a future date
+		Calendar date = getFutureCalendar();
+		//
+		int id = instance.addFutureMeeting( contacts, date);
+		// use the created meeting id
+		instance.addMeetingNotes(id, "");	
+	}
+
 	//	*********************************************************************************************
 	//	Utility methods
 	//	*********************************************************************************************
