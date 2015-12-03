@@ -112,6 +112,32 @@ public class TestContactManagerImplMeeting {
 		List<Meeting> meetings = instance.getFutureMeetingList(nullDate);	
 	}
 
+	@Test
+	public void getFutureMeetingListByDate_SingleMeeting() {
+
+		// Use a valid contact
+		Set<Contact> expectedContacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		expectedContacts.add(validContact);
+		// Use a future date
+		Calendar expectedDate = getFutureCalendar();
+		// Add the meeting
+		int meetingId = instance.addFutureMeeting(expectedContacts, expectedDate);	
+		// Get the list
+		List<Meeting> meetings = instance.getFutureMeetingList(expectedDate);	
+		assertNotNull(meetings);
+		int exectedListSize = 1;
+		int resultListSize = meetings.size();
+		assertEquals(exectedListSize, resultListSize);
+		// Get the only item
+		Meeting resultMeeting = meetings.get(0);	
+		Calendar resultDate = resultMeeting.getDate();
+		Set<Contact> resultContacts = resultMeeting.getContacts();
+		assertEquals(expectedDate, resultDate);
+		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());
+	}
+	
+
 	//	*********************************************************************************************
 	//	Test addPastMeeting
 	//	*********************************************************************************************
