@@ -79,6 +79,19 @@ public class TestContactManagerImplMeeting {
 		assertNull(meeting);	
 	}
 
+	@Test(expected=IllegalArgumentException.class)
+	public void getFutureMeetingListById_PastMeeting() {
+
+		Set<Contact> contacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		contacts.add(validContact);
+		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
+		// Should only be one meeting
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);
+		int id = pastMeetings.get(0).getId();
+		instance.getFutureMeeting(id);	
+	}
+
 
 	//	*********************************************************************************************
 	//	Test getMeeting by id
