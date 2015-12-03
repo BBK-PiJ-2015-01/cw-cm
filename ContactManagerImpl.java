@@ -49,10 +49,10 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		// TO DO: Replace with factory implementation
 		// TO DO: Make defensive copy
-		PastMeetingImpl pm = new PastMeetingImpl(m.getId());
-		pm.setDate(m.getDate());
-		pm.setContacts(m.getContacts());	
-		return pm;
+//		PastMeetingImpl pm = new PastMeetingImpl(m.getId());
+//		pm.setDate(m.getDate());
+//		pm.setContacts(m.getContacts());	
+		return cloneAsPastMeeting(m);
 	}
 
 	@Override
@@ -97,6 +97,7 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		List<PastMeeting> pastMeetings = new LinkedList<>();
 //		System.out.println("Search through Meetings size: " + meetings.size());
+		// Filter on contact and date
 		meetings.stream()
 			.filter((m) -> m.getContacts().contains(contact))
 			.filter((m) -> isPastDate(m.getDate()))

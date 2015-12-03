@@ -169,19 +169,19 @@ public class TestContactManagerImplMeeting {
 	//	Test getPastMeetingList by Contact
 	//	*********************************************************************************************
 	@Test(expected=NullPointerException.class)
-	public void getPastMeetingListByNullContactTest() {
+	public void getPastMeetingList_NullContact() {
 
 		List<PastMeeting> pastMeetings = instance.getPastMeetingList(null);		
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void getPastMeetingListByInvalidContactTest() {
+	public void getPastMeetingList_InvalidContact() {
 
 		List<PastMeeting> pastMeetings = instance.getPastMeetingList(new ContactImpl(-1));		
 	}
 
 	@Test
-	public void getPastMeetingListByValidContactEmptyListTest() {
+	public void getPastMeetingList_ValidContactEmptyList() {
 
 		Contact validContact = getValidContact();
 		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
@@ -189,10 +189,8 @@ public class TestContactManagerImplMeeting {
 		assertTrue(pastMeetings.isEmpty());
 	}
 
-
-
 	@Test
-	public void getPastMeetingListByValidContactMultipleItemsOrderTest() {
+	public void getPastMeetingList_SingleContactMultipleDates() {
 
 		// Valid params
 		Set<Contact> contacts = new HashSet<>();
@@ -222,6 +220,50 @@ public class TestContactManagerImplMeeting {
 		// 2nd item date should be oldest i.e. 2 days ago
 		resultDate = pastMeetings.get(1).getDate();
 		assertEquals(date2DaysAgo, resultDate);
+	}
+
+	@Test
+	public void getPastMeetingList_MultipleContactsMultipleDates() {
+
+		// Valid params
+		Set<Contact> contacts = new HashSet<>();
+		Contact validContact1 = getValidContact();
+		Contact validContact2 = getValidContact();
+		Contact validContact3 = getValidContact();
+		contacts.add(validContact1);
+		contacts.add(validContact2);
+		contacts.add(validContact3);
+		// Date - 1 day ago
+		Calendar date1DayAgo = Calendar.getInstance();
+		date1DayAgo.add(Calendar.DAY_OF_YEAR, -1);
+		// Date - 2 days ago
+		Calendar date2DaysAgo = Calendar.getInstance();
+		date2DaysAgo.add(Calendar.DAY_OF_YEAR, -2);
+		// Date - 3 days ago
+		Calendar date3DaysAgo = Calendar.getInstance();
+		date3DaysAgo.add(Calendar.DAY_OF_YEAR, -3);
+		//	
+		// Add in random date order
+		//
+//		System.out.println("Adding Past Meetings");
+		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
+		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
+		instance.addNewPastMeeting( contacts, date3DaysAgo, "");	
+		// Get the list for random contact
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact2);	
+		assertNotNull(pastMeetings);	
+		int expectedListSize = 3;
+		int resultListSize = pastMeetings.size();
+		assertEquals(expectedListSize, resultListSize);
+		// 1st item date should be newest i.e. 1 day ago
+		Calendar resultDate = pastMeetings.get(0).getDate();
+		assertEquals(date1DayAgo, resultDate);
+		// 2nd item date should be middle i.e. 2 days ago
+		resultDate = pastMeetings.get(1).getDate();
+		assertEquals(date2DaysAgo, resultDate);
+		// 3rd item date should be oldest i.e. 3 days ago
+		resultDate = pastMeetings.get(2).getDate();
+		assertEquals(date3DaysAgo, resultDate);
 	}
 
 	//	*********************************************************************************************
