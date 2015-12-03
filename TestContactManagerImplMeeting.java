@@ -203,13 +203,7 @@ public class TestContactManagerImplMeeting {
 	//	Test getFutureMeetingList by Contact
 	//	*********************************************************************************************
 
-//	@Test
-	public void getFutureMeetingListByContact_NoMeetings() {
 
-		List<Meeting> meetings = instance.getFutureMeetingList(Calendar.getInstance());
-		assertNotNull(meetings);
-		assertTrue(meetings.isEmpty());		
-	}
 
 	@Test(expected=NullPointerException.class)
 	public void getFutureMeetingListByContact_NullContact() {
@@ -224,6 +218,18 @@ public class TestContactManagerImplMeeting {
 
 		Contact unknownContact = new ContactImpl(-1);
 		List<Meeting> meetings = instance.getFutureMeetingList(unknownContact);	
+	}
+
+	@Test
+	public void getFutureMeetingListByContact_ValidContactNoMeetings() {
+
+		// Use a valid contact
+		Set<Contact> contacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		contacts.add(validContact);
+		List<Meeting> meetings = instance.getFutureMeetingList(validContact);	
+		assertNotNull(meetings);
+		assertTrue(meetings.isEmpty());		
 	}
 
 	//	*********************************************************************************************

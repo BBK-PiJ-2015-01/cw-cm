@@ -77,6 +77,9 @@ public class ContactManagerImpl implements ContactManager {
 		if (!contacts.contains(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
+		if (meetings.isEmpty()) {
+			return Collections.emptyList();
+		}
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 
