@@ -161,6 +161,9 @@ public class ContactManagerImpl implements ContactManager {
 		if (m == null)  {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
+		if (text == null ) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
 	throw new UnsupportedOperationException("Not implemented."); 
 	}
 
