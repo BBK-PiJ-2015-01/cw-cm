@@ -11,6 +11,7 @@ public class ContactManagerImpl implements ContactManager {
 	private final String INVALID_ID_MSG = "Supplied id was invalid";
 	private final String INVALID_DATE_MSG = "Supplied date was invalid";
 	private final String INVALID_PARAM_MSG = "Supplied param was invalid";
+	private final String ILLEGAL_STATE_MSG = "Supplied params we not valid for this operation";
 	private final TimeZone tz = new SimpleTimeZone(0, "GMT");
 
 
@@ -163,6 +164,9 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		if (text == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
+		}
+		if (isFutureDate(m.getDate())) {
+			throw new IllegalStateException(ILLEGAL_STATE_MSG);
 		}
 	throw new UnsupportedOperationException("Not implemented."); 
 	}
