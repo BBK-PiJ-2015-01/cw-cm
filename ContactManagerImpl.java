@@ -79,7 +79,16 @@ public class ContactManagerImpl implements ContactManager {
 		if (date == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		return Collections.emptyList();
+		if (meetings.isEmpty()) {
+			return Collections.emptyList();
+		}
+		final int dateEquality = 0;
+		List<Meeting> futureMeetings = new LinkedList<>();
+		// Filter on date
+		meetings.stream()
+			.filter((m) -> date.compareTo(m.getDate()) == dateEquality)
+			.forEach((m) -> futureMeetings.add(m));
+		return futureMeetings;
 	}
 
 	@Override
