@@ -156,6 +156,11 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void addMeetingNotes(int id, String text) {
+
+		Meeting m = getMeeting(id);
+		if (m == null)  {
+			throw new IllegalArgumentException(INVALID_PARAM_MSG);
+		}
 	throw new UnsupportedOperationException("Not implemented."); 
 	}
 
