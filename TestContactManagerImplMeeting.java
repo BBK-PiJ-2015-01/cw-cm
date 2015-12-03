@@ -526,6 +526,29 @@ public class TestContactManagerImplMeeting {
 		instance.addMeetingNotes(id, "");	
 	}
 
+	@Test
+	public void addMeetingNotes_ValidPastMeeting() {
+
+		// Use a valid contact
+		Set<Contact> contacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		contacts.add(validContact);
+		// Use a future date
+		Calendar date = getPastCalendar();
+		//
+		instance.addNewPastMeeting( contacts, date, "");
+		// Should only be one meeting
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);
+		int id = pastMeetings.get(0).getId();
+		//
+		String expectedNewNotes = "expectedNewNotes";			
+		instance.addMeetingNotes(id, expectedNewNotes);	
+		//		
+		PastMeeting resultPastMeeting = instance.getPastMeeting(id);
+		String resultNotes = resultPastMeeting.getNotes();
+		assertEquals(expectedNewNotes, resultNotes);
+	}
+
 	//	*********************************************************************************************
 	//	Utility methods
 	//	*********************************************************************************************

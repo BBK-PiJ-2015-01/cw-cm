@@ -48,7 +48,6 @@ public class ContactManagerImpl implements ContactManager {
 		if (isFutureDate(m.getDate())) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-
 		return cloneAsPastMeeting(m);
 	}
 
@@ -147,12 +146,10 @@ public class ContactManagerImpl implements ContactManager {
 		}
 		// TO DO: Replace with factory implementation
 		PastMeetingImpl m = new PastMeetingImpl(getNextMeetingId());
-//		System.out.println("Add meeting with id: " + m.getId());
 		m.setDate(date);
 		m.setContacts(contacts);
 		m.setNotes(text);
 		meetings.add(m);
-//		System.out.println("Meetings size: " + meetings.size());
 	}
 
 	@Override
@@ -168,7 +165,10 @@ public class ContactManagerImpl implements ContactManager {
 		if (isFutureDate(m.getDate())) {
 			throw new IllegalStateException(ILLEGAL_STATE_MSG);
 		}
-	throw new UnsupportedOperationException("Not implemented."); 
+		PastMeetingImpl pm =  cloneAsPastMeeting(m);
+		pm.setNotes(text);
+		meetings.remove(m);
+		meetings.add(pm);
 	}
 
 	@Override
@@ -245,12 +245,15 @@ public class ContactManagerImpl implements ContactManager {
 		return Calendar.getInstance().compareTo(date) > 0;
 	}
 
-	private PastMeeting cloneAsPastMeeting(Meeting m) {
+	private PastMeetingImpl cloneAsPastMeeting(Meeting m) {
 		// TO DO: Replace with factory implementation
 		// TO DO: Make defensive copy	
 		PastMeetingImpl pm = new PastMeetingImpl(m.getId());
 		pm.setDate(m.getDate());
 		pm.setContacts(m.getContacts());
+		if (m instanceof PastMeeting) {
+			pm.setNotes(((PastMeeting) m).getNotes());
+		}
 		return pm;
 	}
 }
