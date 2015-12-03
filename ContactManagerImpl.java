@@ -80,7 +80,12 @@ public class ContactManagerImpl implements ContactManager {
 		if (meetings.isEmpty()) {
 			return Collections.emptyList();
 		}
-	throw new UnsupportedOperationException("Not implemented.");
+		List<Meeting> futureMeetings = new LinkedList<>();
+		// Filter on contact
+		meetings.stream()
+			.filter((m) -> m.getContacts().contains(contact))
+			.forEach((m) -> futureMeetings.add(m));
+		return futureMeetings;
 	}
 
 	@Override
