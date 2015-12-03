@@ -85,6 +85,8 @@ public class ContactManagerImpl implements ContactManager {
 		meetings.stream()
 			.filter((m) -> m.getContacts().contains(contact))
 			.forEach((m) -> futureMeetings.add(m));
+		// Sort meetings on meeting date
+		Collections.sort(futureMeetings, (m1,m2) -> m1.getDate().compareTo(m2.getDate()));
 		return futureMeetings;
 	}
 
@@ -127,7 +129,7 @@ public class ContactManagerImpl implements ContactManager {
 			.forEach((m) -> pastMeetings.add(cloneAsPastMeeting(m)));
 
 		// Sort meetings on meeting date
-		Collections.sort(pastMeetings, (m1,m2) -> m2.getDate().compareTo(m1.getDate()));
+		Collections.sort(pastMeetings, (m1,m2) -> m1.getDate().compareTo(m2.getDate()));
 		return pastMeetings;
 	}
 

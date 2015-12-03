@@ -256,6 +256,49 @@ public class TestContactManagerImplMeeting {
 		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());
 	}
 
+	@Test
+	public void getFutureMeetingListByDate_ValidContactMultipleMeetingDates() {
+
+		// Use a valid contact
+		Set<Contact> expectedContacts = new HashSet<>();
+		Contact validContact = getValidContact();
+		expectedContacts.add(validContact);
+		// Date - 1 day ahead
+		Calendar date1DayAhead = Calendar.getInstance();
+		date1DayAhead.add(Calendar.DAY_OF_YEAR, 1);
+//		System.out.println("Day+1: " + date1DayAhead.get(Calendar.DAY_OF_YEAR));
+		// Date - 2 days ahead
+		Calendar date2DaysAhead = Calendar.getInstance();
+		date2DaysAhead.add(Calendar.DAY_OF_YEAR, 2);
+//		System.out.println("Day+2: " + date2DaysAhead.get(Calendar.DAY_OF_YEAR));
+		// Date - 3 days ahead
+		Calendar date3DaysAhead = Calendar.getInstance();
+		date3DaysAhead.add(Calendar.DAY_OF_YEAR, 3);
+//		System.out.println("Day+3: " + date3DaysAhead.get(Calendar.DAY_OF_YEAR));
+		// Add the meetings
+		instance.addFutureMeeting(expectedContacts, date3DaysAhead);	
+		instance.addFutureMeeting(expectedContacts, date1DayAhead);	
+		instance.addFutureMeeting(expectedContacts, date2DaysAhead);	
+		// Get the list
+		List<Meeting> meetings = instance.getFutureMeetingList(validContact);	
+		assertNotNull(meetings);
+		int expectedListSize = 3;
+		int resultListSize = meetings.size();
+		assertEquals(expectedListSize, resultListSize);
+		// 1st item date should be newest i.e. 1 day ahead
+		Calendar resultDate = meetings.get(0).getDate();
+//		System.out.println("Returned date 1: " + resultDate.get(Calendar.DAY_OF_YEAR));
+		assertEquals(date1DayAhead, resultDate);
+		// 2nd item date should be middle i.e. 2 days ahead
+		resultDate = meetings.get(1).getDate();
+//		System.out.println("Returned date 2: " + resultDate.get(Calendar.DAY_OF_YEAR));
+		assertEquals(date2DaysAhead, resultDate);
+		// 3rd item date should be latest i.e. 3 days ahead
+		resultDate = meetings.get(2).getDate();
+//		System.out.println("Returned date 3: " + resultDate.get(Calendar.DAY_OF_YEAR));
+		assertEquals(date3DaysAhead, resultDate);
+	}
+
 	//	*********************************************************************************************
 	//	Test addPastMeeting
 	//	*********************************************************************************************
@@ -357,12 +400,12 @@ public class TestContactManagerImplMeeting {
 		int expectedListSize = 2;
 		int resultListSize = pastMeetings.size();
 		assertEquals(expectedListSize, resultListSize);
-		// 1st item date should be newest i.e. 1 day ago
+		// 1st item date should be newest i.e. 2 days ago
 		Calendar resultDate = pastMeetings.get(0).getDate();
-		assertEquals(date1DayAgo, resultDate);
-		// 2nd item date should be oldest i.e. 2 days ago
-		resultDate = pastMeetings.get(1).getDate();
 		assertEquals(date2DaysAgo, resultDate);
+		// 2nd item date should be oldest i.e. 1 day ago 
+		resultDate = pastMeetings.get(1).getDate();
+		assertEquals(date1DayAgo, resultDate);
 	}
 
 	@Test
@@ -398,15 +441,15 @@ public class TestContactManagerImplMeeting {
 		int expectedListSize = 3;
 		int resultListSize = pastMeetings.size();
 		assertEquals(expectedListSize, resultListSize);
-		// 1st item date should be newest i.e. 1 day ago
+		// 1st item date should be oldest i.e. 3 days ago
 		Calendar resultDate = pastMeetings.get(0).getDate();
-		assertEquals(date1DayAgo, resultDate);
+		assertEquals(date3DaysAgo, resultDate);
 		// 2nd item date should be middle i.e. 2 days ago
 		resultDate = pastMeetings.get(1).getDate();
 		assertEquals(date2DaysAgo, resultDate);
-		// 3rd item date should be oldest i.e. 3 days ago
+		// 3rd item date should be newest i.e. 1 day ago
 		resultDate = pastMeetings.get(2).getDate();
-		assertEquals(date3DaysAgo, resultDate);
+		assertEquals(date1DayAgo, resultDate);
 	}
 
 	//	*********************************************************************************************
