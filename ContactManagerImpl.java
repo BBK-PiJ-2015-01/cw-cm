@@ -76,6 +76,9 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public List<Meeting> getFutureMeetingList(Calendar date) {
 
+		if (date == null ) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
 		return Collections.emptyList();
 	}
 
