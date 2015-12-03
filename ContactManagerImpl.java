@@ -67,6 +67,9 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public Meeting getMeeting(int id) {
 		
+		if (meetings.isEmpty()) {
+			return null;
+		}
 		for (Meeting meeting: meetings) {
 			if (meeting.getId() == id) {
 				// TO DO: Return copy, not original
@@ -89,12 +92,11 @@ public class ContactManagerImpl implements ContactManager {
 			return Collections.emptyList();
 		}
 		List<Meeting> futureMeetings = new LinkedList<>();
-		// Filter on contact
+		// Filter on contact, sort on date
 		meetings.stream()
 			.filter((m) -> m.getContacts().contains(contact))
+			.sorted((m1,m2) -> m1.getDate().compareTo(m2.getDate()))
 			.forEach((m) -> futureMeetings.add(m));
-		// Sort meetings on meeting date
-		Collections.sort(futureMeetings, (m1,m2) -> m1.getDate().compareTo(m2.getDate()));
 		return futureMeetings;
 	}
 
@@ -129,14 +131,12 @@ public class ContactManagerImpl implements ContactManager {
 			return Collections.emptyList();
 		}
 		List<PastMeeting> pastMeetings = new LinkedList<>();
-		// Filter on contact and date
+		// Filter on contact and date, sort on date
 		meetings.stream()
 			.filter((m) -> m.getContacts().contains(contact))
 			.filter((m) -> isPastDate(m.getDate()))
+			.sorted((m1,m2) -> m1.getDate().compareTo(m2.getDate()))
 			.forEach((m) -> pastMeetings.add(cloneAsPastMeeting(m)));
-
-		// Sort meetings on meeting date
-		Collections.sort(pastMeetings, (m1,m2) -> m1.getDate().compareTo(m2.getDate()));
 		return pastMeetings;
 	}
 
