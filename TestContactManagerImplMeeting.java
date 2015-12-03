@@ -92,6 +92,18 @@ public class TestContactManagerImplMeeting {
 		instance.getFutureMeeting(id);	
 	}
 
+	@Test
+	public void getFutureMeetingListById_ValidMeeting() {
+
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		int id = instance.addFutureMeeting( contacts, getFutureCalendar());	
+		FutureMeeting fm = instance.getFutureMeeting(id);	
+		assertNotNull(fm);
+		int resultId = fm.getId();
+		assertEquals(id, resultId);
+	}
+
 
 	//	*********************************************************************************************
 	//	Test getMeeting by id

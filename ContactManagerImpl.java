@@ -62,6 +62,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 	throw new UnsupportedOperationException("Not implemented.");
+//		return cloneAsFutureMeeting(m);
 	}
 
 	@Override
@@ -263,6 +264,15 @@ public class ContactManagerImpl implements ContactManager {
 			pm.setNotes(((PastMeeting) m).getNotes());
 		}
 		return pm;
+	}
+
+	private FutureMeeting cloneAsFutureMeeting(Meeting m) {
+		// TO DO: Replace with factory implementation
+		// TO DO: Make defensive copy	
+		FutureMeetingImpl fm = new FutureMeetingImpl(m.getId());
+		fm.setDate(m.getDate());
+		fm.setContacts(m.getContacts());
+		return fm;
 	}
 }
 
