@@ -198,7 +198,26 @@ public class TestContactManagerImplMeeting {
 		int resultListSize = meetings.size();
 		assertEquals(expectedListSize, resultListSize);
 	}
-	
+
+	//	*********************************************************************************************
+	//	Test getFutureMeetingList by Contact
+	//	*********************************************************************************************
+
+//	@Test
+	public void getFutureMeetingListByContact_NoMeetings() {
+
+		List<Meeting> meetings = instance.getFutureMeetingList(Calendar.getInstance());
+		assertNotNull(meetings);
+		assertTrue(meetings.isEmpty());		
+	}
+
+	@Test(expected=NullPointerException.class)
+	public void getFutureMeetingListByContact_NullContact() {
+
+		Contact nullContact = null;
+		List<Meeting> meetings = instance.getFutureMeetingList(nullContact);	
+	}
+
 	//	*********************************************************************************************
 	//	Test addPastMeeting
 	//	*********************************************************************************************
