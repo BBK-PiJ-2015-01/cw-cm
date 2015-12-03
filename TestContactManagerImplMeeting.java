@@ -266,15 +266,12 @@ public class TestContactManagerImplMeeting {
 		// Date - 1 day ahead
 		Calendar date1DayAhead = Calendar.getInstance();
 		date1DayAhead.add(Calendar.DAY_OF_YEAR, 1);
-//		System.out.println("Day+1: " + date1DayAhead.get(Calendar.DAY_OF_YEAR));
 		// Date - 2 days ahead
 		Calendar date2DaysAhead = Calendar.getInstance();
 		date2DaysAhead.add(Calendar.DAY_OF_YEAR, 2);
-//		System.out.println("Day+2: " + date2DaysAhead.get(Calendar.DAY_OF_YEAR));
 		// Date - 3 days ahead
 		Calendar date3DaysAhead = Calendar.getInstance();
 		date3DaysAhead.add(Calendar.DAY_OF_YEAR, 3);
-//		System.out.println("Day+3: " + date3DaysAhead.get(Calendar.DAY_OF_YEAR));
 		// Add the meetings
 		instance.addFutureMeeting(expectedContacts, date3DaysAhead);	
 		instance.addFutureMeeting(expectedContacts, date1DayAhead);	
@@ -287,15 +284,12 @@ public class TestContactManagerImplMeeting {
 		assertEquals(expectedListSize, resultListSize);
 		// 1st item date should be newest i.e. 1 day ahead
 		Calendar resultDate = meetings.get(0).getDate();
-//		System.out.println("Returned date 1: " + resultDate.get(Calendar.DAY_OF_YEAR));
 		assertEquals(date1DayAhead, resultDate);
 		// 2nd item date should be middle i.e. 2 days ahead
 		resultDate = meetings.get(1).getDate();
-//		System.out.println("Returned date 2: " + resultDate.get(Calendar.DAY_OF_YEAR));
 		assertEquals(date2DaysAhead, resultDate);
 		// 3rd item date should be latest i.e. 3 days ahead
 		resultDate = meetings.get(2).getDate();
-//		System.out.println("Returned date 3: " + resultDate.get(Calendar.DAY_OF_YEAR));
 		assertEquals(date3DaysAhead, resultDate);
 	}
 
@@ -431,10 +425,9 @@ public class TestContactManagerImplMeeting {
 		//	
 		// Add in random date order
 		//
-//		System.out.println("Adding Past Meetings");
-		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
-		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
 		instance.addNewPastMeeting( contacts, date3DaysAgo, "");	
+		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
+		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
 		// Get the list for random contact
 		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact2);	
 		assertNotNull(pastMeetings);	
@@ -493,6 +486,16 @@ public class TestContactManagerImplMeeting {
 		// Get the meeting by id
 		PastMeeting resultMeeting = instance.getPastMeeting(validId);
 		assertEquals(expectedMeeting, resultMeeting);
+	}
+
+	//	*********************************************************************************************
+	//	Add meeting notes
+	//	*********************************************************************************************
+
+	@Test(expected=IllegalArgumentException.class)
+	public void addMeetingNotes_NonexistentMeeting() {
+
+		instance.addMeetingNotes(-1, null);	
 	}
 
 	//	*********************************************************************************************

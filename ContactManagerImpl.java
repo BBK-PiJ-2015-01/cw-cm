@@ -121,7 +121,6 @@ public class ContactManagerImpl implements ContactManager {
 			return Collections.emptyList();
 		}
 		List<PastMeeting> pastMeetings = new LinkedList<>();
-//		System.out.println("Search through Meetings size: " + meetings.size());
 		// Filter on contact and date
 		meetings.stream()
 			.filter((m) -> m.getContacts().contains(contact))
