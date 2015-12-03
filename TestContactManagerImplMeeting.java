@@ -69,19 +69,29 @@ public class TestContactManagerImplMeeting {
 		Calendar resultDate = meeting.getDate();
 		assertEquals(expectedDate, resultDate);
 	}
-
 	//	*********************************************************************************************
-	//	Test getFutureMeeting by id
+	//	Test geFutureMeeting by id
 	//	*********************************************************************************************
 	@Test
 	public void getFutureMeetingListById_EmptyMeetings() {
+
+		Meeting meeting = instance.getFutureMeeting(-1);
+		assertNull(meeting);	
+	}
+
+
+	//	*********************************************************************************************
+	//	Test getMeeting by id
+	//	*********************************************************************************************
+	@Test
+	public void getMeetingListById_EmptyMeetings() {
 
 		Meeting meeting = instance.getMeeting(-1);
 		assertNull(meeting);	
 	}
 
 	@Test
-	public void getFutureMeetingListById_UnknownMeetingId() {
+	public void getMeetingListById_UnknownMeetingId() {
 
 		// Use a valid contact
 		Set<Contact> contacts = new HashSet<>();

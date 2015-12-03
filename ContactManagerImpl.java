@@ -3,7 +3,7 @@ import java.util.*;
 
 /**
  *
- * @author user0001
+ * @author Simon Baird
  */
 public class ContactManagerImpl implements ContactManager {
 
