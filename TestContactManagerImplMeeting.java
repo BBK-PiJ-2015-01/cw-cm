@@ -218,6 +218,14 @@ public class TestContactManagerImplMeeting {
 		List<Meeting> meetings = instance.getFutureMeetingList(nullContact);	
 	}
 
+
+	@Test(expected=IllegalArgumentException.class)
+	public void getFutureMeetingListByContact_UnknownContact() {
+
+		Contact unknownContact = new ContactImpl(-1);
+		List<Meeting> meetings = instance.getFutureMeetingList(unknownContact);	
+	}
+
 	//	*********************************************************************************************
 	//	Test addPastMeeting
 	//	*********************************************************************************************
