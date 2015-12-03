@@ -53,6 +53,11 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public FutureMeeting getFutureMeeting(int id) {
+
+		Meeting m = getMeeting(id);
+		if (m == null) {
+			return null;
+		}
 	throw new UnsupportedOperationException("Not implemented.");
 	}
 
