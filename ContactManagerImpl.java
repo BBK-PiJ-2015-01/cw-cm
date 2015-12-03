@@ -79,7 +79,7 @@ public class ContactManagerImpl implements ContactManager {
 		if (date == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (meetings.isEmpty()) {
+		if (meetings.isEmpty() || isPastDate(date)) {
 			return Collections.emptyList();
 		}
 		final int dateEquality = 0;

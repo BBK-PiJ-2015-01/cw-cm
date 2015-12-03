@@ -122,13 +122,13 @@ public class TestContactManagerImplMeeting {
 		// Use a future date
 		Calendar expectedDate = getFutureCalendar();
 		// Add the meeting
-		int meetingId = instance.addFutureMeeting(expectedContacts, expectedDate);	
+		instance.addFutureMeeting(expectedContacts, expectedDate);	
 		// Get the list
 		List<Meeting> meetings = instance.getFutureMeetingList(expectedDate);	
 		assertNotNull(meetings);
-		int exectedListSize = 1;
+		int expectedListSize = 1;
 		int resultListSize = meetings.size();
-		assertEquals(exectedListSize, resultListSize);
+		assertEquals(expectedListSize, resultListSize);
 		// Get the only item
 		Meeting resultMeeting = meetings.get(0);	
 		Calendar resultDate = resultMeeting.getDate();
@@ -136,8 +136,69 @@ public class TestContactManagerImplMeeting {
 		assertEquals(expectedDate, resultDate);
 		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());
 	}
-	
 
+	@Test
+	public void getFutureMeetingListByDate_MultipleMeetings() {
+
+		// Use a valid contact
+		Set<Contact> expectedContacts = new HashSet<>();
+		expectedContacts.add(getValidContact());
+		// Use a future date
+		Calendar expectedDate = getFutureCalendar();
+		int expectedListSize = 5;
+		int[] allValidIds = new int[expectedListSize];
+		for (int i = 0; i < expectedListSize; i++) {
+			allValidIds[i] = instance.addFutureMeeting(expectedContacts, expectedDate);
+		}
+		// Add some meetings for another future date
+		Calendar anotherFutureDate = getFutureCalendar();
+		anotherFutureDate.add(Calendar.DAY_OF_YEAR, 3);
+		for (int i = 0; i < expectedListSize; i++) {
+			instance.addFutureMeeting(expectedContacts, anotherFutureDate);
+		}
+		// Get the list. 2x expectedListSize meetings have been added
+		// Only 1x expectedListSize meetings should be returned for expectedDate
+		List<Meeting> meetings = instance.getFutureMeetingList(expectedDate);	
+		assertNotNull(meetings);
+		int resultListSize = meetings.size();
+		assertEquals(expectedListSize, resultListSize);
+		// Ensure all added meeting ids are found
+		for (int j = 0; j < expectedListSize; j++) {
+			boolean found = false;
+			for (Meeting m : meetings) {
+				if (m.getId() == allValidIds[j]) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				fail("Id not found: " + j);
+			}
+		}
+	}
+
+	@Test
+	public void getFutureMeetingListByDate_NoMatchingMeetings() {
+
+		// Use a valid contact
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(getValidContact());
+		// Use some future date
+		Calendar someFutureDate = getFutureCalendar();
+		someFutureDate.add(Calendar.DAY_OF_YEAR, 3);
+		int listSize = 5;
+		for (int i = 0; i < listSize; i++) {
+			instance.addFutureMeeting(contacts, someFutureDate);
+		}
+		// Use a different future date. No meetings should be returned
+		Calendar expectedDate = getFutureCalendar();
+		int expectedListSize = 0;
+		List<Meeting> meetings = instance.getFutureMeetingList(expectedDate);	
+		assertNotNull(meetings);
+		int resultListSize = meetings.size();
+		assertEquals(expectedListSize, resultListSize);
+	}
+	
 	//	*********************************************************************************************
 	//	Test addPastMeeting
 	//	*********************************************************************************************
