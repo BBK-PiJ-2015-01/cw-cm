@@ -60,16 +60,16 @@ public class TestDefaultModelMeeting {
 	@Test
 	public void getContacts_NotSet() {
 		
-		Set<Contact> resultSet = instance.getContacts();
+		Set<ModelContact> resultSet = instance.getContacts();
 		assertNull(resultSet);
 	}
 
 	@Test
 	public void setContacts() {
 		
-		Set<Contact> expectedContacts = Collections.emptySet();
+		Set<ModelContact> expectedContacts = Collections.emptySet();
 		instance.setContacts(expectedContacts);
-		Set<Contact> resultContacts = instance.getContacts();
+		Set<ModelContact> resultContacts = instance.getContacts();
 		assertEquals(expectedContacts, resultContacts);
 	}
 
@@ -87,7 +87,7 @@ public class TestDefaultModelMeeting {
 		instance.setDate(Calendar.getInstance());
 		instance.setNotes("notes");
 
-		Set<Contact> contacts = new HashSet<>();
+		Set<ModelContact> contacts = new HashSet<>();
 		ModelContact instanceContact = new DefaultModelContact(-1);
 		instance.setContacts(contacts);
 		// clone

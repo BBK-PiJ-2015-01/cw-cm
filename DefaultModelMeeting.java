@@ -1,5 +1,4 @@
-import java.util.Calendar;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -10,7 +9,7 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 	private final int id;
 	private Calendar date;
 	private String notes;
-	private Set<Contact> contacts;
+	private Set<ModelContact> contacts;
 
 	public DefaultModelMeeting(int id) {
 
@@ -36,13 +35,13 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 	}
 
 	@Override
-	public Set<Contact> getContacts() {
+	public Set<ModelContact> getContacts() {
 
 		return contacts;
 	}
 
 	@Override
-	public void setContacts(Set<Contact> contacts) {
+	public void setContacts(Set<ModelContact> contacts) {
 		
 		this.contacts = contacts;
 	}
@@ -62,6 +61,16 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 	public DefaultModelMeeting clone() {
 		
 		DefaultModelMeeting clone = new DefaultModelMeeting(id);
+		if (date != null) {
+			clone.date = (Calendar)date.clone();
+		}
+		if (notes != null) {
+			clone.notes = new String(notes);
+		}
+		if (contacts != null) {
+			clone.contacts = new HashSet<ModelContact>();
+			contacts.stream().forEach((c) -> clone.contacts.add(c.clone()));
+		}
 		return clone;		
 	}
 }

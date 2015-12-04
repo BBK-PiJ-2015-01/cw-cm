@@ -28,14 +28,14 @@ public interface ModelMeeting {
      *     
      * @return the set of contacts
      */
-    Set<Contact> getContacts();
+    Set<ModelContact> getContacts();
 
     /**
      * Set the details of people that attended the meeting.
      *     
      * @param contacts the set of people attending the meeting
      */
-    void setContacts(Set<Contact> contacts);
+    void setContacts(Set<ModelContact> contacts);
 
     /**
      * Returns the notes of the meeting.

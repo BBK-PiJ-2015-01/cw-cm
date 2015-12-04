@@ -1,38 +1,45 @@
 public interface ModelContact {
 
-    /**
-     * Returns the ID of the contact.
-     *
-     * @return the ID of the contact.
-     */
-    int getId();
+	/**
+	* Returns the ID of the contact.
+	*
+	* @return the ID of the contact.
+	*/
+	int getId();
 
-    /**
-     * Returns the name of the contact.
-     *
-     * @return the name of the contact.
-     */
-    String getName();
+	/**
+	* Returns the name of the contact.
+	*
+	* @return the name of the contact.
+	*/
+	String getName();
 
-    /**
-     * Set the name of the contact.
-     *
-     * @param name Contact name
-     */
-    void setName(String name);
+	/**
+	* Set the name of the contact.
+	*
+	* @param name Contact name
+	*/
+	void setName(String name);
 
-    /**
-     * Returns the contact notes.
-     *
-     *
-     * @return a string with notes about the contact
-     */
-    String getNotes();
+	/**
+	* Returns the contact notes.
+	*
+	*
+	* @return a string with notes about the contact
+	*/
+	String getNotes();
 
-    /**
-     * Add notes about the contact.
-     *
-     * @param note the notes to be added
-     */
-    void setNotes(String note);
+	/**
+	* Add notes about the contact.
+	*
+	* @param note the notes to be added
+	*/
+	void setNotes(String note);
+
+	/**
+	* Performs a deep clone of the contact.
+	*
+	* @return a new instance of DefaultModelContact
+	*/
+	DefaultModelContact clone();
 }
