@@ -51,6 +51,7 @@ public class TestSerializableContactManagerModel {
 		expectedContact.addNotes("notes");
 		int resultId = instance.addContact(expectedContact);		
 		ModelContact resultContact = instance.getContact(resultId);
+		assertFalse(expectedContact == resultContact);
 		assertEquals(expectedContact.getName(), resultContact.getName());	
 		assertEquals(expectedContact.getNotes(), resultContact.getNotes());					
 	}
@@ -62,11 +63,11 @@ public class TestSerializableContactManagerModel {
 		expectedContact.setName("name");
 		expectedContact.addNotes("notes");
 		int resultId = instance.addContact(expectedContact);		
-		ModelContact resultContact = instance.getContact(resultId);
 		
 		expectedContact.setName("Changed name");
 		expectedContact.addNotes("Changed notes");
 
+		ModelContact resultContact = instance.getContact(resultId);
 		assertNotEquals(expectedContact.getName(), resultContact.getName());	
 		assertNotEquals(expectedContact.getNotes(), resultContact.getNotes());						
 	}
