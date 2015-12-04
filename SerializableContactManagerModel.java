@@ -80,6 +80,9 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 	@Override
 	public int addMeeting(ModelMeeting meeting) {
+		if (meeting == null) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
 	throw new UnsupportedOperationException("Unsupported operation."); 
 	}
 
