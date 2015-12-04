@@ -29,7 +29,8 @@ public class DefaultModelMeeting implements ModelMeeting{
 
 	@Override
 	public void setDate(Calendar date) {
-	throw new UnsupportedOperationException("Unsupported operation.");
+
+		this.date = date;
 	}
 
 	@Override

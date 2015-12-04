@@ -40,6 +40,13 @@ public class TestDefaultModelMeeting {
 		assertEquals(expectedDate, resultDate);
 	}
 
+	@Test
+	public void getNotes_NotSet() {
+		
+		String resultNotes = instance.getNotes();
+		assertNull(resultNotes);
+
+	}
 	protected ModelMeeting getInstance(int id) {
 
 		return new DefaultModelMeeting(id);
