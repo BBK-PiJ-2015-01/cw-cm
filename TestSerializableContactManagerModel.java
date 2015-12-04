@@ -173,6 +173,11 @@ public class TestSerializableContactManagerModel {
 		instance.removeContact(null);				
 	}
 
+	@Test(expected=IllegalStateException.class)
+	public void removeContact_NotFound() {
+
+		instance.removeContact(getContactInstance());				
+	}
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
