@@ -89,7 +89,9 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 	@Override
 	public ModelMeeting getMeeting(int id) {
-	throw new UnsupportedOperationException("Unsupported operation."); 
+		lazyInstantiateMeetings();
+		Optional<ModelMeeting> result =  meetings.stream().filter((m) -> m.getId() == id).findFirst();
+		return result.isPresent() ? result.get().clone() : null;
 	}
 
 	@Override
