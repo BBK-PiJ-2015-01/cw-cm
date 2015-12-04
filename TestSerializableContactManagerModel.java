@@ -316,7 +316,32 @@ public class TestSerializableContactManagerModel {
 		assertNotNull(meetings);							
 	}
 
+	@Test
+	public void getMeetings_PopulatedSet() {
 
+		instance.addMeeting(getMeetingInstance());
+		Set<ModelMeeting> resultMeetings = instance.getMeetings();
+
+		Set<ModelMeeting> meetings = instance.getMeetings();	
+		int expectedMeetingsSize = 1;
+		int resultMeetingsSize	= resultMeetings.size();
+		assertEquals(expectedMeetingsSize, resultMeetingsSize);			
+	}
+
+	@Test
+	public void getMeetings_ImmutabilityTest() {
+
+		ModelMeeting expectedMeeting = getMeetingInstance();
+		expectedMeeting.setDate(Calendar.getInstance());
+		expectedMeeting.addNotes("notes");
+		int resultId = instance.addMeeting(expectedMeeting);
+		Set<ModelMeeting> resultMeetings = instance.getMeetings();
+
+		Set<ModelMeeting> meetings = instance.getMeetings();	
+		ModelMeeting setMeeting = (ModelMeeting) meetings.stream().findFirst().get();
+		ModelMeeting getMeeting = instance.getMeeting(resultId);
+		assertNotSame(setMeeting , getMeeting);		
+	}
 	// *****************************************************************************************************************	
 	// Update Meeting tests
 	// *****************************************************************************************************************	
