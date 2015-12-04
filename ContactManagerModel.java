@@ -29,6 +29,7 @@ public interface ContactManagerModel {
      * @param contact to add
      * @return id of newly created Contact
      * @throws java.lang.NullPointerException - if the contact is null
+     * @throws java.lang.IllegalStateException - if the contact already exists in the model
      */
     int addContact(Contact contact);
 
@@ -44,6 +45,7 @@ public interface ContactManagerModel {
      * Remove on instance of a Contact from the model
      *
      * @param contact Contact to remove
+     * @throws java.lang.IllegalStateException - if the contact does not exists in the model
      */
     void removeContact(Contact contact);
 
@@ -51,6 +53,8 @@ public interface ContactManagerModel {
      * Replace the instance of the Contact in the model
      *
      * @param contact amended Contact to store in the model
+     * @throws java.lang.NullPointerException - if the contact is null
+     * @throws java.lang.IllegalStateException - if the contact does not exists in the model
      */
     void updateContact(Contact contact);
 
@@ -60,6 +64,7 @@ public interface ContactManagerModel {
      * @param meeting to add
      * @return id of newly created Meeting
      * @throws java.lang.NullPointerException - if meeting is null
+     * @throws java.lang.IllegalStateException - if the meeting already exists in the model
      */
     int addMeeting(Meeting meeting);
 
@@ -75,6 +80,8 @@ public interface ContactManagerModel {
      * Replace the instance of the Meeting in the model
      *
      * @param meeting amended Meeting to store in the model
+     * @throws java.lang.NullPointerException - if the meeting is null
+     * @throws java.lang.IllegalStateException - if the meeting does not exists in the model
      */
     void removeMeeting(Meeting meeting);
 
@@ -82,6 +89,8 @@ public interface ContactManagerModel {
      * Replace the instance of the Meeting in the model
      *
      * @param meeting amended Meeting to store in the model
+     * @throws java.lang.NullPointerException - if the meeting is null
+     * @throws java.lang.IllegalStateException - if the meeting does not exists in the model
      */
     void updateMeeting(Meeting meeting);
 }

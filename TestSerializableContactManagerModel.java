@@ -15,7 +15,9 @@ public class TestSerializableContactManagerModel {
 	}
 	
 	@Test
-	public void standardMethodTest() {
+	public void addMeeting_Null() {
+
+		
 		
 	}
 
