@@ -8,6 +8,7 @@ import java.util.Set;
 public class DefaultModelMeeting implements ModelMeeting{
 
 	private final int id;
+	private Calendar date;
 
 	public DefaultModelMeeting(int id) {
 
@@ -22,7 +23,8 @@ public class DefaultModelMeeting implements ModelMeeting{
 
 	@Override
 	public Calendar getDate() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+
+		return date;
 	}
 
 	@Override
