@@ -115,7 +115,8 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 
 		int hash = 2047;
 		hash = 113 * hash + id;
-		return hash;
+//		return hash;
+		return id;
 	}
 }
 

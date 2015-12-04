@@ -337,6 +337,7 @@ public class TestSerializableContactManagerModel {
 		assertEquals(intialMeeting.getNotes(), resultMeeting.getNotes());
 		assertNotSame(intialMeeting.getNotes() , resultMeeting.getNotes());			
 	}
+
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
