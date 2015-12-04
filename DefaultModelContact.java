@@ -34,8 +34,9 @@ public class DefaultModelContact implements ModelContact {
 	}
 
 	@Override
-	public void addNotes(String note) {
-	throw new UnsupportedOperationException("Unsupported operation.");
+	public void addNotes(String notes) {
+
+		this.notes = notes;
 	}
     
 }
