@@ -14,10 +14,10 @@ public class TestSerializableContactManagerModel {
 		instance = getInstance();
 	}
 	
-	@Test
-	public void addMeeting_Null() {
+	@Test(expected=NullPointerException.class)
+	public void addContact_Null() {
 
-		
+		instance.addContact(null);
 		
 	}
 
