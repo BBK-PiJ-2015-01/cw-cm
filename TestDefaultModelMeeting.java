@@ -31,6 +31,15 @@ public class TestDefaultModelMeeting {
 		assertNull(resultDate);
 	}
 
+	@Test
+	public void setDate() {
+		
+		Calendar expectedDate = Calendar.getInstance();
+		instance.setDate(expectedDate);
+		Calendar resultDate = instance.getDate();
+		assertEquals(expectedDate, resultDate);
+	}
+
 	protected ModelMeeting getInstance(int id) {
 
 		return new DefaultModelMeeting(id);
