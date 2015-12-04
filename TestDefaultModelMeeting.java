@@ -24,6 +24,13 @@ public class TestDefaultModelMeeting {
 		assertEquals(defaultId, resultId);
 	}
 
+	@Test
+	public void getDate_NotSet() {
+		
+		Calendar resultDate = instance.getDate();
+		assertNull(resultDate);
+	}
+
 	protected ModelMeeting getInstance(int id) {
 
 		return new DefaultModelMeeting(id);
