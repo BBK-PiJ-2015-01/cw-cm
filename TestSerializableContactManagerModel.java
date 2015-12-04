@@ -215,6 +215,13 @@ public class TestSerializableContactManagerModel {
 		assertNull(meeting);				
 	}
 
+	@Test
+	public void getMeeting_Exists() {
+
+		int resultId = instance.addMeeting(getMeetingInstance());		
+		ModelMeeting meeting = instance.getMeeting(resultId);
+		assertNotNull(meeting);				
+	}
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
