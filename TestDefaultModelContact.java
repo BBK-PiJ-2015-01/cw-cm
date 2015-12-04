@@ -38,6 +38,13 @@ public class TestDefaultModelContact {
 		assertEquals(expectedName, resultName);
 	}
 
+	@Test
+	public void getNotes_NotSet() {
+
+		String resultNotes = instance.getNotes();
+		assertNull(resultNotes);
+	}
+
 	protected int generateDefaultId() {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
