@@ -57,6 +57,12 @@ public class TestDefaultModelMeeting {
 		assertEquals(expectedNotes, resultNotes);
 	}
 
+	@Test
+	public void getContacts_NotSet() {
+		
+		Set<Contact> resultSet = instance.getContacts();
+		assertNull(resultSet);
+	}
 
 	protected ModelMeeting getInstance(int id) {
 
