@@ -34,5 +34,5 @@ public interface ModelContact {
      *
      * @param note the notes to be added
      */
-    void addNotes(String note);
+    void setNotes(String note);
 }

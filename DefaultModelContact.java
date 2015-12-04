@@ -34,14 +34,21 @@ public class DefaultModelContact implements ModelContact, Cloneable {
 	}
 
 	@Override
-	public void addNotes(String notes) {
+	public void setNotes(String notes) {
 
 		this.notes = notes;
 	}
     
 	public DefaultModelContact clone() {
 
-		return new DefaultModelContact(id);
+		DefaultModelContact clone = new DefaultModelContact(id);
+		if (name != null) {
+			clone.name = new String(name);
+		}
+		if (notes != null) {
+			clone.notes = new String(notes);
+		}
+		return clone;
 	}
 }
 
