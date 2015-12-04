@@ -243,6 +243,32 @@ public class TestSerializableContactManagerModel {
 		assertEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
 		assertEquals(expectedMeeting.getContacts(), resultMeeting.getContacts());				
 	}
+
+	@Test
+	public void getMeeting_CheckImmutableUpdatesOnExpected() {
+
+		ModelMeeting expectedMeeting = getMeetingInstance();
+		expectedMeeting.setDate(Calendar.getInstance());
+		expectedMeeting.addNotes("notes");
+
+		Set<Contact> expectedContacts = new HashSet<>();
+		int contactId = instance.addContact(getContactInstance());
+		Contact meetingContact = instance.getContact(contactId);	
+		expectedContacts.add(meetingContact);
+		expectedMeeting.setContacts(expectedContacts);
+
+		int resultId = instance.addMeeting(expectedMeeting);	
+		
+		expectedMeeting.setDate(Calendar.getInstance());
+		expectedMeeting.addNotes("Changed notes");
+		expectedMeeting.getContacts().add(getContactInstance());
+
+		ModelMeeting resultMeeting = instance.getMeeting(resultId);
+		assertNotEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
+		assertNotEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
+		assertNotEquals(expectedMeeting.getContacts(), resultMeeting.getContacts());								
+	}
+
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
