@@ -312,6 +312,12 @@ public class TestSerializableContactManagerModel {
 
 		instance.updateMeeting(null);				
 	}
+
+	@Test(expected=IllegalStateException.class)
+	public void updateMeeting_NotFound() {
+
+		instance.updateMeeting(getMeetingInstance());				
+	}
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
