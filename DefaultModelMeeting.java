@@ -60,7 +60,9 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 	}
 
 	public DefaultModelMeeting clone() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+		
+		DefaultModelMeeting clone = new DefaultModelMeeting(id);
+		return clone;		
 	}
 }
 
