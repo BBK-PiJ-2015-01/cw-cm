@@ -22,6 +22,13 @@ public class TestDefaultModelContact {
 		assertEquals(defaultId, resultId);
 	}
 
+	@Test
+	public void getName_NotSet() {
+
+		String resultName = instance.getName();
+		assertNull(resultName);
+	}
+
 	protected int generateDefaultId() {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
