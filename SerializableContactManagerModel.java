@@ -12,7 +12,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	private Set<ModelContact> contacts;
 
 	@Override
-	public Set<? extends ModelContact> getContacts() {
+	public Set<ModelContact> getContacts() {
 	throw new UnsupportedOperationException("Unsupported operation."); 
 	}
 

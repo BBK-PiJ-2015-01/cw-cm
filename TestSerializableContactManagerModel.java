@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.*;
 
 //
 //	Don't forget org.junit.runner.JUnitCore !
@@ -14,6 +15,9 @@ public class TestSerializableContactManagerModel {
 		instance = getInstance();
 	}
 	
+	// *****************************************************************************************************************	
+	// Add Contact and Get Contact tests
+	// *****************************************************************************************************************	
 	@Test(expected=NullPointerException.class)
 	public void addContact_Null() {
 
@@ -87,6 +91,18 @@ public class TestSerializableContactManagerModel {
 		assertNotEquals(expectedContact.getName(), resultContact.getName());	
 		assertNotEquals(expectedContact.getNotes(), resultContact.getNotes());								
 	}
+
+	// *****************************************************************************************************************	
+	// Get Contacts tests
+	// *****************************************************************************************************************	
+
+	@Test
+	public void getContacts_EmptySet() {
+
+		Set<ModelContact> contacts = instance.getContacts();
+		assertNotNull(contacts);							
+	}
+
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();
