@@ -201,6 +201,13 @@ public class TestSerializableContactManagerModel {
 		instance.addMeeting(null);		
 	}
 
+	@Test
+	public void addMeeting_NotNull() {
+
+		int resultId = instance.addMeeting(getMeetingInstance());
+		assertTrue(resultId > 0);		
+	}
+
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
@@ -212,6 +219,11 @@ public class TestSerializableContactManagerModel {
 	protected ModelContact getContactInstance() {
 
 		return new DefaultModelContact(-1);
+	}
+
+	protected ModelMeeting getMeetingInstance() {
+
+		return new DefaultModelMeeting(-1);
 	}
 }
 
