@@ -31,7 +31,7 @@ public interface ContactManagerModel {
      * @return id of newly created Contact
      * @throws java.lang.NullPointerException - if the contact is null
      */
-    int addContact(Contact contact);
+    int addContact(ModelContact contact);
 
     /**
      * Get an instance of a contact by it's unique identifier
@@ -39,7 +39,7 @@ public interface ContactManagerModel {
      * @param id unique Contact identifier
      * @return Contact or null if not found
      */
-    Contact getContact(int id);
+    ModelContact getContact(int id);
 
     /**
      * Remove on instance of a Contact from the model
@@ -47,7 +47,7 @@ public interface ContactManagerModel {
      * @param contact Contact to remove
      * @throws java.lang.IllegalStateException - if the contact does not exists in the model
      */
-    void removeContact(Contact contact);
+    void removeContact(ModelContact contact);
 
     /**
      * Replace the instance of the Contact in the model
@@ -56,7 +56,7 @@ public interface ContactManagerModel {
      * @throws java.lang.NullPointerException - if the contact is null
      * @throws java.lang.IllegalStateException - if the contact does not exists in the model
      */
-    void updateContact(Contact contact);
+    void updateContact(ModelContact contact);
 
     /**
      * Add a meeting to the model
@@ -66,7 +66,7 @@ public interface ContactManagerModel {
      * @throws java.lang.NullPointerException - if meeting is null
      * @throws java.lang.IllegalStateException - if the meeting already exists in the model
      */
-    int addMeeting(Meeting meeting);
+    int addMeeting(ModelMeeting meeting);
 
     /**
      * Get an instance of a Meeting by it's unique identifier
@@ -74,7 +74,7 @@ public interface ContactManagerModel {
      * @param id unique Meeting identifier
      * @return Meeting or null if not found
      */
-    Contact getMeeting(int id);
+    ModelMeeting getMeeting(int id);
 
     /**
      * Replace the instance of the Meeting in the model
@@ -83,7 +83,7 @@ public interface ContactManagerModel {
      * @throws java.lang.NullPointerException - if the meeting is null
      * @throws java.lang.IllegalStateException - if the meeting does not exists in the model
      */
-    void removeMeeting(Meeting meeting);
+    void removeMeeting(ModelMeeting meeting);
 
     /**
      * Replace the instance of the Meeting in the model
@@ -92,6 +92,6 @@ public interface ContactManagerModel {
      * @throws java.lang.NullPointerException - if the meeting is null
      * @throws java.lang.IllegalStateException - if the meeting does not exists in the model
      */
-    void updateMeeting(Meeting meeting);
+    void updateMeeting(ModelMeeting meeting);
 }
 
