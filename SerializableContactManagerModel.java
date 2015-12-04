@@ -10,6 +10,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	private static final String PARAM_NOT_FOUND_MSG = "The supplied argument does not exist in the model";
 
 	private int nextContactId;
+	private int nextMeetingId;
 	private Set<ModelContact> contacts;
 	private Set<ModelMeeting> meetings;
 
@@ -84,7 +85,15 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 		if (meeting == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		return 1;
+		lazyInstantiateMeetings();
+
+		ModelMeeting newMeeting = getNewMeetingInstance();
+		if (meetings.contains(newMeeting)) {
+			throw new IllegalStateException("Meeting Identity error encountered");
+		}
+		populateModelMeetingFromModelMeeting(newMeeting, meeting);
+		meetings.add(newMeeting);
+		return newMeeting.getId();
 	}
 
 	@Override
@@ -104,16 +113,31 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	throw new UnsupportedOperationException("Unsupported operation."); 
 	}
 
+	//	*****************************************************************************************************************************		
+	//	Utility methods
+	//	*****************************************************************************************************************************		
 	private ModelContact getNewContactInstance() {
 		
 		return new DefaultModelContact(++nextContactId);
 	}
 
+	private ModelMeeting getNewMeetingInstance() {
+		
+		return new DefaultModelMeeting(++nextMeetingId);
+	}
 	private void populateModelContactFromModelContact(ModelContact target, ModelContact source) {
 	
 		ModelContact clonedSource = source.clone();
 		target.setName(clonedSource.getName());
 		target.addNotes(clonedSource.getNotes());		
+	}
+
+	private void populateModelMeetingFromModelMeeting(ModelMeeting target, ModelMeeting source) {
+	
+		ModelMeeting clonedSource = source.clone();
+		target.setDate(clonedSource.getDate());
+		target.addNotes(clonedSource.getNotes());
+		target.setContacts(clonedSource.getContacts());		
 	}
 
 	private void lazyInstantiateContacts()  {
