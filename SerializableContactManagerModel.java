@@ -15,7 +15,9 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	public Set<ModelContact> getContacts() {
 
 		lazyInstantiateContacts();
-		return contacts;
+		Set<ModelContact> returnContactsSet =  new HashSet<>();
+		contacts.stream().forEach((c) -> returnContactsSet.add(c.clone()));
+		return returnContactsSet;
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 		lazyInstantiateContacts();
 		Optional<ModelContact> result =  contacts.stream().filter((c) -> c.getId() == id).findFirst();
-		return result.isPresent() ? result.get() : null;
+		return result.isPresent() ? result.get().clone() : null;
 	}
 
 	@Override
