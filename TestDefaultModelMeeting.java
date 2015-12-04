@@ -18,8 +18,10 @@ public class TestDefaultModelMeeting {
 	}
 	
 	@Test
-	public void standardMethodTest() {
+	public void getId() {
 		
+		int resultId = instance.getId();
+		assertEquals(defaultId, resultId);
 	}
 
 	protected ModelMeeting getInstance(int id) {

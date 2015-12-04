@@ -7,7 +7,11 @@ import java.util.Set;
  */
 public class DefaultModelMeeting implements ModelMeeting{
 
+	private final int id;
+
 	public DefaultModelMeeting(int id) {
+
+		this.id = id;
 	}
 
 	@Override
