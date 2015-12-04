@@ -2,6 +2,7 @@ public class DefaultModelContact implements ModelContact {
 
 	private final int id;
 	private String name;
+	private String notes;
 
 	public DefaultModelContact (int id) {
 
@@ -28,7 +29,8 @@ public class DefaultModelContact implements ModelContact {
 
 	@Override
 	public String getNotes() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+
+		return notes;
 	}
 
 	@Override
