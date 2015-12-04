@@ -113,6 +113,10 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 		if (meeting == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
+		lazyInstantiateMeetings();
+		if (!meetings.contains(meetings)) {
+			throw new IllegalStateException(PARAM_NOT_FOUND_MSG);
+		}
 	throw new UnsupportedOperationException("Unsupported operation."); 
 	}
 
