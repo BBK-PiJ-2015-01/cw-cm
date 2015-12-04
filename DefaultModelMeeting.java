@@ -51,7 +51,7 @@ public class DefaultModelMeeting implements ModelMeeting{
 	}
 
 	@Override
-	public void getNotes(String notes) {
+	public void setNotes(String notes) {
 	throw new UnsupportedOperationException("Unsupported operation.");
 	}
     

@@ -50,6 +50,6 @@ public interface ModelMeeting {
      *    
      * @param notes the notes from the meeting
      */
-    void getNotes(String notes);
+    void setNotes(String notes);
 }
 
