@@ -339,6 +339,15 @@ public class TestSerializableContactManagerModel {
 	}
 
 	// *****************************************************************************************************************	
+	// Remove Meeting tests
+	// *****************************************************************************************************************	
+
+	@Test(expected=NullPointerException.class)
+	public void removeMeeting_NullMeeting() {
+
+		instance.removeMeeting(null);				
+	}
+	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
 	protected SerializableContactManagerModel getInstance() {
