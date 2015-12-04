@@ -43,9 +43,8 @@ public class DefaultModelMeeting implements ModelMeeting{
 
 	@Override
 	public void setContacts(Set<Contact> contacts) {
-
 		
-	throw new UnsupportedOperationException("Unsupported operation.");
+		this.contacts = contacts;
 	}
 
 	@Override
