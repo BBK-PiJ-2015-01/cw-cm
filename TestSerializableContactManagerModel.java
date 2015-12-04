@@ -132,6 +132,7 @@ public class TestSerializableContactManagerModel {
 	// *****************************************************************************************************************	
 	// Update Contacts tests
 	// *****************************************************************************************************************	
+
 	@Test(expected=NullPointerException.class)
 	public void updateContact_NullContact() {
 
@@ -144,6 +145,28 @@ public class TestSerializableContactManagerModel {
 		instance.updateContact(getContactInstance());				
 	}
 
+	@Test
+	public void updateContact_ImmutabilityTest() {
+
+		ModelContact intialContact = getContactInstance();		
+		int initialId = instance.addContact(intialContact);
+	
+		intialContact = instance.getContact(initialId);
+		intialContact.setName("name");
+		intialContact.addNotes("notes");
+		instance.updateContact(intialContact);
+
+		ModelContact resultContact = instance.getContact(initialId);
+		assertFalse(intialContact == resultContact);	
+		assertEquals(intialContact.getName(), resultContact.getName());
+		assertFalse(intialContact.getName() == resultContact.getName());
+		assertEquals(intialContact.getNotes(), resultContact.getNotes());
+		assertFalse(intialContact.getNotes() == resultContact.getNotes());			
+	}
+
+	// *****************************************************************************************************************	
+	// Utility methods
+	// *****************************************************************************************************************	
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();

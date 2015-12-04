@@ -58,6 +58,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 	@Override
 	public void updateContact(ModelContact contact) {
+
 		if (contact == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
