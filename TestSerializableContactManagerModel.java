@@ -65,7 +65,7 @@ public class TestSerializableContactManagerModel {
 		ModelContact resultContact = instance.getContact(resultId);
 		
 		expectedContact.setName("Changed name");
-		expectedContact.setName("Changed notes");
+		expectedContact.addNotes("Changed notes");
 
 		assertNotEquals(expectedContact.getName(), resultContact.getName());	
 		assertNotEquals(expectedContact.getNotes(), resultContact.getNotes());						
