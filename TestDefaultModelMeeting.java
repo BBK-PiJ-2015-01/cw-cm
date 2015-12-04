@@ -86,10 +86,14 @@ public class TestDefaultModelMeeting {
 		
 		instance.setDate(Calendar.getInstance());
 		instance.setNotes("notes");
-
+		// generate a contact
 		Set<ModelContact> contacts = new HashSet<>();
 		ModelContact instanceContact = new DefaultModelContact(-1);
+		instanceContact.setName("contactName");
+		instanceContact.setNotes("contactNotes");
+		contacts.add(instanceContact);		
 		instance.setContacts(contacts);
+
 		// clone
 		DefaultModelMeeting instanceClone = instance.clone();
 
@@ -98,8 +102,17 @@ public class TestDefaultModelMeeting {
 		assertFalse(instance.getDate() == instanceClone.getDate());
 		assertEquals(instance.getNotes(),instanceClone.getNotes());
 		assertFalse(instance.getNotes() == instanceClone.getNotes());
-		assertArrayEquals(instance.getContacts().toArray(), instanceClone.getContacts().toArray());
+
 		assertFalse(instance.getContacts() == instanceClone.getContacts());
+
+		// check the cloned contact
+		ModelContact clonedContact = instanceClone.getContacts().stream().findFirst().get();
+		assertFalse(instanceContact == clonedContact);
+		assertEquals(instanceContact.getId(), clonedContact.getId());
+		assertEquals(instanceContact.getName(), clonedContact.getName());
+		assertFalse(instanceContact.getName() == clonedContact.getName());
+		assertEquals(instanceContact.getNotes(), clonedContact.getNotes());
+		assertFalse(instanceContact.getNotes() == clonedContact.getNotes());
 
 	}
 
