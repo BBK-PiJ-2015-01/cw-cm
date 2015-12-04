@@ -43,6 +43,18 @@ public class TestSerializableContactManagerModel {
 		assertNotNull(contact);				
 	}
 
+	@Test
+	public void getContact_CheckValues() {
+
+		ModelContact expectedContact = getContactInstance();
+		expectedContact.setName("name");
+		expectedContact.addNotes("notes");
+		int resultId = instance.addContact(expectedContact);		
+		ModelContact resultContact = instance.getContact(resultId);
+		assertEquals(expectedContact.getName(), resultContact.getName());	
+		assertEquals(expectedContact.getNotes(), resultContact.getNotes());					
+	}
+
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();
