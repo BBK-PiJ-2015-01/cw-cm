@@ -354,6 +354,19 @@ public class TestSerializableContactManagerModel {
 
 		instance.removeMeeting(getMeetingInstance());				
 	}
+
+	@Test
+	public void removeMeeting() {
+
+		ModelMeeting intialMeeting = getMeetingInstance();		
+		int initialId = instance.addMeeting(intialMeeting);	
+		intialMeeting = instance.getMeeting(initialId);
+
+		instance.removeMeeting(intialMeeting);	
+		ModelMeeting removedMeeting = instance.getMeeting(initialId);
+		assertNull(removedMeeting);
+				
+	}
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
