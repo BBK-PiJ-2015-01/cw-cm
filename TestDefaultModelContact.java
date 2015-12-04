@@ -45,6 +45,15 @@ public class TestDefaultModelContact {
 		assertNull(resultNotes);
 	}
 
+	@Test
+	public void addNotes() {
+
+		String expectedNotes = "expectedNotes";
+		instance.addNotes(expectedNotes);
+		String resultNotes = instance.getNotes();
+		assertEquals(expectedNotes, expectedNotes);
+	}
+
 	protected int generateDefaultId() {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
