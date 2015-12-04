@@ -13,7 +13,9 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 	@Override
 	public Set<ModelContact> getContacts() {
-	throw new UnsupportedOperationException("Unsupported operation."); 
+
+		lazyInstantiateContacts();
+		return contacts;
 	}
 
 	@Override
