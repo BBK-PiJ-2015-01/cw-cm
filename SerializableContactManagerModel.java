@@ -117,7 +117,8 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 		if (!meetings.contains(meetings)) {
 			throw new IllegalStateException(PARAM_NOT_FOUND_MSG);
 		}
-	throw new UnsupportedOperationException("Unsupported operation."); 
+		meetings.remove(meeting);
+		meetings.add(meeting.clone());
 	}
 
 	//	*****************************************************************************************************************************		

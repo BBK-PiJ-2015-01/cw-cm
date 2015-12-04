@@ -318,6 +318,25 @@ public class TestSerializableContactManagerModel {
 
 		instance.updateMeeting(getMeetingInstance());				
 	}
+
+	@Test
+	public void updateMeeting_ImmutabilityTest() {
+
+		ModelMeeting intialMeeting = getMeetingInstance();		
+		int initialId = instance.addMeeting(intialMeeting);
+
+		intialMeeting = instance.getMeeting(initialId);
+		intialMeeting.setDate(Calendar.getInstance());
+		intialMeeting.addNotes("notes");
+		instance.updateMeeting(intialMeeting);
+
+		ModelMeeting resultMeeting = instance.getMeeting(initialId);
+		assertNotSame(intialMeeting , resultMeeting);	
+		assertEquals(intialMeeting.getDate(), resultMeeting.getDate());
+		assertNotSame(intialMeeting.getDate() , resultMeeting.getDate());
+		assertEquals(intialMeeting.getNotes(), resultMeeting.getNotes());
+		assertNotSame(intialMeeting.getNotes() , resultMeeting.getNotes());			
+	}
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
