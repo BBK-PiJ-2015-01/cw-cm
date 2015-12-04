@@ -29,7 +29,8 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 	@Override
 	public Contact getContact(int id) {
-	throw new UnsupportedOperationException("Unsupported operation."); 
+
+		return null;
 	}
 
 	@Override
