@@ -47,6 +47,17 @@ public class TestDefaultModelMeeting {
 		assertNull(resultNotes);
 
 	}
+
+	@Test
+	public void setNotes() {
+		
+		String expectedNotes = "expectedNotes";
+		instance.setNotes(expectedNotes);
+		String resultNotes = instance.getNotes();
+		assertEquals(expectedNotes, resultNotes);
+	}
+
+
 	protected ModelMeeting getInstance(int id) {
 
 		return new DefaultModelMeeting(id);
