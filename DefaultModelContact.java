@@ -73,8 +73,6 @@ public class DefaultModelContact implements ModelContact, Cloneable {
 
 		int hash = 78125;
 		hash = 103 * hash + id;
-		hash = 103 * hash + Objects.hashCode(name);
-		hash = 103 * hash + Objects.hashCode(notes);
 		return hash;
 	}
 }

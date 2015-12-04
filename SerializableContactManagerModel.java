@@ -66,7 +66,8 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 		if (!contacts.contains(contact)) {
 			throw new IllegalStateException(PARAM_NOT_FOUND_MSG);
 		}
-	throw new UnsupportedOperationException("Unsupported operation."); 
+		contacts.remove(contact);
+		contacts.add(contact.clone());
 	}
 
 	@Override
