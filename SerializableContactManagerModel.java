@@ -25,7 +25,11 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 	@Override
 	public Set<ModelMeeting> getMeetings() {
-	throw new UnsupportedOperationException("Unsupported operation."); 
+
+		lazyInstantiateMeetings();
+		Set<ModelMeeting> returnMeetingsSet =  new HashSet<>();
+		meetings.stream().forEach((m) -> returnMeetingsSet.add(m.clone()));
+		return returnMeetingsSet;
 	}
 
 	@Override
