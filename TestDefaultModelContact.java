@@ -5,7 +5,7 @@ import java.util.*;
 
 public class TestDefaultModelContact {
 
-	protected ModelContact instance;
+	protected DefaultModelContact instance;
 	protected int defaultId;
 	protected Random r = new Random();
 	
@@ -52,6 +52,14 @@ public class TestDefaultModelContact {
 		instance.addNotes(expectedNotes);
 		String resultNotes = instance.getNotes();
 		assertEquals(expectedNotes, expectedNotes);
+	}
+
+	@Test
+	public void testClone() {
+
+		DefaultModelContact instanceClone = instance.clone();
+		assertNotNull(instanceClone);
+		assertFalse(instance == instanceClone);
 	}
 
 	protected int generateDefaultId() {

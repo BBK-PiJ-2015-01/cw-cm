@@ -1,4 +1,4 @@
-public class DefaultModelContact implements ModelContact {
+public class DefaultModelContact implements ModelContact, Cloneable {
 
 	private final int id;
 	private String name;
@@ -39,5 +39,9 @@ public class DefaultModelContact implements ModelContact {
 		this.notes = notes;
 	}
     
+	public DefaultModelContact clone() {
+
+		return new DefaultModelContact(id);
+	}
 }
 
