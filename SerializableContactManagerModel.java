@@ -24,7 +24,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 		if (contact == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-	throw new UnsupportedOperationException("Unsupported operation."); 
+		return 1;
 	}
 
 	@Override
