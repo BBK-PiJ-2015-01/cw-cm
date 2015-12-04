@@ -22,7 +22,8 @@ public class DefaultModelContact implements ModelContact {
 
 	@Override
 	public void setName(String name) {
-	throw new UnsupportedOperationException("Unsupported operation.");
+
+		this.name = name;
 	}
 
 	@Override
