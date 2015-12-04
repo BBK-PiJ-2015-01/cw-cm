@@ -55,7 +55,7 @@ public class TestSerializableContactManagerModel {
 		expectedContact.addNotes("notes");
 		int resultId = instance.addContact(expectedContact);		
 		ModelContact resultContact = instance.getContact(resultId);
-		assertFalse(expectedContact == resultContact);
+		assertNotSame(expectedContact,resultContact);
 		assertEquals(expectedContact.getName(), resultContact.getName());	
 		assertEquals(expectedContact.getNotes(), resultContact.getNotes());					
 	}
@@ -127,7 +127,7 @@ public class TestSerializableContactManagerModel {
 		Set<ModelContact> contacts = instance.getContacts();	
 		ModelContact setContact = (ModelContact) contacts.stream().findFirst().get();
 		ModelContact getContact = instance.getContact(resultId);
-		assertFalse(setContact == getContact);		
+		assertNotSame(setContact , getContact);		
 	}
 	// *****************************************************************************************************************	
 	// Update Contacts tests
@@ -157,11 +157,11 @@ public class TestSerializableContactManagerModel {
 		instance.updateContact(intialContact);
 
 		ModelContact resultContact = instance.getContact(initialId);
-		assertFalse(intialContact == resultContact);	
+		assertNotSame(intialContact , resultContact);	
 		assertEquals(intialContact.getName(), resultContact.getName());
-		assertFalse(intialContact.getName() == resultContact.getName());
+		assertNotSame(intialContact.getName() , resultContact.getName());
 		assertEquals(intialContact.getNotes(), resultContact.getNotes());
-		assertFalse(intialContact.getNotes() == resultContact.getNotes());			
+		assertNotSame(intialContact.getNotes() , resultContact.getNotes());			
 	}
 	// *****************************************************************************************************************	
 	// Remove Contacts tests
@@ -238,7 +238,7 @@ public class TestSerializableContactManagerModel {
 
 		int resultId = instance.addMeeting(expectedMeeting);		
 		ModelMeeting resultMeeting = instance.getMeeting(resultId);
-		assertFalse(expectedMeeting == resultMeeting);
+		assertNotSame(expectedMeeting , resultMeeting);
 		assertEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
 		assertEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
 		assertEquals(expectedMeeting.getContacts(), resultMeeting.getContacts());				
@@ -266,7 +266,7 @@ public class TestSerializableContactManagerModel {
 		ModelMeeting resultMeeting = instance.getMeeting(resultId);
 		assertNotEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
 		assertNotEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
-		assertNotEquals(expectedMeeting.getContacts(), resultMeeting.getContacts());								
+		assertArrayNotEquals(expectedMeeting.getContacts().toArray(), resultMeeting.getContacts().toArray());								
 	}
 
 	// *****************************************************************************************************************	
