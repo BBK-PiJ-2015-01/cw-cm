@@ -129,6 +129,14 @@ public class TestSerializableContactManagerModel {
 		ModelContact getContact = instance.getContact(resultId);
 		assertFalse(setContact == getContact);		
 	}
+	// *****************************************************************************************************************	
+	// Update Contacts tests
+	// *****************************************************************************************************************	
+	@Test(expected=NullPointerException.class)
+	public void updateContact_NullContact() {
+
+		instance.updateContact(null);				
+	}
 
 	protected SerializableContactManagerModel getInstance() {
 	
