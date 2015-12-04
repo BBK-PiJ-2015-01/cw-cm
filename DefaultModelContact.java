@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class DefaultModelContact implements ModelContact, Cloneable {
 
 	private final int id;
@@ -49,6 +51,31 @@ public class DefaultModelContact implements ModelContact, Cloneable {
 			clone.notes = new String(notes);
 		}
 		return clone;
+	}
+	/**
+	*	Allow equality on id
+	*
+	*/
+	@Override
+	public boolean equals(Object other) {
+
+		System.out.println("Other: " + other);
+		if (other == null || this.getClass() != other.getClass()) {
+		    return false;
+		}
+
+		DefaultModelContact otherContactImpl = (DefaultModelContact) other;
+		return this.getId() == otherContactImpl.getId();
+	}
+
+	@Override
+	public int hashCode() {
+
+		int hash = 78125;
+		hash = 103 * hash + id;
+		hash = 103 * hash + Objects.hashCode(name);
+		hash = 103 * hash + Objects.hashCode(notes);
+		return hash;
 	}
 }
 

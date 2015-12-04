@@ -51,7 +51,7 @@ public class TestContactManagerImplMeeting {
 	public void addFutureMeeting_UnknownContacts() {
 		
 		Set<Contact> contacts = new HashSet<>();
-		contacts.add(new ContactImpl(-1));
+		contacts.add(getContactInstance(-1));
 		instance.addFutureMeeting(contacts, Calendar.getInstance());		
 	}
 	
@@ -250,7 +250,7 @@ public class TestContactManagerImplMeeting {
 	@Test(expected=IllegalArgumentException.class)
 	public void getFutureMeetingListByContact_UnknownContact() {
 
-		Contact unknownContact = new ContactImpl(-1);
+		Contact unknownContact = getContactInstance(-1);
 		List<Meeting> meetings = instance.getFutureMeetingList(unknownContact);	
 	}
 
@@ -368,7 +368,7 @@ public class TestContactManagerImplMeeting {
 	public void addNewPastMeeting_ContactDoesNotExist() {
 
 		Set<Contact> contacts = new HashSet<>();
-		contacts.add(new ContactImpl(-1));
+		contacts.add(getContactInstance(-1));
 		instance.addNewPastMeeting( contacts, Calendar.getInstance(), "");		
 	}
 
@@ -392,7 +392,7 @@ public class TestContactManagerImplMeeting {
 	@Test(expected=IllegalArgumentException.class)
 	public void getPastMeetingList_InvalidContact() {
 
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(new ContactImpl(-1));		
+		List<PastMeeting> pastMeetings = instance.getPastMeetingList(getContactInstance(-1));		
 	}
 
 	@Test
@@ -629,6 +629,12 @@ public class TestContactManagerImplMeeting {
 			count++;
 		}
 		return null;
+	}
+
+	private ContactImpl getContactInstance(int id) {
+
+		ModelContact model = new DefaultModelContact(id);
+		return new ContactImpl(model);
 	}
 }
 

@@ -181,7 +181,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
 		// TO DO: Replace with factory implementation
-		ContactImpl newContact = new ContactImpl(getNextContactId());
+		ContactImpl newContact = getContactInstance(getNextContactId());
 		newContact.setName(name);
 		newContact.addNotes(notes);
 		contacts.add(newContact);
@@ -267,6 +267,12 @@ public class ContactManagerImpl implements ContactManager {
 		fm.setDate(m.getDate());
 		fm.setContacts(m.getContacts());
 		return fm;
+	}
+
+	private ContactImpl getContactInstance(int id) {
+
+		ModelContact model = new DefaultModelContact(id);
+		return new ContactImpl(model);
 	}
 }
 

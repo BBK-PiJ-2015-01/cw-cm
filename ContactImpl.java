@@ -6,45 +6,44 @@ import java.util.*;
  */
 public class ContactImpl implements Contact {
 
-	private final int id;
-	private String name;
-	private String notes;
+	private final ModelContact model;
+	private final String NULL_MODEL_MSG = "Supplied model was null";
 
+	public ContactImpl(ModelContact model) {
 
-	public ContactImpl(int id) {
-
-		this.id = id;
+		if (model == null) {
+			throw new IllegalArgumentException(NULL_MODEL_MSG);
+		}
+		this.model = model;
 	}
-
-
 
 	@Override
 	public int getId() {
 
-		return id;
+		return model.getId();
 	}
 
 	@Override
 	public String getName() {
 
-		return name;
+		return model.getName();
 	}
 
 	public void setName(String name) {
 	
-		this.name = name;
+		model.setName(name);
 	}
 
 	@Override
 	public String getNotes() {
 
-		return notes == null ? new String() : notes;
+		return model.getNotes() == null ? new String() : model.getNotes();
 	}
 
 	@Override
 	public void addNotes(String notes) {
 
-		this.notes = notes;
+		model.setNotes(notes);
 	}
 
 	/**
@@ -57,16 +56,15 @@ public class ContactImpl implements Contact {
 		if (other == null || this.getClass() != other.getClass()) {
 		    return false;
 		}
+
 		ContactImpl otherContactImpl = (ContactImpl) other;
-		return this.id == otherContactImpl.id;
+		return this.getId() == otherContactImpl.getId();
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 16381;
-		hash = 83 * hash + id;
-		hash = 83 * hash + Objects.hashCode(name);
-		hash = 83 * hash + Objects.hashCode(notes);
+		hash = 83 * hash + Objects.hashCode(model);
 		return hash;
 	}
 }

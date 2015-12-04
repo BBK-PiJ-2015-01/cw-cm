@@ -12,7 +12,7 @@ public class TestContactImpl {
 	@Before
 	public void init() {
 		
-		instance = new ContactImpl(generateDefaultId());
+		instance = getInstance(generateDefaultId());
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class TestContactImpl {
 
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(instance);
-		Contact instanceCopy = new ContactImpl(instance.getId());
+		Contact instanceCopy = getInstance(instance.getId());
 		assertTrue(contacts.contains(instanceCopy));
 	}
 
@@ -81,7 +81,13 @@ public class TestContactImpl {
 
 		Set<Contact> contacts = new HashSet<>();
 		contacts.add(instance);
-		assertFalse(contacts.contains(new ContactImpl(instance.getId()-1)));
+		assertFalse(contacts.contains(getInstance(instance.getId()-1)));
+	}
+
+	protected ContactImpl getInstance(int id) {
+
+		ModelContact model = new DefaultModelContact(id);
+		return new ContactImpl(model);
 	}
 
 	protected int generateDefaultId() {

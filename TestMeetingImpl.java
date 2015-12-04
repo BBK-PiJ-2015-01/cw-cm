@@ -115,7 +115,7 @@ public class TestMeetingImpl {
 	public void setContactsTest() {
 		
 		Set<Contact> expectedContacts = new HashSet<>();
-		expectedContacts.add(new ContactImpl(1));
+		expectedContacts.add(getContactInstance(1));
 		instance.setContacts(expectedContacts);
 		Set<Contact> resultContacts = instance.getContacts();
 		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());	
@@ -129,7 +129,7 @@ public class TestMeetingImpl {
 		//
 		Set<Contact> expectedContacts = new HashSet<>();
 		Set<Contact> copyContacts = new HashSet<>();
-		Contact singleContact = new ContactImpl(1);
+		Contact singleContact = getContactInstance(1);
 		expectedContacts.add(singleContact);
 		copyContacts.add(singleContact);
 		assertArrayEquals(expectedContacts.toArray(), copyContacts.toArray());
@@ -156,7 +156,7 @@ public class TestMeetingImpl {
 		//
 		Set<Contact> expectedContacts = new HashSet<>();
 		Set<Contact> copyContacts = new HashSet<>();
-		Contact singleContact = new ContactImpl(1);
+		Contact singleContact = getContactInstance(1);
 		expectedContacts.add(singleContact);
 		copyContacts.add(singleContact);
 		assertArrayEquals(expectedContacts.toArray(), copyContacts.toArray());
@@ -200,6 +200,12 @@ public class TestMeetingImpl {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
 		return defaultId;
+	}
+
+	protected ContactImpl getContactInstance(int id) {
+
+		ModelContact model = new DefaultModelContact(id);
+		return new ContactImpl(model);
 	}
 }
 
