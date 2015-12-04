@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.*;
 
 //
 //	Don't forget org.junit.runner.JUnitCore !
@@ -7,16 +8,29 @@ import static org.junit.Assert.*;
 public class TestDefaultModelMeeting {
 
 	private ModelMeeting instance;
+	protected int defaultId;
+	protected Random r = new Random(100);
 	
 	@Before
 	public void init() {
 		
-//		instance = new IntegerBinarySearchImpl();
+		instance = getInstance(generateDefaultId());
 	}
 	
 	@Test
 	public void standardMethodTest() {
 		
+	}
+
+	protected ModelMeeting getInstance(int id) {
+
+		return new DefaultModelMeeting(id);
+	}
+
+	protected int generateDefaultId() {
+
+		defaultId = r.nextInt(Integer.MAX_VALUE);
+		return defaultId;
 	}
 }
 
