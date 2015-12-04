@@ -178,6 +178,18 @@ public class TestSerializableContactManagerModel {
 
 		instance.removeContact(getContactInstance());				
 	}
+	@Test
+	public void removeContact() {
+
+		ModelContact intialContact = getContactInstance();		
+		int initialId = instance.addContact(intialContact);	
+		intialContact = instance.getContact(initialId);
+
+		instance.removeContact(intialContact);	
+		ModelContact removedContact = instance.getContact(initialId);
+		assertNull(removedContact);
+				
+	}
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
