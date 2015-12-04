@@ -1,11 +1,16 @@
 public class DefaultModelContact implements ModelContact {
 
+	private final int id;
+
 	public DefaultModelContact (int id) {
+
+		this.id = id;
 	}
 
 	@Override
 	public int getId() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+
+		return id;
 	}
 
 	@Override
