@@ -10,6 +10,7 @@ public class DefaultModelMeeting implements ModelMeeting{
 	private final int id;
 	private Calendar date;
 	private String notes;
+	private Set<Contact> contacts;
 
 	public DefaultModelMeeting(int id) {
 
@@ -36,7 +37,8 @@ public class DefaultModelMeeting implements ModelMeeting{
 
 	@Override
 	public Set<Contact> getContacts() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+
+		return contacts;
 	}
 
 	@Override
