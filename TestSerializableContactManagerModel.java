@@ -304,6 +304,19 @@ public class TestSerializableContactManagerModel {
 		int resultContactsSize = resultMeeting.getContacts().size();
 		assertNotEquals(expectedContactsSize, resultContactsSize);								
 	}
+
+	// *****************************************************************************************************************	
+	// Get Meetings tests
+	// *****************************************************************************************************************	
+
+	@Test
+	public void getMeetings_EmptySet() {
+
+		Set<ModelMeeting> meetings = instance.getMeetings();
+		assertNotNull(meetings);							
+	}
+
+
 	// *****************************************************************************************************************	
 	// Update Meeting tests
 	// *****************************************************************************************************************	

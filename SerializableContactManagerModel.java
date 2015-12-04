@@ -24,7 +24,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	}
 
 	@Override
-	public Set<? extends ModelMeeting> getMeetings() {
+	public Set<ModelMeeting> getMeetings() {
 	throw new UnsupportedOperationException("Unsupported operation."); 
 	}
 
