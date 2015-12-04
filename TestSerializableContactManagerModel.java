@@ -35,6 +35,14 @@ public class TestSerializableContactManagerModel {
 		assertNull(contact);				
 	}
 
+	@Test
+	public void getContact_Exists() {
+
+		int resultId = instance.addContact(getContactInstance(-1));		
+		Contact contact = instance.getContact(resultId);
+		assertNotNull(contact);				
+	}
+
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();
