@@ -7,7 +7,7 @@ import java.util.*;
 //
 public class TestDefaultModelMeeting {
 
-	private ModelMeeting instance;
+	private DefaultModelMeeting instance;
 	protected int defaultId;
 	protected Random r = new Random(100);
 	
@@ -73,7 +73,15 @@ public class TestDefaultModelMeeting {
 		assertEquals(expectedContacts, resultContacts);
 	}
 
-	protected ModelMeeting getInstance(int id) {
+	@Test
+	public void testClone() {
+		
+		DefaultModelMeeting instanceClone = instance.clone();
+		assertNotNull(instanceClone);
+		assertFalse(instanceClone == instance);
+	}
+
+	protected DefaultModelMeeting getInstance(int id) {
 
 		return new DefaultModelMeeting(id);
 	}
