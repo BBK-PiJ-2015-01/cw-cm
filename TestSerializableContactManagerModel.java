@@ -208,6 +208,13 @@ public class TestSerializableContactManagerModel {
 		assertTrue(resultId > 0);		
 	}
 
+	@Test
+	public void getMeeting_DoesNotExist() {
+
+		ModelMeeting meeting = instance.getMeeting(1);
+		assertNull(meeting);				
+	}
+
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
