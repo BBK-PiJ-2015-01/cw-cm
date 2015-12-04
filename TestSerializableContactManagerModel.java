@@ -273,6 +273,37 @@ public class TestSerializableContactManagerModel {
 		assertNotEquals(expectedContactsSize, resultContactsSize);								
 	}
 
+	@Test
+	public void getMeeting_CheckImmutableUpdatesOnResult() {
+
+		ModelMeeting expectedMeeting = getMeetingInstance();
+		expectedMeeting.setDate(Calendar.getInstance());
+		expectedMeeting.addNotes("notes");
+
+		Set<Contact> expectedContacts = new HashSet<>();
+		int contactId = instance.addContact(getContactInstance());
+		Contact meetingContact = instance.getContact(contactId);	
+		expectedContacts.add(meetingContact);
+		expectedMeeting.setContacts(expectedContacts);
+
+		int resultId = instance.addMeeting(expectedMeeting);
+		ModelMeeting resultMeeting = instance.getMeeting(resultId);
+
+		Calendar newDate = Calendar.getInstance();
+		newDate.add(Calendar.HOUR, 1);
+		resultMeeting.setDate(newDate);
+		resultMeeting.addNotes("Changed notes");
+		Set<Contact> resultContacts  = resultMeeting.getContacts();
+		resultContacts.add(getContactInstance());
+		resultMeeting.setContacts(resultContacts);
+
+		assertNotEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
+		assertNotEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
+		int expectedContactsSize = expectedMeeting.getContacts().size();
+		int resultContactsSize = resultMeeting.getContacts().size();
+		assertNotEquals(expectedContactsSize, resultContactsSize);								
+	}
+
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
