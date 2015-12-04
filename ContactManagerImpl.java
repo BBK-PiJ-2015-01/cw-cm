@@ -70,13 +70,8 @@ public class ContactManagerImpl implements ContactManager {
 		if (meetings.isEmpty()) {
 			return null;
 		}
-		for (Meeting meeting: meetings) {
-			if (meeting.getId() == id) {
-				// TO DO: Return copy, not original
-				return meeting;
-			}
-		}
-		return null;
+		Optional<Meeting> opt = meetings.stream().filter((m) -> m.getId() == id).findFirst();
+		return opt.isPresent() ? opt.get() : null;
 	}
 
 	@Override
