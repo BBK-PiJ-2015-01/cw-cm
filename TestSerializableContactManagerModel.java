@@ -261,12 +261,16 @@ public class TestSerializableContactManagerModel {
 		
 		expectedMeeting.setDate(Calendar.getInstance());
 		expectedMeeting.addNotes("Changed notes");
-		expectedMeeting.getContacts().add(getContactInstance());
+		expectedContacts = expectedMeeting.getContacts();
+		expectedContacts.add(getContactInstance());
+		expectedMeeting.setContacts(expectedContacts);
 
 		ModelMeeting resultMeeting = instance.getMeeting(resultId);
 		assertNotEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
 		assertNotEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
-		assertArrayNotEquals(expectedMeeting.getContacts().toArray(), resultMeeting.getContacts().toArray());								
+		int expectedContactsSize = expectedMeeting.getContacts().size();
+		int resultContactsSize = resultMeeting.getContacts().size();
+		assertNotEquals(expectedContactsSize, resultContactsSize);								
 	}
 
 	// *****************************************************************************************************************	
