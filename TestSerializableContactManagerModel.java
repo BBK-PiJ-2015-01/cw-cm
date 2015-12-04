@@ -18,11 +18,11 @@ public class TestSerializableContactManagerModel {
 	// *****************************************************************************************************************	
 	// Add Contact and Get Contact tests
 	// *****************************************************************************************************************	
+
 	@Test(expected=NullPointerException.class)
 	public void addContact_Null() {
 
-		instance.addContact(null);
-		
+		instance.addContact(null);		
 	}
 
 	@Test
@@ -190,6 +190,17 @@ public class TestSerializableContactManagerModel {
 		assertNull(removedContact);
 				
 	}
+	
+	// *****************************************************************************************************************	
+	// Add Meeting and Get Meeting tests
+	// *****************************************************************************************************************	
+
+	@Test(expected=NullPointerException.class)
+	public void addMeeting_Null() {
+
+		instance.addMeeting(null);		
+	}
+
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
