@@ -222,6 +222,27 @@ public class TestSerializableContactManagerModel {
 		ModelMeeting meeting = instance.getMeeting(resultId);
 		assertNotNull(meeting);				
 	}
+
+	@Test
+	public void getMeeting_CheckValues() {
+
+		ModelMeeting expectedMeeting = getMeetingInstance();
+		expectedMeeting.setDate(Calendar.getInstance());
+		expectedMeeting.addNotes("notes");
+
+		Set<Contact> expectedContacts = new HashSet<>();
+		int contactId = instance.addContact(getContactInstance());
+		Contact meetingContact = instance.getContact(contactId);	
+		expectedContacts.add(meetingContact);
+		expectedMeeting.setContacts(expectedContacts);
+
+		int resultId = instance.addMeeting(expectedMeeting);		
+		ModelMeeting resultMeeting = instance.getMeeting(resultId);
+		assertFalse(expectedMeeting == resultMeeting);
+		assertEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
+		assertEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
+		assertEquals(expectedMeeting.getContacts(), resultMeeting.getContacts());				
+	}
 	// *****************************************************************************************************************	
 	// Utility methods
 	// *****************************************************************************************************************	
