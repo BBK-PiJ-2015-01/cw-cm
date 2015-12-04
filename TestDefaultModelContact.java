@@ -29,6 +29,15 @@ public class TestDefaultModelContact {
 		assertNull(resultName);
 	}
 
+	@Test
+	public void setName() {
+
+		String expectedName = "expectedName";
+		instance.setName(expectedName);
+		String resultName = instance.getName();
+		assertEquals(expectedName, resultName);
+	}
+
 	protected int generateDefaultId() {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);
