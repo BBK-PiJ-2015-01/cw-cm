@@ -1,6 +1,7 @@
 public class DefaultModelContact implements ModelContact {
 
 	private final int id;
+	private String name;
 
 	public DefaultModelContact (int id) {
 
@@ -15,7 +16,8 @@ public class DefaultModelContact implements ModelContact {
 
 	@Override
 	public String getName() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+
+		return name;
 	}
 
 	@Override
