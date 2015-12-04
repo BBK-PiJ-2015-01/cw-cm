@@ -81,6 +81,28 @@ public class TestDefaultModelMeeting {
 		assertFalse(instanceClone == instance);
 	}
 
+	@Test
+	public void testCloneAttributes() {
+		
+		instance.setDate(Calendar.getInstance());
+		instance.setNotes("notes");
+
+		Set<Contact> contacts = new HashSet<>();
+		ModelContact instanceContact = new DefaultModelContact(-1);
+		instance.setContacts(contacts);
+		// clone
+		DefaultModelMeeting instanceClone = instance.clone();
+
+		assertEquals(instance.getId(),instanceClone.getId());
+		assertEquals(instance.getDate(),instanceClone.getDate());
+		assertFalse(instance.getDate() == instanceClone.getDate());
+		assertEquals(instance.getNotes(),instanceClone.getNotes());
+		assertFalse(instance.getNotes() == instanceClone.getNotes());
+		assertArrayEquals(instance.getContacts().toArray(), instanceClone.getContacts().toArray());
+		assertFalse(instance.getContacts() == instanceClone.getContacts());
+
+	}
+
 	protected DefaultModelMeeting getInstance(int id) {
 
 		return new DefaultModelMeeting(id);
