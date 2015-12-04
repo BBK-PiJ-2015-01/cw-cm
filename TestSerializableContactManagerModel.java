@@ -103,6 +103,33 @@ public class TestSerializableContactManagerModel {
 		assertNotNull(contacts);							
 	}
 
+	@Test
+	public void getContacts_PopulatedSet() {
+
+		instance.addContact(getContactInstance());
+		Set<ModelContact> resultContacts = instance.getContacts();
+
+		Set<ModelContact> contacts = instance.getContacts();	
+		int expectedContactsSize = 1;
+		int resultContactsSize	= resultContacts.size();
+		assertEquals(expectedContactsSize, resultContactsSize);			
+	}
+
+	@Test
+	public void getContacts_ImmutabilityTest() {
+
+		ModelContact expectedContact = getContactInstance();
+		expectedContact.setName("name");
+		expectedContact.addNotes("notes");
+		int resultId = instance.addContact(expectedContact);
+		Set<ModelContact> resultContacts = instance.getContacts();
+
+		Set<ModelContact> contacts = instance.getContacts();	
+		ModelContact setContact = (ModelContact) contacts.stream().findFirst().get();
+		ModelContact getContact = instance.getContact(resultId);
+		assertFalse(setContact == getContact);		
+	}
+
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();
