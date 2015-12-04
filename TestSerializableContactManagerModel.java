@@ -28,6 +28,13 @@ public class TestSerializableContactManagerModel {
 		assertTrue(resultId > 0);		
 	}
 
+	@Test
+	public void getContact_DoesNotExist() {
+
+		Contact contact = instance.getContact(1);
+		assertNull(contact);				
+	}
+
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();
