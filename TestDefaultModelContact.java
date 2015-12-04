@@ -18,9 +18,8 @@ public class TestDefaultModelContact {
 	@Test
 	public void getIdTest() {
 
-		int expectedId = defaultId;
 		int resultId = instance.getId();
-		assertEquals(expectedId, resultId);
+		assertEquals(defaultId, resultId);
 	}
 
 	protected int generateDefaultId() {
