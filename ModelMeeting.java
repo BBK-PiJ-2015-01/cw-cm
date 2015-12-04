@@ -35,7 +35,7 @@ public interface ModelMeeting {
      *     
      * @param contacts the set of people attending the meeting
      */
-    void getContacts(Set<Contact> contacts);
+    void setContacts(Set<Contact> contacts);
 
     /**
      * Returns the notes of the meeting.
