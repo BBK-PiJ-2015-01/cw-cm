@@ -12,7 +12,8 @@ public interface ContactManagerModel {
     /**
      * Get the set of all contacts within the model
      *
-     * @return all contacts in the model
+     * @return all contacts in the model.  An empty set will be returned 
+     * if not contacts are present 
      */
     Set<? extends Contact> getContacts();
 
