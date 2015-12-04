@@ -260,7 +260,9 @@ public class TestSerializableContactManagerModel {
 
 		int resultId = instance.addMeeting(expectedMeeting);	
 		
-		expectedMeeting.setDate(Calendar.getInstance());
+		Calendar newDate = Calendar.getInstance();
+		newDate.add(Calendar.HOUR, 12);
+		expectedMeeting.setDate(newDate);
 		expectedMeeting.addNotes("Changed notes");
 		expectedContacts = expectedMeeting.getContacts();
 		expectedContacts.add(getContactInstance());

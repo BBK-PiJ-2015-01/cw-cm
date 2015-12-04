@@ -14,7 +14,7 @@ public class ContactManagerImpl implements ContactManager {
 	private final String ILLEGAL_STATE_MSG = "Supplied params we not valid for this operation";
 	private final TimeZone tz = new SimpleTimeZone(0, "GMT");
 
-
+	ContactManagerModel model = new SerializableContactManagerModel();
 	private Set<Contact> contacts = new HashSet<>();
 	private Set<Meeting> meetings = new HashSet<>();
 
