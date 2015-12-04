@@ -55,6 +55,22 @@ public class TestSerializableContactManagerModel {
 		assertEquals(expectedContact.getNotes(), resultContact.getNotes());					
 	}
 
+	@Test
+	public void getContact_CheckImmutability() {
+
+		ModelContact expectedContact = getContactInstance();
+		expectedContact.setName("name");
+		expectedContact.addNotes("notes");
+		int resultId = instance.addContact(expectedContact);		
+		ModelContact resultContact = instance.getContact(resultId);
+		
+		expectedContact.setName("Changed name");
+		expectedContact.setName("Changed notes");
+
+		assertNotEquals(expectedContact.getName(), resultContact.getName());	
+		assertNotEquals(expectedContact.getNotes(), resultContact.getNotes());						
+	}
+
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();
