@@ -16,7 +16,8 @@ public class DefaultModelMeeting implements ModelMeeting{
 
 	@Override
 	public int getId() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+	
+		return id;
 	}
 
 	@Override
