@@ -11,6 +11,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 	private int nextContactId;
 	private Set<ModelContact> contacts;
+	private Set<ModelMeeting> meetings;
 
 	@Override
 	public Set<ModelContact> getContacts() {
@@ -83,7 +84,7 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 		if (meeting == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-	throw new UnsupportedOperationException("Unsupported operation."); 
+		return 1;
 	}
 
 	@Override
@@ -117,6 +118,13 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 
 		if (contacts == null) {
 			contacts = new HashSet<>();
+		}
+	}
+
+	private void lazyInstantiateMeetings()  {
+
+		if (meetings == null) {
+			meetings = new HashSet<>();
 		}
 	}
 }
