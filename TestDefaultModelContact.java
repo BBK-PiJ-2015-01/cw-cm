@@ -76,6 +76,17 @@ public class TestDefaultModelContact {
 		assertFalse(instance.getNotes() == instanceClone.getNotes());
 	}
 
+	@Test
+	public void testCloneAttributesMutability() {
+
+		DefaultModelContact instanceClone = instance.clone();
+		assertNotNull(instanceClone);
+		instance.setName("name");
+		assertNotEquals(instance.getName(), instanceClone.getName());
+		instance.setNotes("notes");
+		assertNotEquals(instance.getNotes(), instanceClone.getNotes());
+	}
+
 	protected int generateDefaultId() {
 
 		defaultId = r.nextInt(Integer.MAX_VALUE);

@@ -5,7 +5,7 @@ import java.util.Set;
  *
  * @author Simon Baird
  */
-public class DefaultModelMeeting implements ModelMeeting{
+public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 
 	private final int id;
 	private Calendar date;
@@ -57,6 +57,10 @@ public class DefaultModelMeeting implements ModelMeeting{
 	public void setNotes(String notes) {
 
 		this.notes = notes;
+	}
+
+	public DefaultModelMeeting clone() {
+	throw new UnsupportedOperationException("Unsupported operation.");
 	}
 }
 
