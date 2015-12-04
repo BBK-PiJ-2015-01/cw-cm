@@ -46,10 +46,10 @@ public class TestDefaultModelContact {
 	}
 
 	@Test
-	public void setNotes() {
+	public void addNotes() {
 
 		String expectedNotes = "expectedNotes";
-		instance.setNotes(expectedNotes);
+		instance.addNotes(expectedNotes);
 		String resultNotes = instance.getNotes();
 		assertEquals(expectedNotes, expectedNotes);
 	}
@@ -66,7 +66,7 @@ public class TestDefaultModelContact {
 	public void testCloneAttributes() {
 
 		instance.setName("name");
-		instance.setNotes("notes");
+		instance.addNotes("notes");
 		DefaultModelContact instanceClone = instance.clone();
 		assertNotNull(instanceClone);
 		assertEquals(instance.getId(), instanceClone.getId());
@@ -83,7 +83,7 @@ public class TestDefaultModelContact {
 		assertNotNull(instanceClone);
 		instance.setName("name");
 		assertNotEquals(instance.getName(), instanceClone.getName());
-		instance.setNotes("notes");
+		instance.addNotes("notes");
 		assertNotEquals(instance.getNotes(), instanceClone.getNotes());
 	}
 

@@ -15,6 +15,8 @@ public class TestFutureMeetingImpl extends TestMeetingImpl {
 	}
 
 	protected MeetingImpl getInstance(int id) {
-		return new FutureMeetingImpl(id);
+
+		ModelMeeting model = new DefaultModelMeeting(id);
+		return new FutureMeetingImpl(model);
 	}
 }

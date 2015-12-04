@@ -35,15 +35,29 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 	}
 
 	@Override
-	public Set<ModelContact> getContacts() {
+	public Set<Contact> getContacts() {
 
-		return contacts;
+		if (contacts == null)  {
+			return null;
+		}
+		Set<Contact> returnContacts = new HashSet<Contact>();
+		contacts.stream().forEach((mc) -> returnContacts.add(mc));
+		return returnContacts;
 	}
 
 	@Override
-	public void setContacts(Set<ModelContact> contacts) {
+	public void setContacts(Set<Contact> contacts) {
 		
-		this.contacts = contacts;
+		if (contacts == null)  {
+			this.contacts = null;
+			return;
+		}
+		this.contacts = new HashSet<ModelContact>();
+		if (contacts.isEmpty())  {
+			return;
+		}
+		// Convert the contacts to ModelContacts
+		contacts.stream().forEach((c) -> this.contacts.add(getModelContactInstance(c)));
 	}
 
 	@Override
@@ -53,7 +67,7 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 	}
 
 	@Override
-	public void setNotes(String notes) {
+	public void addNotes(String notes) {
 
 		this.notes = notes;
 	}
@@ -72,6 +86,39 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable{
 			contacts.stream().forEach((c) -> clone.contacts.add(c.clone()));
 		}
 		return clone;		
+	}
+
+	private ModelContact getModelContactInstance(Contact contact) {
+		
+		ModelContact mc = new DefaultModelContact(contact.getId());
+		mc.setName(contact.getName());
+		mc.addNotes(contact.getNotes());
+		return mc;		
+	}
+
+	/**
+	*	Allow equality on id
+	*
+	*/
+	@Override
+	public boolean equals(Object other) {
+
+		if (other == null || !(other instanceof Meeting)) {
+		    return false;
+		}
+		Meeting otherMeeting = (Meeting) other;
+		return this.getId() == otherMeeting.getId();
+	}
+
+	@Override
+	public int hashCode() {
+
+		int hash = 2047;
+		hash = 113 * hash + id;
+		hash = 113 * hash + Objects.hashCode(date);
+		hash = 113 * hash + Objects.hashCode(notes);
+		hash = 113 * hash + Objects.hashCode(contacts);
+		return hash;
 	}
 }
 

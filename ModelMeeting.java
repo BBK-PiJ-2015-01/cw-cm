@@ -1,20 +1,7 @@
 import java.util.*;
 
-public interface ModelMeeting {
+public interface ModelMeeting extends Meeting {
 
-    /**
-     * Returns the id of the meeting.
-     *     
-     * @return the id of the meeting.
-     */
-    int getId();
-
-    /**
-     * Return the date of the meeting.
-     *     
-     * @return the date of the meeting.
-     */
-    Calendar getDate();
 
     /**
      * Set the the meeting date.
@@ -23,19 +10,13 @@ public interface ModelMeeting {
      */
 
     void setDate(Calendar date);
-    /**
-     * Return the details of people that attended the meeting.
-     *     
-     * @return the set of contacts
-     */
-    Set<ModelContact> getContacts();
 
     /**
      * Set the details of people that attended the meeting.
      *     
      * @param contacts the set of people attending the meeting
      */
-    void setContacts(Set<ModelContact> contacts);
+    void setContacts(Set<Contact> contacts);
 
     /**
      * Returns the notes of the meeting.
@@ -50,6 +31,6 @@ public interface ModelMeeting {
      *    
      * @param notes the notes from the meeting
      */
-    void setNotes(String notes);
+    void addNotes(String notes);
 }
 

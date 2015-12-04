@@ -35,8 +35,9 @@ public class DefaultModelContact implements ModelContact, Cloneable {
 		return notes;
 	}
 
+   
 	@Override
-	public void setNotes(String notes) {
+	public void addNotes(String notes) {
 
 		this.notes = notes;
 	}
@@ -59,12 +60,11 @@ public class DefaultModelContact implements ModelContact, Cloneable {
 	@Override
 	public boolean equals(Object other) {
 
-		System.out.println("Other: " + other);
-		if (other == null || this.getClass() != other.getClass()) {
+		if (other == null || !(other instanceof Contact)) {
 		    return false;
 		}
 
-		DefaultModelContact otherContactImpl = (DefaultModelContact) other;
+		Contact otherContactImpl = (Contact) other;
 		return this.getId() == otherContactImpl.getId();
 	}
 

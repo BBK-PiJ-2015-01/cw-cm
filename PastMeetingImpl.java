@@ -8,19 +8,19 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
 	private String notes;
 
-	public PastMeetingImpl(int id) {
+	public PastMeetingImpl(ModelMeeting model) {
 
-		super(id);
+		super(model);
 	}
 
 	@Override
 	public String getNotes() {
 
-		return notes == null ? new String() : notes;
+		return model.getNotes() == null ? new String() : model.getNotes();
 	}
 
 	public void setNotes(String notes) {
 
-		this.notes = notes;
+		model.addNotes(notes);
 	}
 }

@@ -31,7 +31,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException(INVALID_DATE_MSG);
 		}
 		// TO DO: Replace with factory implementation
-		MeetingImpl m = new MeetingImpl(getNextMeetingId());
+		MeetingImpl m = getMeetingInstance(getNextMeetingId());
 		m.setDate(date);
 		m.setContacts(contacts);
 		meetings.add(m);
@@ -148,7 +148,7 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 		// TO DO: Replace with factory implementation
-		PastMeetingImpl m = new PastMeetingImpl(getNextMeetingId());
+		PastMeetingImpl m = getPastMeetingInstance(getNextMeetingId());
 		m.setDate(date);
 		m.setContacts(contacts);
 		m.setNotes(text);
@@ -251,7 +251,7 @@ public class ContactManagerImpl implements ContactManager {
 	private PastMeetingImpl cloneAsPastMeeting(Meeting m) {
 		// TO DO: Replace with factory implementation
 		// TO DO: Make defensive copy	
-		PastMeetingImpl pm = new PastMeetingImpl(m.getId());
+		PastMeetingImpl pm = getPastMeetingInstance(m.getId());
 		pm.setDate(m.getDate());
 		pm.setContacts(m.getContacts());
 		if (m instanceof PastMeeting) {
@@ -263,7 +263,7 @@ public class ContactManagerImpl implements ContactManager {
 	private FutureMeeting cloneAsFutureMeeting(Meeting m) {
 		// TO DO: Replace with factory implementation
 		// TO DO: Make defensive copy	
-		FutureMeetingImpl fm = new FutureMeetingImpl(m.getId());
+		FutureMeetingImpl fm = getFutureMeetingInstance(m.getId());
 		fm.setDate(m.getDate());
 		fm.setContacts(m.getContacts());
 		return fm;
@@ -273,6 +273,24 @@ public class ContactManagerImpl implements ContactManager {
 
 		ModelContact model = new DefaultModelContact(id);
 		return new ContactImpl(model);
+	}
+
+	private MeetingImpl getMeetingInstance(int id) {
+
+		ModelMeeting model = new DefaultModelMeeting(id);
+		return new MeetingImpl(model);
+	}
+
+	private FutureMeetingImpl getFutureMeetingInstance(int id) {
+
+		ModelMeeting model = new DefaultModelMeeting(id);
+		return new FutureMeetingImpl(model);
+	}
+
+	private PastMeetingImpl getPastMeetingInstance(int id) {
+
+		ModelMeeting model = new DefaultModelMeeting(id);
+		return new PastMeetingImpl(model);
 	}
 }
 

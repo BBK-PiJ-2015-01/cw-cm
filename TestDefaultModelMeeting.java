@@ -52,7 +52,7 @@ public class TestDefaultModelMeeting {
 	public void setNotes() {
 		
 		String expectedNotes = "expectedNotes";
-		instance.setNotes(expectedNotes);
+		instance.addNotes(expectedNotes);
 		String resultNotes = instance.getNotes();
 		assertEquals(expectedNotes, resultNotes);
 	}
@@ -60,16 +60,16 @@ public class TestDefaultModelMeeting {
 	@Test
 	public void getContacts_NotSet() {
 		
-		Set<ModelContact> resultSet = instance.getContacts();
+		Set<Contact> resultSet = instance.getContacts();
 		assertNull(resultSet);
 	}
 
 	@Test
 	public void setContacts() {
 		
-		Set<ModelContact> expectedContacts = Collections.emptySet();
+		Set<Contact> expectedContacts = Collections.emptySet();
 		instance.setContacts(expectedContacts);
-		Set<ModelContact> resultContacts = instance.getContacts();
+		Set<Contact> resultContacts = instance.getContacts();
 		assertEquals(expectedContacts, resultContacts);
 	}
 
@@ -85,12 +85,12 @@ public class TestDefaultModelMeeting {
 	public void testCloneAttributes() {
 		
 		instance.setDate(Calendar.getInstance());
-		instance.setNotes("notes");
+		instance.addNotes("notes");
 		// generate a contact
-		Set<ModelContact> contacts = new HashSet<>();
+		Set<Contact> contacts = new HashSet<>();
 		ModelContact instanceContact = new DefaultModelContact(-1);
 		instanceContact.setName("contactName");
-		instanceContact.setNotes("contactNotes");
+		instanceContact.addNotes("contactNotes");
 		contacts.add(instanceContact);		
 		instance.setContacts(contacts);
 
@@ -106,7 +106,7 @@ public class TestDefaultModelMeeting {
 		assertFalse(instance.getContacts() == instanceClone.getContacts());
 
 		// check the cloned contact
-		ModelContact clonedContact = instanceClone.getContacts().stream().findFirst().get();
+		Contact clonedContact = instanceClone.getContacts().stream().findFirst().get();
 		assertFalse(instanceContact == clonedContact);
 		assertEquals(instanceContact.getId(), clonedContact.getId());
 		assertEquals(instanceContact.getName(), clonedContact.getName());

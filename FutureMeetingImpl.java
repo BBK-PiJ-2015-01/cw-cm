@@ -6,8 +6,8 @@ import java.util.*;
  */
 public class FutureMeetingImpl extends MeetingImpl implements FutureMeeting {
 
-	public FutureMeetingImpl(int id) {
+	public FutureMeetingImpl(ModelMeeting model) {
 
-		super(id);
+		super(model);
 	}
 }

@@ -420,7 +420,6 @@ public class TestContactManagerImplMeeting {
 		//	
 		// Add in reverse order
 		//
-//		System.out.println("Adding Past Meetings");
 		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
 		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
 		// Get the list

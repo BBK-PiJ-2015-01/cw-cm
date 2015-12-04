@@ -43,7 +43,7 @@ public class ContactImpl implements Contact {
 	@Override
 	public void addNotes(String notes) {
 
-		model.setNotes(notes);
+		model.addNotes(notes);
 	}
 
 	/**
@@ -53,18 +53,12 @@ public class ContactImpl implements Contact {
 	@Override
 	public boolean equals(Object other) {
 
-		if (other == null || this.getClass() != other.getClass()) {
-		    return false;
-		}
-
-		ContactImpl otherContactImpl = (ContactImpl) other;
-		return this.getId() == otherContactImpl.getId();
+		return model.equals(other);
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 16381;
-		hash = 83 * hash + Objects.hashCode(model);
-		return hash;
+
+		return model.hashCode();
 	}
 }

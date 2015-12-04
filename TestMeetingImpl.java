@@ -189,11 +189,13 @@ public class TestMeetingImpl {
 
 		List<Meeting> meetings = new ArrayList<>();
 		meetings.add(instance);
-		assertFalse(meetings.contains(new MeetingImpl(instance.getId()-1)));
+		assertFalse(meetings.contains(getInstance(instance.getId()-1)));
 	}
 
 	protected MeetingImpl getInstance(int id) {
-		return new MeetingImpl(id);
+
+		ModelMeeting model = new DefaultModelMeeting(id);
+		return new MeetingImpl(model);
 	}
 
 	protected int generateDefaultId() {

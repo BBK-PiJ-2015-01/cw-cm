@@ -6,29 +6,29 @@ import java.util.*;
  */
 public class MeetingImpl implements Meeting {
 
-	private final int id;
-	private Calendar date;
-	private Set<Contact> contacts;
-	private List<Contact> backingList = new ArrayList<>();
-	
+	protected final ModelMeeting model;		
+	private final String NULL_MODEL_MSG = "Supplied model was null";	
 	private final String INVALID_CONTACTS = "The Set of contacts must not be null or empty";
 
-	public MeetingImpl(int id) {
+	public MeetingImpl(ModelMeeting model) {
 
-		this.id = id;
+		if (model == null) {
+			throw new IllegalArgumentException(NULL_MODEL_MSG);
+		}
+		this.model = model;
 	}
 
 	@Override
 	public int getId() {
 
-		return id;
+		return model.getId();
 	}
 
 	@Override
 	public Calendar getDate() {
 	
 		// Make a defensive copy
-		return date == null ? null : (Calendar) date.clone();
+		return model.getDate() == null ? null : (Calendar) model.getDate().clone();
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class MeetingImpl implements Meeting {
 	public void setDate(Calendar date) {
 
 		// Make a defensive copy
-		this.date = date == null ? null : (Calendar) date.clone();
+		model.setDate(date == null ? null : (Calendar) date.clone());
 	}
 
 	/**
@@ -57,8 +57,8 @@ public class MeetingImpl implements Meeting {
 		//	contact Set will be the same class as supplied but
 		//	will be immutable from the perpective of this class
 		//
-		backingList = new ArrayList<>(contacts);
-		this.contacts = contacts;
+//		backingList = new ArrayList<>(contacts);
+		model.setContacts(contacts);
 	}
 	/**
 	* Get the contacts. This will return a reference to the Set used in the
@@ -68,13 +68,13 @@ public class MeetingImpl implements Meeting {
 	@Override
 	public Set<Contact> getContacts() {
 
-		if (contacts == null) {
-			return null;
-		}
-		//	Return a defensive copy
-		contacts.clear();
-		contacts.addAll(backingList);
-		return contacts;
+//		if (model.getContacts() == null) {
+//			return null;
+//		}
+//		//	Return a defensive copy
+//		contacts.clear();
+//		contacts.addAll(backingList);
+		return model.getContacts();
 	}  
 
 	/**
@@ -84,20 +84,20 @@ public class MeetingImpl implements Meeting {
 	@Override
 	public boolean equals(Object other) {
 
-		if (other == null || this.getClass() != other.getClass()) {
-		    return false;
-		}
-		MeetingImpl otherMeetingImpl = (MeetingImpl) other;
-		return this.id == otherMeetingImpl.id;
+//		if (other == null || this.getClass() != other.getClass()) {
+//		    return false;
+//		}
+//		MeetingImpl otherMeetingImpl = (MeetingImpl) other;
+//		return this.getId() == otherMeetingImpl.getId();
+		return model.equals(other);
 	}
 
 	@Override
 	public int hashCode() {
 
-		int hash = 16381;
-		hash = 97 * hash + id;
-		hash = 97 * hash + Objects.hashCode(date);
-		hash = 97 * hash + Objects.hashCode(backingList);
-		return hash;
+//		int hash = 16381;
+//		hash = 107 * hash + Objects.hashCode(model);
+//		return hash;
+		return model.hashCode();
 	}
 }

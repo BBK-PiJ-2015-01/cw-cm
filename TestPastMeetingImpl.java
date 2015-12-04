@@ -48,7 +48,9 @@ public class TestPastMeetingImpl extends TestMeetingImpl {
 	}
 
 	protected MeetingImpl getInstance(int id) {
-		return new PastMeetingImpl(id);
+
+		ModelMeeting model = new DefaultModelMeeting(id);
+		return new PastMeetingImpl(model);
 	}
 
 }
