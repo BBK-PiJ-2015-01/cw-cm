@@ -178,6 +178,7 @@ public class TestSerializableContactManagerModel {
 
 		instance.removeContact(getContactInstance());				
 	}
+
 	@Test
 	public void removeContact() {
 
@@ -346,6 +347,12 @@ public class TestSerializableContactManagerModel {
 	public void removeMeeting_NullMeeting() {
 
 		instance.removeMeeting(null);				
+	}
+
+	@Test(expected=IllegalStateException.class)
+	public void removeMeeting_NotFound() {
+
+		instance.removeMeeting(getMeetingInstance());				
 	}
 	// *****************************************************************************************************************	
 	// Utility methods
