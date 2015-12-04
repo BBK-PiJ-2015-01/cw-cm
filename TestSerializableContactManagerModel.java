@@ -138,6 +138,12 @@ public class TestSerializableContactManagerModel {
 		instance.updateContact(null);				
 	}
 
+	@Test(expected=IllegalStateException.class)
+	public void updateContact_NotFound() {
+
+		instance.updateContact(getContactInstance());				
+	}
+
 	protected SerializableContactManagerModel getInstance() {
 	
 		return new SerializableContactManagerModel();

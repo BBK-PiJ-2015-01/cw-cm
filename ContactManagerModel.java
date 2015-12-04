@@ -65,7 +65,6 @@ public interface ContactManagerModel {
      * @param meeting to add
      * @return id of newly created Meeting
      * @throws java.lang.NullPointerException - if meeting is null
-     * @throws java.lang.IllegalStateException - if the meeting already exists in the model
      */
     int addMeeting(ModelMeeting meeting);
 
