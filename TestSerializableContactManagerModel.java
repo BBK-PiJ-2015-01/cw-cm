@@ -163,6 +163,15 @@ public class TestSerializableContactManagerModel {
 		assertEquals(intialContact.getNotes(), resultContact.getNotes());
 		assertFalse(intialContact.getNotes() == resultContact.getNotes());			
 	}
+	// *****************************************************************************************************************	
+	// Remove Contacts tests
+	// *****************************************************************************************************************	
+
+	@Test(expected=NullPointerException.class)
+	public void removeContact_NullContact() {
+
+		instance.removeContact(null);				
+	}
 
 	// *****************************************************************************************************************	
 	// Utility methods
