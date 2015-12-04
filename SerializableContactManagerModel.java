@@ -6,7 +6,8 @@ import java.util.*;
  */
 public class SerializableContactManagerModel implements ContactManagerModel {
 
-	private final String NULL_PARAM_MSG = "The supplied argument was null";
+	private static final String NULL_PARAM_MSG = "The supplied argument was null";	
+	private static final String PARAM_NOT_FOUND_MSG = "The supplied argument does not exist in the model";
 
 	private int nextContactId;
 	private Set<ModelContact> contacts;
@@ -59,6 +60,10 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	public void updateContact(ModelContact contact) {
 		if (contact == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
+		}
+		lazyInstantiateContacts();
+		if (!contacts.contains(contact)) {
+			throw new IllegalStateException(PARAM_NOT_FOUND_MSG);
 		}
 	throw new UnsupportedOperationException("Unsupported operation."); 
 	}
