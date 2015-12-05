@@ -5,9 +5,13 @@
 public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
 	private String fileName;
+	private final String INVALID_FILENAME_MSG = "An invalid filename was supplied";
 
 	public SerializableFilePersistenceUnit(String fileName) {
-
+	
+		if (fileName == null) {
+			throw new IllegalArgumentException(INVALID_FILENAME_MSG);
+		}		
 	}
 
 	@Override
