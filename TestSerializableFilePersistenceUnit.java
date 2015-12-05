@@ -89,6 +89,31 @@ public class TestSerializableFilePersistenceUnit {
 	}
 
 	@Test
+	public void crudSequence_WithCommitAndReload() throws PersistenceUnitException {
+	
+		final String testFileName = String.format("%d.txt", System.nanoTime());
+		instance = getInstance(testFileName);
+		ContactManagerModel model = instance.getModel();
+		assertNotNull(model);
+		String expectedContactName = "name";
+		String expectedContactNotes = "notes";
+		int contactId = model.addContact(expectedContactName, expectedContactNotes);
+		instance.commit();
+		// new instance
+		instance = getInstance(testFileName);
+		model = instance.getModel();
+		assertNotNull(model);
+		ModelContact resultContact = model.getContact(contactId);
+		assertNotNull(resultContact);
+		assertEquals(expectedContactName, resultContact.getName());
+		assertEquals(expectedContactNotes, resultContact.getNotes());
+		File expectedFile = new File(testFileName);
+		assertTrue(expectedFile.exists());
+		expectedFile.delete();
+		assertFalse(expectedFile.exists());
+	}
+
+	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
 
 		instance = getInstance(expectedFileName) ;
