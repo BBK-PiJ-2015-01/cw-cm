@@ -15,7 +15,10 @@ public class TestSerializableFilePersistenceUnit {
 	}
 	
 	@Test
-	public void standardMethodTest() {
+	public void getModel_NotLoaded() {
+	
+		ContactManagerModel model = instance.getModel();
+		assertNull(model);
 		
 	}
 
