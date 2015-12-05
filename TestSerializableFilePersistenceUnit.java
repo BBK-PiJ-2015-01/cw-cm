@@ -89,7 +89,7 @@ public class TestSerializableFilePersistenceUnit {
 	}
 
 	@Test
-	public void crudSequence_WithCommitAndReload() throws PersistenceUnitException {
+	public void crudSequence_NonNullsContactWithCommitAndReload() throws PersistenceUnitException {
 	
 		final String testFileName = String.format("%d.txt", System.nanoTime());
 		instance = getInstance(testFileName);
@@ -107,11 +107,37 @@ public class TestSerializableFilePersistenceUnit {
 		assertNotNull(resultContact);
 		assertEquals(expectedContactName, resultContact.getName());
 		assertEquals(expectedContactNotes, resultContact.getNotes());
+		// cleanup
 		File expectedFile = new File(testFileName);
 		assertTrue(expectedFile.exists());
 		expectedFile.delete();
 		assertFalse(expectedFile.exists());
 	}
+	@Test
+	public void crudSequence_NullsMeetingWithCommitAndReload() throws PersistenceUnitException {
+	
+		final String testFileName = String.format("%d.txt", System.nanoTime());
+		instance = getInstance(testFileName);
+		ContactManagerModel model = instance.getModel();
+		assertNotNull(model);
+		int meetingId = model.addMeeting(null, null, null);
+		instance.commit();
+		// new instance
+		instance = getInstance(testFileName);
+		model = instance.getModel();
+		assertNotNull(model);
+		ModelMeeting resultMeeting = model.getMeeting(meetingId);
+		assertNotNull(resultMeeting);
+		assertNull(resultMeeting.getDate());
+		assertNull(resultMeeting.getContacts());
+		assertNull(resultMeeting.getNotes());
+		// cleanup
+		File expectedFile = new File(testFileName);
+		assertTrue(expectedFile.exists());
+		expectedFile.delete();
+		assertFalse(expectedFile.exists());
+	}
+
 
 	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
