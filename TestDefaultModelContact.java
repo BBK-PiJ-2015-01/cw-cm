@@ -1,7 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
-
+import java.io.*;
 
 public class TestDefaultModelContact {
 
@@ -13,6 +13,13 @@ public class TestDefaultModelContact {
 	public void init() {
 		
 		instance = new DefaultModelContact(generateDefaultId());
+	}
+
+	@Test
+	public void instanceIsSerializable() throws IOException {
+		assertTrue(instance instanceof Serializable);
+		ObjectOutputStream oos = new ObjectOutputStream(new ByteArrayOutputStream());
+		oos.writeObject(instance);
 	}
 
 	@Test

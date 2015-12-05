@@ -59,7 +59,7 @@ public class TestSerializableFilePersistenceUnit {
 	//	sequence tests
 	//	****************************************************************	
 	@Test
-	public void crudSequence_NoCommit()  throws PersistenceUnitException {
+	public void crudSequence_NoCommit() throws PersistenceUnitException {
 	
 		final String testFileName = String.format("%d.txt", System.nanoTime());
 		instance = getInstance(testFileName);
@@ -72,7 +72,7 @@ public class TestSerializableFilePersistenceUnit {
 		assertFalse(expectedFile.exists());
 	}
 	@Test
-	public void crudSequence_WithCommit()  throws PersistenceUnitException {
+	public void crudSequence_WithCommit() throws PersistenceUnitException {
 	
 		final String testFileName = String.format("%d.txt", System.nanoTime());
 		instance = getInstance(testFileName);

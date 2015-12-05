@@ -39,6 +39,7 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 		try (FileOutputStream fos = new FileOutputStream(fileName); ObjectOutputStream oos = new ObjectOutputStream(fos) ) {
 			oos.writeObject(model);
 		} catch (IOException ex) {
+			System.out.println("Commit exception: " + ex.getClass().getSimpleName());
 			ex.printStackTrace();
 			throw new PersistenceUnitException(ex.getMessage()); 
 		}
