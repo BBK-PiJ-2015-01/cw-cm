@@ -25,14 +25,14 @@ public interface ContactManagerModel {
     Set<? extends Meeting> getMeetings();
 
     /**
-     * Add a contact to the model. If the contact has an id set then this may be
-     * ignored in favour of a identifier suitable for the model implementation.
+     * Add a contact to the model. A unique id will be created and 
+     * returned to enable the Contact to be retrieved
      *
-     * @param contact to add
+     * @param name optional name of Contact
+     * @param notes optional notes to be added to the  Contact
      * @return id of newly created Contact
-     * @throws java.lang.NullPointerException - if the contact is null
      */
-    int addContact(ModelContact contact);
+    int addContact(String name, String notes);
 
     /**
      * Get an instance of a contact by it's unique identifier

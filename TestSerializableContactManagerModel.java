@@ -19,16 +19,17 @@ public class TestSerializableContactManagerModel {
 	// Add Contact and Get Contact tests
 	// *****************************************************************************************************************	
 
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void addContact_Null() {
 
-		instance.addContact(null);		
+		int resultId = instance.addContact(null, null);	
+		assertTrue(resultId > 0);
 	}
 
 	@Test
 	public void addContact_NotNull() {
 
-		int resultId = instance.addContact(getContactInstance());
+		int resultId = instance.addContact("name", "notes");	
 		assertTrue(resultId > 0);		
 	}
 
@@ -42,7 +43,7 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getContact_Exists() {
 
-		int resultId = instance.addContact(getContactInstance());		
+		int resultId = instance.addContact(null, null);			
 		ModelContact contact = instance.getContact(resultId);
 		assertNotNull(contact);				
 	}
@@ -50,46 +51,27 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getContact_CheckValues() {
 
-		ModelContact expectedContact = getContactInstance();
-		expectedContact.setName("name");
-		expectedContact.addNotes("notes");
-		int resultId = instance.addContact(expectedContact);		
+		String expectedName = "name";
+		String expectedNotes = "notes";
+		int resultId = instance.addContact(expectedName, expectedNotes);		
 		ModelContact resultContact = instance.getContact(resultId);
-		assertNotSame(expectedContact,resultContact);
-		assertEquals(expectedContact.getName(), resultContact.getName());	
-		assertEquals(expectedContact.getNotes(), resultContact.getNotes());					
-	}
-
-	@Test
-	public void getContact_CheckImmutableUpdatesOnExpected() {
-
-		ModelContact expectedContact = getContactInstance();
-		expectedContact.setName("name");
-		expectedContact.addNotes("notes");
-		int resultId = instance.addContact(expectedContact);		
-		
-		expectedContact.setName("Changed name");
-		expectedContact.addNotes("Changed notes");
-
-		ModelContact resultContact = instance.getContact(resultId);
-		assertNotEquals(expectedContact.getName(), resultContact.getName());	
-		assertNotEquals(expectedContact.getNotes(), resultContact.getNotes());								
+		assertEquals(expectedName, resultContact.getName());	
+		assertEquals(expectedNotes, resultContact.getNotes());					
 	}
 
 	@Test
 	public void getContact_CheckImmutableUpdatesOnResult() {
 
-		ModelContact expectedContact = getContactInstance();
-		expectedContact.setName("name");
-		expectedContact.addNotes("notes");
-		int resultId = instance.addContact(expectedContact);		
+		String expectedName = "name";
+		String expectedNotes = "notes";
+		int resultId = instance.addContact(expectedName, expectedNotes);	
 		ModelContact resultContact = instance.getContact(resultId);
 
 		resultContact.setName("Changed name");
 		resultContact.addNotes("Changed notes");
 
-		assertNotEquals(expectedContact.getName(), resultContact.getName());	
-		assertNotEquals(expectedContact.getNotes(), resultContact.getNotes());								
+		assertNotEquals(expectedName, resultContact.getName());	
+		assertNotEquals(expectedNotes, resultContact.getNotes());								
 	}
 
 	// *****************************************************************************************************************	
@@ -106,7 +88,7 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getContacts_PopulatedSet() {
 
-		instance.addContact(getContactInstance());
+		instance.addContact(null, null);
 		Set<ModelContact> resultContacts = instance.getContacts();
 
 		Set<ModelContact> contacts = instance.getContacts();	
@@ -118,16 +100,19 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getContacts_ImmutabilityTest() {
 
-		ModelContact expectedContact = getContactInstance();
-		expectedContact.setName("name");
-		expectedContact.addNotes("notes");
-		int resultId = instance.addContact(expectedContact);
+		String expectedName = "name";
+		String expectedNotes = "notes";
+		int resultId = instance.addContact(expectedName, expectedNotes);	
 		Set<ModelContact> resultContacts = instance.getContacts();
 
 		Set<ModelContact> contacts = instance.getContacts();	
 		ModelContact setContact = (ModelContact) contacts.stream().findFirst().get();
 		ModelContact getContact = instance.getContact(resultId);
-		assertNotSame(setContact , getContact);		
+		assertNotSame(setContact , getContact);	
+		assertEquals(expectedName, setContact.getName());	
+		assertEquals(expectedNotes, setContact.getNotes());	
+		assertEquals(expectedName, getContact.getName());	
+		assertEquals(expectedNotes, getContact.getNotes());		
 	}
 	// *****************************************************************************************************************	
 	// Update Contacts tests
@@ -148,10 +133,10 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void updateContact_ImmutabilityTest() {
 
-		ModelContact intialContact = getContactInstance();		
-		int initialId = instance.addContact(intialContact);
 	
-		intialContact = instance.getContact(initialId);
+		int initialId = instance.addContact(null, null);
+	
+		ModelContact intialContact = instance.getContact(initialId);
 		intialContact.setName("name");
 		intialContact.addNotes("notes");
 		instance.updateContact(intialContact);
@@ -181,10 +166,9 @@ public class TestSerializableContactManagerModel {
 
 	@Test
 	public void removeContact() {
-
-		ModelContact intialContact = getContactInstance();		
-		int initialId = instance.addContact(intialContact);	
-		intialContact = instance.getContact(initialId);
+		
+		int initialId = instance.addContact(null, null);	
+		ModelContact intialContact = instance.getContact(initialId);
 
 		instance.removeContact(intialContact);	
 		ModelContact removedContact = instance.getContact(initialId);
@@ -232,7 +216,7 @@ public class TestSerializableContactManagerModel {
 		expectedMeeting.addNotes("notes");
 
 		Set<Contact> expectedContacts = new HashSet<>();
-		int contactId = instance.addContact(getContactInstance());
+		int contactId = instance.addContact("name", "notes");
 		Contact meetingContact = instance.getContact(contactId);	
 		expectedContacts.add(meetingContact);
 		expectedMeeting.setContacts(expectedContacts);
@@ -253,7 +237,7 @@ public class TestSerializableContactManagerModel {
 		expectedMeeting.addNotes("notes");
 
 		Set<Contact> expectedContacts = new HashSet<>();
-		int contactId = instance.addContact(getContactInstance());
+		int contactId = instance.addContact("name", "notes");
 		Contact meetingContact = instance.getContact(contactId);	
 		expectedContacts.add(meetingContact);
 		expectedMeeting.setContacts(expectedContacts);
@@ -284,7 +268,7 @@ public class TestSerializableContactManagerModel {
 		expectedMeeting.addNotes("notes");
 
 		Set<Contact> expectedContacts = new HashSet<>();
-		int contactId = instance.addContact(getContactInstance());
+		int contactId = instance.addContact("name", "notes");
 		Contact meetingContact = instance.getContact(contactId);	
 		expectedContacts.add(meetingContact);
 		expectedMeeting.setContacts(expectedContacts);

@@ -33,18 +33,16 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	}
 
 	@Override
-	public int addContact(ModelContact contact) {
+	public int addContact(String name, String notes) {
 
-		if (contact == null) {
-			throw new NullPointerException(NULL_PARAM_MSG);
-		}
-		lazyInstantiateContacts();
 
 		ModelContact newContact = getNewContactInstance();
+		lazyInstantiateContacts();
 		if (contacts.contains(newContact)) {
 			throw new IllegalStateException("Contact Identity error encountered");
 		}
-		populateModelContactFromModelContact(newContact, contact);
+		newContact.setName(name);
+		newContact.addNotes(notes);
 		contacts.add(newContact);
 		return newContact.getId();
 	}
