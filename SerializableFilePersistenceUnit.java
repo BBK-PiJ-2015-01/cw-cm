@@ -4,6 +4,8 @@
  */
 public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
+	
+
 	@Override
 	public void load() throws PersistenceUnitException {
 	throw new UnsupportedOperationException("Unsupported operation.");
