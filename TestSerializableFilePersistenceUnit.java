@@ -84,6 +84,8 @@ public class TestSerializableFilePersistenceUnit {
 		instance.commit();
 		File expectedFile = new File(testFileName);
 		assertTrue(expectedFile.exists());
+		expectedFile.delete();
+		assertFalse(expectedFile.exists());
 	}
 
 	@Test
