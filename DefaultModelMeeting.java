@@ -1,10 +1,10 @@
 import java.util.*;
-
+import java.io.*;
 /**
  *
  * @author Simon Baird
  */
-public class DefaultModelMeeting implements ModelMeeting, Cloneable{
+public class DefaultModelMeeting implements ModelMeeting, Cloneable, Serializable {
 
 	private final int id;
 	private Calendar date;
