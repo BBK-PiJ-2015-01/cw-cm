@@ -23,15 +23,7 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	@Override
 	public void load() throws PersistenceUnitException {
 
-		if (fileName == null) {
-			throw new PersistenceUnitException("File not found.");
-		}
-		File destinationFile = new File(fileName);
-//		if  (destinationFile.exists()) {
-			// load the model
-			model = getContactManagerModelInstance();
-//		}
-		loaded = true;
+		performLoad();
 	}
 
 	@Override
@@ -51,7 +43,21 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	//	Convenience methods
 	// ********************************************************************
 	private ContactManagerModel getContactManagerModelInstance() {
+
 		return new SerializableContactManagerModel();
+	}
+
+	private void performLoad() throws PersistenceUnitException{
+
+		if (fileName == null) {
+			throw new PersistenceUnitException("File not found.");
+		}
+		File destinationFile = new File(fileName);
+		if  (!destinationFile.exists()) {
+			// load the model
+			model = getContactManagerModelInstance();
+		}
+		loaded = true;
 	}
 }
 
