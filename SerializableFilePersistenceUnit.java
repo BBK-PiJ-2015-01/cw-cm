@@ -28,6 +28,10 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
 	@Override
 	public void commit() throws PersistenceUnitException {
+
+		if  (!loaded) {
+			throw new PersistenceUnitException (NOT_LOADED_MSG);
+		}
 	throw new UnsupportedOperationException("Unsupported operation.");
 	}
 
@@ -39,6 +43,7 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 		}
 		return model;
 	}
+
 	// ********************************************************************
 	//	Convenience methods
 	// ********************************************************************
@@ -49,15 +54,23 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
 	private void performLoad() throws PersistenceUnitException{
 
+		model = null;
+		loaded = true;
 		if (fileName == null) {
 			throw new PersistenceUnitException("File not found.");
 		}
 		File destinationFile = new File(fileName);
 		if  (!destinationFile.exists()) {
-			// load the model
+			// Create empty model
 			model = getContactManagerModelInstance();
+		} else {
+			try (FileInputStream fis = new FileInputStream(destinationFile); ObjectInputStream ois = new ObjectInputStream(fis) ) {
+				model = (ContactManagerModel) ois.readObject();
+				loaded = true;
+			} catch (IOException | ClassNotFoundException ex) {
+				throw new PersistenceUnitException(ex.getMessage()); 
+			}
 		}
-		loaded = true;
 	}
 }
 

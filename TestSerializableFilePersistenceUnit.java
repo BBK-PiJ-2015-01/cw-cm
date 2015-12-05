@@ -58,6 +58,15 @@ public class TestSerializableFilePersistenceUnit {
 		}
 	}
 
+	//	****************************************************************
+	//	commit tests
+	//	****************************************************************
+	@Test(expected=PersistenceUnitException.class)
+	public void commit_NotLoaded() throws PersistenceUnitException {
+	
+		getInstance(expectedFileName).commit() ;
+	}
+
 	protected PersistenceUnit getInstance(String fileName) {
 
 		return new SerializableFilePersistenceUnit(fileName);
