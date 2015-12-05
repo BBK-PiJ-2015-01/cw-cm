@@ -23,6 +23,12 @@ public class TestSerializableFilePersistenceUnit {
 		instance = getInstance(null);
 	}
 
+	@Test(expected=IllegalArgumentException.class)
+	public void constructor_EmptyFilename() {
+	
+		instance = getInstance("");
+	}
+
 	//	****************************************************************
 	//	load tests
 	//	****************************************************************
