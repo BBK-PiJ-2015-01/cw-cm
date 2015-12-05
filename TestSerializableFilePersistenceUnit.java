@@ -17,12 +17,12 @@ public class TestSerializableFilePersistenceUnit {
 	//	load tests
 	//	****************************************************************
 	@Test(expected=PersistenceUnitException.class)
-	public void load_UnknownFile() {
+	public void load_UnknownFile() throws PersistenceUnitException {
 	
 		try {
 			instance.load();	
 		} catch(PersistenceUnitException ex) {
-			ex.printStackTrace();
+			throw ex;
 		}
 	}
 
