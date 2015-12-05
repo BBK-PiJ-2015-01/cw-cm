@@ -32,7 +32,15 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 		if  (!loaded) {
 			throw new PersistenceUnitException (NOT_LOADED_MSG);
 		}
-	throw new UnsupportedOperationException("Unsupported operation.");
+		if (fileName == null) {
+			throw new PersistenceUnitException("File not found.");
+		}
+		try (FileOutputStream fos = new FileOutputStream(fileName); ObjectOutputStream oos = new ObjectOutputStream(fos) ) {
+			oos.writeObject(model);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			throw new PersistenceUnitException(ex.getMessage()); 
+		}
 	}
 
 	@Override

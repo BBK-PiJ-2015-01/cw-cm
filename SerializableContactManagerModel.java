@@ -1,10 +1,11 @@
 import java.util.*;
+import java.io.*;
 /**
  * 
  *
  * @author sbaird02
  */
-public class SerializableContactManagerModel implements ContactManagerModel {
+public class SerializableContactManagerModel implements ContactManagerModel, Serializable {
 
 	private static final String NULL_PARAM_MSG = "The supplied argument was null";	
 	private static final String PARAM_NOT_FOUND_MSG = "The supplied argument does not exist in the model";
