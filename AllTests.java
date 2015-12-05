@@ -13,5 +13,6 @@ import org.junit.runners.Suite;
 ,	TestContactManagerImplMeeting.class
 ,	TestDefaultModelMeeting.class
 ,	TestDefaultModelContact.class
-,	TestSerializableContactManagerModel.class})
+,	TestSerializableContactManagerModel.class
+,	TestSerializableFilePersistenceUnit.class})
 public class AllTests {}
