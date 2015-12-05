@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.io.*;
 
 //
 //	Don't forget org.junit.runner.JUnitCore !
@@ -57,6 +58,7 @@ public class TestSerializableFilePersistenceUnit {
 	//	****************************************************************
 	//	sequence tests
 	//	****************************************************************	
+	@Test
 	public void crudSequence_NoCommit()  throws PersistenceUnitException {
 	
 		final String testFileName = String.format("%d.txt", System.nanoTime());
@@ -66,7 +68,24 @@ public class TestSerializableFilePersistenceUnit {
 		int contactId = model.addContact("name", "notes");
 		ModelContact contact = model.getContact(contactId);
 		assertNotNull(contact);
+		File expectedFile = new File(testFileName);
+		assertFalse(expectedFile.exists());
 	}
+	@Test
+	public void crudSequence_WithCommit()  throws PersistenceUnitException {
+	
+		final String testFileName = String.format("%d.txt", System.nanoTime());
+		instance = getInstance(testFileName);
+		ContactManagerModel model = instance.getModel();
+		assertNotNull(model);
+		int contactId = model.addContact("name", "notes");
+		ModelContact contact = model.getContact(contactId);
+		assertNotNull(contact);
+		instance.commit();
+		File expectedFile = new File(testFileName);
+		assertTrue(expectedFile.exists());
+	}
+
 	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
 
