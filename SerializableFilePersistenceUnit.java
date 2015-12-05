@@ -12,12 +12,13 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	private boolean loaded = false;
 	private ContactManagerModel model;
 
-	public SerializableFilePersistenceUnit(String fileName) {
+	public SerializableFilePersistenceUnit(String fileName) throws PersistenceUnitException{
 	
 		if (fileName == null || fileName.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_FILENAME_MSG);
 		}	
 		this.fileName = fileName;	
+		performLoad();
 	}
 
 	@Override
@@ -64,16 +65,17 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
 		model = null;
 		loaded = true;
+		final long EMPTY_FILE_SIZE = 0L;
 		if (fileName == null) {
 			throw new PersistenceUnitException("File not found.");
 		}
 		File destinationFile = new File(fileName);
-		if  (!destinationFile.exists()) {
+		if  (!destinationFile.exists() || destinationFile.length() == EMPTY_FILE_SIZE) {
 			// Create empty model
 			model = getContactManagerModelInstance();
 		} else {
 			try (FileInputStream fis = new FileInputStream(destinationFile); ObjectInputStream ois = new ObjectInputStream(fis) ) {
-				model = (ContactManagerModel) ois.readObject();
+				model = (SerializableContactManagerModel) ois.readObject();
 				loaded = true;
 			} catch (IOException | ClassNotFoundException ex) {
 				throw new PersistenceUnitException(ex.getMessage()); 

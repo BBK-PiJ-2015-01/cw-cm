@@ -1,6 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
+import java.io.*;
 
 //
 //	Don't forget org.junit.runner.JUnitCore !
@@ -16,6 +17,13 @@ public class TestSerializableContactManagerModel {
 //		System.out.println(System.nanoTime());
 	}
 	
+	@Test
+	public void instanceIsSerializable() throws IOException {
+		assertTrue(instance instanceof Serializable);
+		ObjectOutputStream oos = new ObjectOutputStream(new ByteArrayOutputStream());
+		oos.writeObject(instance);
+
+	}
 	// *****************************************************************************************************************	
 	// Add Contact and Get Contact tests
 	// *****************************************************************************************************************	

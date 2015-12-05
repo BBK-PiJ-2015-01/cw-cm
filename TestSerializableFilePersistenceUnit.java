@@ -18,13 +18,13 @@ public class TestSerializableFilePersistenceUnit {
 	//	constructor tests
 	//	****************************************************************
 	@Test(expected=IllegalArgumentException.class)
-	public void constructor_NullFile() {
+	public void constructor_NullFile()  throws PersistenceUnitException {
 	
 		instance = getInstance(null);
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public void constructor_EmptyFilename() {
+	public void constructor_EmptyFilename()  throws PersistenceUnitException {
 	
 		instance = getInstance("");
 	}
@@ -33,7 +33,7 @@ public class TestSerializableFilePersistenceUnit {
 	//	load tests
 	//	****************************************************************
 	@Test
-	public void load_UnknownFile() {
+	public void load_UnknownFile()  throws PersistenceUnitException{
 	
 		instance = getInstance(expectedFileName) ;
 		try {
@@ -47,26 +47,22 @@ public class TestSerializableFilePersistenceUnit {
 	//	****************************************************************
 	//	get Model tests
 	//	****************************************************************
-	@Test(expected=PersistenceUnitException.class)
-	public void getModel_NotLoaded() throws PersistenceUnitException {
-	
-		instance = getInstance(expectedFileName) ;
-		try {
-			instance.getModel();
-		} catch(PersistenceUnitException ex) {
-			throw ex;
-		}
-	}
+
 
 	//	****************************************************************
 	//	commit tests
 	//	****************************************************************
-	@Test(expected=PersistenceUnitException.class)
-	public void commit_NotLoaded() throws PersistenceUnitException {
-	
-		getInstance(expectedFileName).commit() ;
-	}
 
+
+	//	****************************************************************
+	//	sequence tests
+	//	****************************************************************	
+	public void crudSequence()  throws PersistenceUnitException {
+	
+		final String testFileName = String.format("%d.txt", System.nanoTime());
+		instance = getInstance(testFileName);
+		
+	}
 	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
 
@@ -75,7 +71,7 @@ public class TestSerializableFilePersistenceUnit {
 		instance.commit();
 	}
 
-	protected PersistenceUnit getInstance(String fileName) {
+	protected PersistenceUnit getInstance(String fileName) throws PersistenceUnitException {
 
 		return new SerializableFilePersistenceUnit(fileName);
 	}
