@@ -57,11 +57,15 @@ public class TestSerializableFilePersistenceUnit {
 	//	****************************************************************
 	//	sequence tests
 	//	****************************************************************	
-	public void crudSequence()  throws PersistenceUnitException {
+	public void crudSequence_NoCommit()  throws PersistenceUnitException {
 	
 		final String testFileName = String.format("%d.txt", System.nanoTime());
 		instance = getInstance(testFileName);
-		
+		ContactManagerModel model = instance.getModel();
+		assertNotNull(model);
+		int contactId = model.addContact("name", "notes");
+		ModelContact contact = model.getContact(contactId);
+		assertNotNull(contact);
 	}
 	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
