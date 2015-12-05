@@ -1,6 +1,7 @@
 import java.util.*;
+import java.io.*;
 
-public class DefaultModelContact implements ModelContact, Cloneable {
+public class DefaultModelContact implements ModelContact, Cloneable, Serializable {
 
 	private final int id;
 	private String name;
