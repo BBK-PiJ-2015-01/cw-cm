@@ -18,7 +18,7 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
 	@Override
 	public ContactManagerModel getModel() {
-	throw new UnsupportedOperationException("Unsupported operation.");
+		return null;
 	}
 
 }

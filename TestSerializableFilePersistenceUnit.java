@@ -13,7 +13,22 @@ public class TestSerializableFilePersistenceUnit {
 		
 		instance = getInstance() ;
 	}
+	//	****************************************************************
+	//	load tests
+	//	****************************************************************
+	@Test(expected=PersistenceUnitException.class)
+	public void load_UnknownFile() {
 	
+		try {
+			instance.load();	
+		} catch(PersistenceUnitException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	//	****************************************************************
+	//	get Model tests
+	//	****************************************************************
 	@Test
 	public void getModel_NotLoaded() {
 	
