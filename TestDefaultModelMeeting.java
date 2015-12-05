@@ -1,7 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
-
+import java.io.*;
 //
 //	Don't forget org.junit.runner.JUnitCore !
 //
@@ -17,6 +17,13 @@ public class TestDefaultModelMeeting {
 		instance = getInstance(generateDefaultId());
 	}
 	
+	@Test
+	public void instanceIsSerializable() throws IOException {
+		assertTrue(instance instanceof Serializable);
+		ObjectOutputStream oos = new ObjectOutputStream(new ByteArrayOutputStream());
+		oos.writeObject(instance);
+	}
+
 	@Test
 	public void getId() {
 		
