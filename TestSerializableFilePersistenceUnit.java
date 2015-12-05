@@ -1,7 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.io.*;
-
+import java.util.*;
 //
 //	Don't forget org.junit.runner.JUnitCore !
 //
@@ -113,6 +113,7 @@ public class TestSerializableFilePersistenceUnit {
 		expectedFile.delete();
 		assertFalse(expectedFile.exists());
 	}
+
 	@Test
 	public void crudSequence_NullsMeetingWithCommitAndReload() throws PersistenceUnitException {
 	
@@ -138,6 +139,44 @@ public class TestSerializableFilePersistenceUnit {
 		assertFalse(expectedFile.exists());
 	}
 
+	@Test
+	public void crudSequence_NonNullsMeetingWithCommitAndReload() throws PersistenceUnitException {
+	
+		final String testFileName = String.format("%d.txt", System.nanoTime());
+		instance = getInstance(testFileName);
+		ContactManagerModel model = instance.getModel();
+		assertNotNull(model);
+		//Create a contact
+		String expectedContactName = "Contact name";
+		String expectedContactNotes = "Contact notes";
+		int contactId = model.addContact(expectedContactName, expectedContactNotes);
+		ModelContact resultContact = model.getContact(contactId);
+		// Create a meeting
+		Calendar expectedMeetingDate = Calendar.getInstance();
+		String expectedMeetingNotes = "Meeting notes";
+		Set<Contact> expectedContacts = new HashSet<>();
+		expectedContacts.add(resultContact);
+		int meetingId = model.addMeeting(expectedMeetingDate, expectedContacts, expectedMeetingNotes);
+		instance.commit();
+		// new instance
+		instance = getInstance(testFileName);
+		model = instance.getModel();
+		assertNotNull(model);
+		ModelMeeting resultMeeting = model.getMeeting(meetingId);
+		assertNotNull(resultMeeting);
+		assertEquals(expectedMeetingDate, resultMeeting.getDate());
+		assertEquals(expectedContacts, resultMeeting.getContacts());
+		assertEquals(expectedMeetingNotes, resultMeeting.getNotes());
+		//
+		ModelContact setContact = (ModelContact) resultMeeting.getContacts().stream().findFirst().get();
+		assertEquals(expectedContactName, setContact.getName());
+		assertEquals(expectedContactNotes, setContact.getNotes());
+		// cleanup
+		File expectedFile = new File(testFileName);
+		assertTrue(expectedFile.exists());
+		expectedFile.delete();
+		assertFalse(expectedFile.exists());
+	}
 
 	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
