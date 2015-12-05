@@ -8,7 +8,9 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	private final String fileName;
 	private final String INVALID_FILENAME_MSG = "An invalid filename was supplied";	
 	private final String FILE_NOTFOUND_MSG = "The file was not found";
+	private final String NOT_LOADED_MSG = "The load() method was not successfully executed";
 	private boolean loaded = false;
+	private ContactManagerModel model;
 
 	public SerializableFilePersistenceUnit(String fileName) {
 	
@@ -25,10 +27,10 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 			throw new PersistenceUnitException("File not found.");
 		}
 		File destinationFile = new File(fileName);
-		if  (destinationFile.exists()) {
+//		if  (destinationFile.exists()) {
 			// load the model
-		
-		}
+			model = getContactManagerModelInstance();
+//		}
 		loaded = true;
 	}
 
@@ -38,12 +40,18 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	}
 
 	@Override
-	public ContactManagerModel getModel() {
-		return null;
+	public ContactManagerModel getModel() throws PersistenceUnitException {
+
+		if  (!loaded) {
+			throw new PersistenceUnitException (NOT_LOADED_MSG);
+		}
+		return model;
 	}
 	// ********************************************************************
 	//	Convenience methods
 	// ********************************************************************
-
+	private ContactManagerModel getContactManagerModelInstance() {
+		return new SerializableContactManagerModel();
+	}
 }
 
