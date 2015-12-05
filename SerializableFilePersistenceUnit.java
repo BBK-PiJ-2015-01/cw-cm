@@ -9,7 +9,7 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
 	public SerializableFilePersistenceUnit(String fileName) {
 	
-		if (fileName == null) {
+		if (fileName == null || fileName.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_FILENAME_MSG);
 		}		
 	}
