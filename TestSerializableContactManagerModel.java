@@ -180,16 +180,17 @@ public class TestSerializableContactManagerModel {
 	// Add Meeting and Get Meeting tests
 	// *****************************************************************************************************************	
 
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void addMeeting_Null() {
 
-		instance.addMeeting(null);		
+		int resultId = instance.addMeeting(null, null, null);	
+		assertTrue(resultId > 0);	
 	}
 
 	@Test
 	public void addMeeting_NotNull() {
 
-		int resultId = instance.addMeeting(getMeetingInstance());
+		int resultId = instance.addMeeting(Calendar.getInstance(), Collections.emptySet(), "Notes");
 		assertTrue(resultId > 0);		
 	}
 
@@ -203,7 +204,7 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getMeeting_Exists() {
 
-		int resultId = instance.addMeeting(getMeetingInstance());		
+		int resultId = instance.addMeeting(null, null, null);		
 		ModelMeeting meeting = instance.getMeeting(resultId);
 		assertNotNull(meeting);				
 	}
@@ -211,45 +212,45 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getMeeting_CheckValues() {
 
-		ModelMeeting expectedMeeting = getMeetingInstance();
-		expectedMeeting.setDate(Calendar.getInstance());
-		expectedMeeting.addNotes("notes");
+		Calendar expectedDate = Calendar.getInstance();
+		String expectedNotes = "notes";
 
 		Set<Contact> expectedContacts = new HashSet<>();
 		int contactId = instance.addContact("name", "notes");
 		Contact meetingContact = instance.getContact(contactId);	
 		expectedContacts.add(meetingContact);
-		expectedMeeting.setContacts(expectedContacts);
 
-		int resultId = instance.addMeeting(expectedMeeting);		
+		int resultId = instance.addMeeting(expectedDate, expectedContacts, expectedNotes);	
+	
 		ModelMeeting resultMeeting = instance.getMeeting(resultId);
-		assertNotSame(expectedMeeting , resultMeeting);
-		assertEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
-		assertEquals(expectedMeeting.getNotes(), resultMeeting.getNotes());	
-		assertEquals(expectedMeeting.getContacts(), resultMeeting.getContacts());				
+		assertEquals(expectedDate, resultMeeting.getDate());	
+		assertEquals(expectedNotes, resultMeeting.getNotes());	
+		assertEquals(expectedContacts, resultMeeting.getContacts());				
 	}
 
 	@Test
 	public void getMeeting_CheckImmutableUpdatesOnExpected() {
 
-		ModelMeeting expectedMeeting = getMeetingInstance();
-		expectedMeeting.setDate(Calendar.getInstance());
-		expectedMeeting.addNotes("notes");
+		Calendar expectedDate = Calendar.getInstance();
+		String expectedNotes = "notes";
 
 		Set<Contact> expectedContacts = new HashSet<>();
 		int contactId = instance.addContact("name", "notes");
 		Contact meetingContact = instance.getContact(contactId);	
 		expectedContacts.add(meetingContact);
-		expectedMeeting.setContacts(expectedContacts);
 
-		int resultId = instance.addMeeting(expectedMeeting);	
-		
+		int resultId = instance.addMeeting(expectedDate, expectedContacts, expectedNotes);
+		ModelMeeting expectedMeeting = instance.getMeeting(resultId);
+
 		Calendar newDate = Calendar.getInstance();
 		newDate.add(Calendar.HOUR, 12);
 		expectedMeeting.setDate(newDate);
 		expectedMeeting.addNotes("Changed notes");
 		expectedContacts = expectedMeeting.getContacts();
-		expectedContacts.add(getContactInstance());
+
+		int newContactId = instance.addContact("new name", "new notes");
+		Contact newMeetingContact = instance.getContact(newContactId);
+		expectedContacts.add(newMeetingContact);
 		expectedMeeting.setContacts(expectedContacts);
 
 		ModelMeeting resultMeeting = instance.getMeeting(resultId);
@@ -263,17 +264,17 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getMeeting_CheckImmutableUpdatesOnResult() {
 
-		ModelMeeting expectedMeeting = getMeetingInstance();
-		expectedMeeting.setDate(Calendar.getInstance());
-		expectedMeeting.addNotes("notes");
+		Calendar expectedDate = Calendar.getInstance();
+		String expectedNotes = "notes";
 
 		Set<Contact> expectedContacts = new HashSet<>();
 		int contactId = instance.addContact("name", "notes");
 		Contact meetingContact = instance.getContact(contactId);	
 		expectedContacts.add(meetingContact);
-		expectedMeeting.setContacts(expectedContacts);
 
-		int resultId = instance.addMeeting(expectedMeeting);
+		int resultId = instance.addMeeting(expectedDate, expectedContacts, expectedNotes);
+		ModelMeeting expectedMeeting = instance.getMeeting(resultId);
+
 		ModelMeeting resultMeeting = instance.getMeeting(resultId);
 
 		Calendar newDate = Calendar.getInstance();
@@ -281,7 +282,9 @@ public class TestSerializableContactManagerModel {
 		resultMeeting.setDate(newDate);
 		resultMeeting.addNotes("Changed notes");
 		Set<Contact> resultContacts  = resultMeeting.getContacts();
-		resultContacts.add(getContactInstance());
+		int newContactId = instance.addContact("new name", "new notes");
+		Contact newMeetingContact = instance.getContact(newContactId);
+		resultContacts.add(newMeetingContact);
 		resultMeeting.setContacts(resultContacts);
 
 		assertNotEquals(expectedMeeting.getDate(), resultMeeting.getDate());	
@@ -305,7 +308,7 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getMeetings_PopulatedSet() {
 
-		instance.addMeeting(getMeetingInstance());
+		instance.addMeeting(null, null, null);
 		Set<ModelMeeting> resultMeetings = instance.getMeetings();
 
 		Set<ModelMeeting> meetings = instance.getMeetings();	
@@ -317,11 +320,15 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void getMeetings_ImmutabilityTest() {
 
-		ModelMeeting expectedMeeting = getMeetingInstance();
-		expectedMeeting.setDate(Calendar.getInstance());
-		expectedMeeting.addNotes("notes");
-		int resultId = instance.addMeeting(expectedMeeting);
-		Set<ModelMeeting> resultMeetings = instance.getMeetings();
+		Calendar expectedDate = Calendar.getInstance();
+		String expectedNotes = "notes";
+
+		Set<Contact> expectedContacts = new HashSet<>();
+		int contactId = instance.addContact("name", "notes");
+		Contact meetingContact = instance.getContact(contactId);	
+		expectedContacts.add(meetingContact);
+
+		int resultId = instance.addMeeting(expectedDate, expectedContacts, expectedNotes);
 
 		Set<ModelMeeting> meetings = instance.getMeetings();	
 		ModelMeeting setMeeting = (ModelMeeting) meetings.stream().findFirst().get();
@@ -347,10 +354,10 @@ public class TestSerializableContactManagerModel {
 	@Test
 	public void updateMeeting_ImmutabilityTest() {
 
-		ModelMeeting intialMeeting = getMeetingInstance();		
-		int initialId = instance.addMeeting(intialMeeting);
+	
+		int initialId = instance.addMeeting(null, null, null);
+		ModelMeeting intialMeeting = instance.getMeeting(initialId);
 
-		intialMeeting = instance.getMeeting(initialId);
 		intialMeeting.setDate(Calendar.getInstance());
 		intialMeeting.addNotes("notes");
 		instance.updateMeeting(intialMeeting);
@@ -381,10 +388,9 @@ public class TestSerializableContactManagerModel {
 
 	@Test
 	public void removeMeeting() {
-
-		ModelMeeting intialMeeting = getMeetingInstance();		
-		int initialId = instance.addMeeting(intialMeeting);	
-		intialMeeting = instance.getMeeting(initialId);
+	
+		int initialId = instance.addMeeting(null, null, null);	
+		ModelMeeting intialMeeting = instance.getMeeting(initialId);
 
 		instance.removeMeeting(intialMeeting);	
 		ModelMeeting removedMeeting = instance.getMeeting(initialId);

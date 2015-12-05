@@ -83,17 +83,16 @@ public class SerializableContactManagerModel implements ContactManagerModel {
 	}
 
 	@Override
-	public int addMeeting(ModelMeeting meeting) {
-		if (meeting == null) {
-			throw new NullPointerException(NULL_PARAM_MSG);
-		}
-		lazyInstantiateMeetings();
+	public int addMeeting(Calendar date, Set<Contact> contacts, String notes) {
 
 		ModelMeeting newMeeting = getNewMeetingInstance();
+		lazyInstantiateMeetings();
 		if (meetings.contains(newMeeting)) {
 			throw new IllegalStateException("Meeting Identity error encountered");
 		}
-		populateModelMeetingFromModelMeeting(newMeeting, meeting);
+		newMeeting.setDate(date);
+		newMeeting.setContacts(contacts);
+		newMeeting.addNotes(notes);
 		meetings.add(newMeeting);
 		return newMeeting.getId();
 	}

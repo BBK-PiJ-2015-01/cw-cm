@@ -60,13 +60,15 @@ public interface ContactManagerModel {
     void updateContact(ModelContact contact);
 
     /**
-     * Add a meeting to the model
+     * Add a meeting to the model. A unique id will be created and 
+     * returned to enable the Meeting to be retrieved
      *
-     * @param meeting to add
+     * @param date date of meeting, can be null
+     * @param contacts Set of Contacts attending the meeting, can be null
+     * @param notes meeting notes, can be null
      * @return id of newly created Meeting
-     * @throws java.lang.NullPointerException - if meeting is null
      */
-    int addMeeting(ModelMeeting meeting);
+    int addMeeting(Calendar date, Set<Contact> contacts, String notes);
 
     /**
      * Get an instance of a Meeting by it's unique identifier
