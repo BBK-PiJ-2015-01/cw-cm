@@ -22,8 +22,9 @@ public interface PersistenceUnit {
      * Return the ContactManager model
      *
      * @return an instance of the ContactManagerModel
+     * @throws PersistenceUnitException if called before load()
      */
-    ContactManagerModel getModel();
+    ContactManagerModel getModel() throws PersistenceUnitException;
 
 }
 

@@ -32,27 +32,30 @@ public class TestSerializableFilePersistenceUnit {
 	//	****************************************************************
 	//	load tests
 	//	****************************************************************
-	@Test(expected=PersistenceUnitException.class)
-	public void load_UnknownFile() throws PersistenceUnitException {
+	@Test
+	public void load_UnknownFile() {
 	
 		instance = getInstance(expectedFileName) ;
 		try {
-			instance.load();	
+			instance.load();
+			ContactManagerModel model = instance.getModel();
+			assertNotNull(model);
 		} catch(PersistenceUnitException ex) {
-			throw ex;
+			ex.printStackTrace();
 		}
 	}
-
 	//	****************************************************************
 	//	get Model tests
 	//	****************************************************************
-	@Test
-	public void getModel_NotLoaded() {
+	@Test(expected=PersistenceUnitException.class)
+	public void getModel_NotLoaded() throws PersistenceUnitException {
 	
 		instance = getInstance(expectedFileName) ;
-		ContactManagerModel model = instance.getModel();
-		assertNull(model);
-		
+		try {
+			instance.getModel();
+		} catch(PersistenceUnitException ex) {
+			throw ex;
+		}
 	}
 
 	protected PersistenceUnit getInstance(String fileName) {
