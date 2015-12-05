@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 public class TestSerializableFilePersistenceUnit {
 
 	private PersistenceUnit instance;
+	private final String expectedFileName = "contacts.txt";
 	
 	@Before
 	public void init() {
@@ -39,7 +40,7 @@ public class TestSerializableFilePersistenceUnit {
 
 	protected PersistenceUnit getInstance() {
 
-		return new SerializableFilePersistenceUnit();
+		return new SerializableFilePersistenceUnit(expectedFileName);
 	}
 }
 

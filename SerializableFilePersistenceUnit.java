@@ -4,7 +4,8 @@
  */
 public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
-	
+	public SerializableFilePersistenceUnit(String fileName) {
+	}
 
 	@Override
 	public void load() throws PersistenceUnitException {
