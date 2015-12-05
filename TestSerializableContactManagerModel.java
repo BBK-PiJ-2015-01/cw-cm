@@ -13,6 +13,7 @@ public class TestSerializableContactManagerModel {
 	public void init() {
 		
 		instance = getInstance();
+//		System.out.println(System.nanoTime());
 	}
 	
 	// *****************************************************************************************************************	
