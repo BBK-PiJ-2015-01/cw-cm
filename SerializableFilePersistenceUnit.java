@@ -4,7 +4,10 @@
  */
 public class SerializableFilePersistenceUnit implements PersistenceUnit {
 
+	private String fileName;
+
 	public SerializableFilePersistenceUnit(String fileName) {
+
 	}
 
 	@Override
@@ -21,6 +24,10 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	public ContactManagerModel getModel() {
 		return null;
 	}
-
+	// ********************************************************************
+	//	Convenience methods
+	// ********************************************************************
+	private void loadModelFromFile(String fileName) {
+	}
 }
 

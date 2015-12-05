@@ -12,14 +12,24 @@ public class TestSerializableFilePersistenceUnit {
 	@Before
 	public void init() {
 		
-		instance = getInstance() ;
+//		instance = getInstance() ;
 	}
+	//	****************************************************************
+	//	constructor tests
+	//	****************************************************************
+	@Test(expected=IllegalArgumentException.class)
+	public void constructor_NullFile() {
+	
+		instance = getInstance(null);
+	}
+
 	//	****************************************************************
 	//	load tests
 	//	****************************************************************
 	@Test(expected=PersistenceUnitException.class)
 	public void load_UnknownFile() throws PersistenceUnitException {
 	
+		instance = getInstance(expectedFileName) ;
 		try {
 			instance.load();	
 		} catch(PersistenceUnitException ex) {
@@ -33,14 +43,15 @@ public class TestSerializableFilePersistenceUnit {
 	@Test
 	public void getModel_NotLoaded() {
 	
+		instance = getInstance(expectedFileName) ;
 		ContactManagerModel model = instance.getModel();
 		assertNull(model);
 		
 	}
 
-	protected PersistenceUnit getInstance() {
+	protected PersistenceUnit getInstance(String fileName) {
 
-		return new SerializableFilePersistenceUnit(expectedFileName);
+		return new SerializableFilePersistenceUnit(fileName);
 	}
 }
 
