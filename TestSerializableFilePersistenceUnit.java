@@ -203,6 +203,39 @@ public class TestSerializableFilePersistenceUnit {
 			assertFalse(expectedFile.exists());
 		}
 	}
+
+	@Test
+	public void crudSequence_AddMeetingsBeforeReOpeningFileToTestIds() throws PersistenceUnitException {
+	
+		final String testFileName = String.format("%d.txt", System.nanoTime());
+		try {
+		 	final int count = 5;
+			instance = getInstance(testFileName);
+			ContactManagerModel model = instance.getModel();
+			assertNotNull(model);
+			// Create some meetings
+			for (int i = 0; i < count; i++ ) {			
+				int meetingId = model.addMeeting(null, null, null);
+			}
+			instance.commit();
+			// Re-open the file
+			instance = getInstance(testFileName);
+			model = instance.getModel();
+			assertNotNull(model);
+			//
+			// Create some meetings
+			for (int i = 0; i < count; i++ ) {			
+				int meetingId = model.addMeeting(null, null, null);
+			}
+			//
+			Set<ModelMeeting> meetings = model.getMeetings();
+			assertEquals(2 * count, meetings.size());
+		} finally {
+			// cleanup 
+			cleanUpFile(testFileName);
+		}
+	}
+
 	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
 
