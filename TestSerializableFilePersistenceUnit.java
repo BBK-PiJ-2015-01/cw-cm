@@ -182,19 +182,24 @@ public class TestSerializableFilePersistenceUnit {
 	public void crudSequence_AddMeetingsAndReloadBeforeCommit() throws PersistenceUnitException {
 	
 		final String testFileName = String.format("%d.txt", System.nanoTime());
-		instance = getInstance(testFileName);
-		ContactManagerModel model = instance.getModel();
-		assertNotNull(model);
-		// Create a meeting
-		int meetingId = model.addMeeting(null, null, null);
-		Set<ModelMeeting> meetings = model.getMeetings();
-		assertEquals(1, meetings.size());
-		instance.commit();
-		// Reload the model
- 		meetings = model.getMeetings();
-		assertTrue(meetings.isEmpty());
-		// cleanup
-		cleanUpFile(testFileName);
+		try {
+			instance = getInstance(testFileName);
+			ContactManagerModel model = instance.getModel();
+			assertNotNull(model);
+			// Create a meeting
+			int meetingId = model.addMeeting(null, null, null);
+			Set<ModelMeeting> meetings = model.getMeetings();
+			assertEquals(1, meetings.size());
+			// Reload the model
+			instance.load();
+			model = instance.getModel();
+	 		meetings = model.getMeetings();
+			assertTrue(meetings.isEmpty());
+		} finally {
+			// cleanup not required (no commit)
+			File expectedFile = new File(testFileName);
+			assertFalse(expectedFile.exists());
+		}
 	}
 	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {

@@ -65,7 +65,7 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	private void performLoad() throws PersistenceUnitException{
 
 		model = null;
-		loaded = true;
+		loaded = false;
 		final long EMPTY_FILE_SIZE = 0L;
 		if (fileName == null) {
 			throw new PersistenceUnitException("File not found.");
@@ -74,6 +74,7 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 		if  (!destinationFile.exists() || destinationFile.length() == EMPTY_FILE_SIZE) {
 			// Create empty model
 			model = getContactManagerModelInstance();
+			loaded = true;
 		} else {
 			try (FileInputStream fis = new FileInputStream(destinationFile); ObjectInputStream ois = new ObjectInputStream(fis) ) {
 				model = (SerializableContactManagerModel) ois.readObject();
