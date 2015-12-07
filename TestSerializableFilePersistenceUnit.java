@@ -179,6 +179,24 @@ public class TestSerializableFilePersistenceUnit {
 	}
 
 	@Test
+	public void crudSequence_AddMeetingsAndReloadBeforeCommit() throws PersistenceUnitException {
+	
+		final String testFileName = String.format("%d.txt", System.nanoTime());
+		instance = getInstance(testFileName);
+		ContactManagerModel model = instance.getModel();
+		assertNotNull(model);
+		// Create a meeting
+		int meetingId = model.addMeeting(null, null, null);
+		Set<ModelMeeting> meetings = model.getMeetings();
+		assertEquals(1, meetings.size());
+		instance.commit();
+		// Reload the model
+ 		meetings = model.getMeetings();
+		assertTrue(meetings.isEmpty());
+		// cleanup
+		cleanUpFile(testFileName);
+	}
+	@Test
 	public void commit_AfterLoad() throws PersistenceUnitException {
 
 		instance = getInstance(expectedFileName) ;
@@ -189,6 +207,14 @@ public class TestSerializableFilePersistenceUnit {
 	protected PersistenceUnit getInstance(String fileName) throws PersistenceUnitException {
 
 		return new SerializableFilePersistenceUnit(fileName);
+	}
+
+	protected void cleanUpFile(String fileName) {
+
+		File expectedFile = new File(fileName);
+		assertTrue(expectedFile.exists());
+		expectedFile.delete();
+		assertFalse(expectedFile.exists());
 	}
 }
 

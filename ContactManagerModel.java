@@ -22,7 +22,7 @@ public interface ContactManagerModel {
      *
      * @return all meetings in the model
      */
-    Set<? extends Meeting> getMeetings();
+    Set<ModelMeeting> getMeetings();
 
     /**
      * Add a contact to the model. A unique id will be created and 
