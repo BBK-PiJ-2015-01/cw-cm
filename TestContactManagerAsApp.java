@@ -33,7 +33,7 @@ public class TestContactManagerAsApp {
 	@Test
 	public void addMeetingAndSave() {
 
-		String expectedName = "Expected name";
+		String expectedName = String.format("Name:%d", System.nanoTime());
 		String expectedNotes = "Expected notes";
 		int contactId = instance.addNewContact(expectedName, expectedNotes);
 		Set<Contact> expectedContacts = instance.getContacts(contactId);
@@ -52,7 +52,7 @@ public class TestContactManagerAsApp {
 	@Test
 	public void addMeetingSaveAndThenAddNotes() {
 
-		String expectedName = "Expected name";
+		String expectedName = String.format("Name:%d", System.nanoTime());
 		String expectedNotes = "Expected notes";
 		final int WAIT_TIME_MS = 100;
 		int contactId = instance.addNewContact(expectedName, expectedNotes);
@@ -167,7 +167,23 @@ public class TestContactManagerAsApp {
 		Set<Contact> resultContacts = instance.getContacts(expectedName);
 		assertTrue(resultContacts.containsAll(expectedContacts));
 	}
+	//	*********************************************************************************************
+	//	Test for immutability across commits
+	//	*********************************************************************************************
+	@Test
+	public void addContactAndTryToChangeWithoutUsingContactManagerMethods() {
 
+		String expectedName = String.format("Name:%d", System.nanoTime());
+		String expectedNotes = "Expected notes";
+		int contactId = instance.addNewContact(expectedName, expectedNotes);
+		Contact addedContact = instance.getContacts(contactId).stream().findFirst().get();
+		// Change the  notes
+		addedContact.addNotes("Should not see these anywhere");
+		// Flush the app
+		instance.flush();
+		addedContact = instance.getContacts(contactId).stream().findFirst().get();
+		assertEquals(expectedNotes, addedContact.getNotes());		
+	}
 
 	//	*********************************************************************************************
 	//	Convenience methods
