@@ -6,8 +6,7 @@ import java.util.stream.*;
  */
 public class ContactManagerImpl implements ContactManager {
 
-	public static final String FILENAME = "contacts.txt";
-	//
+
 	private final String NULL_PARAM_MSG = "A null param was supplied";
 	private final String INVALID_ID_MSG = "Supplied id was invalid";
 	private final String INVALID_DATE_MSG = "Supplied date was invalid";
@@ -22,7 +21,7 @@ public class ContactManagerImpl implements ContactManager {
 	public ContactManagerImpl() {
 		
 		try {
-			pUnit = new SerializableFilePersistenceUnit(FILENAME);
+			pUnit = new SerializableFilePersistenceUnit(ContactManagerDomain.FILENAME);
 		} catch(PersistenceUnitException e) {
 
 			throw new IllegalStateException(INVALID_PUNIT_STATE);
@@ -217,7 +216,11 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public void flush() {
 
-//		getModel().commit();
+		try {
+			pUnit.commit();
+		} catch(PersistenceUnitException e) {
+			throw new IllegalStateException(INVALID_PUNIT_STATE);
+		}
 	}
 	//
 	//	Convenience methods
