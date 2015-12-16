@@ -101,9 +101,18 @@ public interface ContactManagerModel {
      * results in a cloned Set every time which is time consuming. 
      * 
      * @param contact a Contact to check for existence 
-     * @return boolean if supplied Contact exists in the model
+     * @return boolean true if supplied Contact exists in the model
      * @throws java.lang.NullPointerException - if the Contact is null
      */
     boolean contactExists(Contact contact);
+    /**
+     * Convenience method to check that each member in a Set of Contact exists in the model
+     * 
+     * 
+     * @param contact a Set of Contacts to check for existence 
+     * @return boolean true if all the members of the Set exists in the model
+     * @throws java.lang.NullPointerException - if the Set  is null
+     */
+    boolean contactsExist(Set<Contact> contact);
 }
 

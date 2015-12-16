@@ -227,6 +227,12 @@ public class TestSerializableContactManagerModel {
 		boolean resultExists = instance.contactExists(expectedContact);		
 		assertEquals(expectedExists, resultExists);
 	}
+
+	@Test(expected=NullPointerException.class)
+	public void contactsExistTest_NullContact() {
+
+		instance.contactsExist(null);		
+	}
 	// *****************************************************************************************************************	
 	// Add Meeting and Get Meeting tests
 	// *****************************************************************************************************************	

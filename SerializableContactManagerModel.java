@@ -139,6 +139,15 @@ public class SerializableContactManagerModel implements ContactManagerModel, Ser
 		lazyInstantiateContacts();	
 		return contacts.contains(contact);
 	}
+
+	@Override
+    	public boolean contactsExist(Set<Contact> contacts) {
+
+		if (contacts == null) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
+		return false;
+	}
 	//	*****************************************************************************************************************************		
 	//	Utility methods
 	//	*****************************************************************************************************************************		
