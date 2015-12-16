@@ -132,10 +132,10 @@ public class TestContactManagerAsApp {
 		// Create a unique Contact name
 		String expectedName = String.format("Name:%d", System.nanoTime());
 		// Add some Contacts
-		Set<Contact> expectedContacts = instance.getContacts(contactId);			
+		Set<Contact> expectedContacts = new HashSet<>();			
 		int expectedContactsSize = 5;
 		int[] contactIds = new int[expectedContactsSize];
-		for(int i = 0; i < expectedMeetingsSize ; i++) {
+		for(int i = 0; i < expectedContactsSize ; i++) {
 			int contactId = instance.addNewContact(expectedName, "");
 			expectedContacts.add(instance.getContacts(contactId).stream().findFirst().get());
 			contactIds[i] = contactId;
@@ -145,6 +145,26 @@ public class TestContactManagerAsApp {
 		init();
 		// Search should return all the contacts added above
 		Set<Contact> resultContacts = instance.getContacts(contactIds);
+		assertTrue(resultContacts.containsAll(expectedContacts));
+	}
+
+	@Test
+	public void getContactsByName() {
+
+		// Create a unique Contact name
+		String expectedName = String.format("Name:%d", System.nanoTime());
+		// Add some Contacts
+		Set<Contact> expectedContacts = new HashSet<>();			
+		int expectedContactsSize = 5;
+		for(int i = 0; i < expectedContactsSize ; i++) {
+			int contactId = instance.addNewContact(expectedName, "");
+			expectedContacts.add(instance.getContacts(contactId).stream().findFirst().get());
+		}
+		// Flush and restart the app
+		instance.flush();
+		init();
+		// Search should return all the contacts added above
+		Set<Contact> resultContacts = instance.getContacts(expectedName);
 		assertTrue(resultContacts.containsAll(expectedContacts));
 	}
 
