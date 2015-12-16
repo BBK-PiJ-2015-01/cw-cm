@@ -37,7 +37,8 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
+//		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
+		if (contacts.isEmpty() || !getModel().contactsExist(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 		if (!isFutureDate(date)) {
@@ -88,7 +89,8 @@ public class ContactManagerImpl implements ContactManager {
 		if (contact == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (!getModel().getContacts().contains(contact)) {
+//		if (!getModel().getContacts().contains(contact)) {
+		if (!getModel().contactExists(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 
@@ -125,7 +127,8 @@ public class ContactManagerImpl implements ContactManager {
 		if (contact == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (!getModel().getContacts().contains(contact)) {
+//		if (!getModel().getContacts().contains(contact)) {
+		if (!getModel().contactExists(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 		// Filter on contact and date, sort on date
@@ -144,7 +147,8 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null || text == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
+//		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
+		if (contacts.isEmpty() || !getModel().contactsExist(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 		if (isFutureDate(date)) {
