@@ -6,34 +6,47 @@ import java.util.stream.*;
  */
 public class ContactManagerImpl implements ContactManager {
 
+	public static final String FILENAME = "contacts.txt";
+	//
 	private final String NULL_PARAM_MSG = "A null param was supplied";
 	private final String INVALID_ID_MSG = "Supplied id was invalid";
 	private final String INVALID_DATE_MSG = "Supplied date was invalid";
 	private final String INVALID_PARAM_MSG = "Supplied param was invalid";
 	private final String ILLEGAL_STATE_MSG = "Supplied params we not valid for this operation";
+	private final String INVALID_PUNIT_STATE = "An error occurred with the persistence unit";
 	private final TimeZone tz = new SimpleTimeZone(0, "GMT");
 
-	ContactManagerModel model = new SerializableContactManagerModel();
+	PersistenceUnit pUnit;
+//	ContactManagerModel model = new SerializableContactManagerModel();
+	
+	public ContactManagerImpl() {
+		
+		try {
+			pUnit = new SerializableFilePersistenceUnit(FILENAME);
+		} catch(PersistenceUnitException e) {
 
+			throw new IllegalStateException(INVALID_PUNIT_STATE);
+		}
+	}
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 	
 		if (contacts == null || date == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (contacts.isEmpty() || !model.getContacts().containsAll(contacts)) {
+		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 		if (!date.after(Calendar.getInstance())) {
 			throw new IllegalArgumentException(INVALID_DATE_MSG);
 		}
-		return model.addMeeting(date, contacts, null);
+		return getModel().addMeeting(date, contacts, null);
 	}
 
 	@Override
 	public PastMeeting getPastMeeting(int id) {
 
-		ModelMeeting m = model.getMeeting(id);
+		ModelMeeting m = getModel().getMeeting(id);
 		if (m == null) {
 			return null;
 		}
@@ -46,7 +59,7 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public FutureMeeting getFutureMeeting(int id) {
 
-		ModelMeeting m = model.getMeeting(id);
+		ModelMeeting m = getModel().getMeeting(id);
 		if (m == null) {
 			return null;
 		}
@@ -59,7 +72,7 @@ public class ContactManagerImpl implements ContactManager {
 	@Override
 	public Meeting getMeeting(int id) {
 
-		ModelMeeting m = model.getMeeting(id);		
+		ModelMeeting m = getModel().getMeeting(id);		
 		if (m == null) {
 			return null;
 		}
@@ -72,13 +85,13 @@ public class ContactManagerImpl implements ContactManager {
 		if (contact == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (!model.getContacts().contains(contact)) {
+		if (!getModel().getContacts().contains(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 
 		List<Meeting> futureMeetings = new LinkedList<>();
 		// Filter on contact, sort on date
-		Stream<Meeting> futureMeetingStream = model.getMeetings().stream()
+		Stream<Meeting> futureMeetingStream = getModel().getMeetings().stream()
 			.filter((m) -> m.getContacts().contains(contact))
 			.sorted((m1,m2) -> m1.getDate().compareTo(m2.getDate()))
 			.map((m) -> m);
@@ -97,7 +110,7 @@ public class ContactManagerImpl implements ContactManager {
 		final int DATE_EQUALITY = 0;
 		List<Meeting> futureMeetings = new LinkedList<>();
 		// Filter on date
-		Stream<Meeting> futureMeetingStream = model.getMeetings().stream()
+		Stream<Meeting> futureMeetingStream = getModel().getMeetings().stream()
 			.filter((m) -> date.compareTo(m.getDate()) == DATE_EQUALITY)
 			.map((m) -> isFutureDate(m.getDate()) ? cloneAsFutureMeeting(m) : cloneAsPastMeeting(m));
 		return  futureMeetingStream.collect(Collectors.toList());
@@ -109,11 +122,11 @@ public class ContactManagerImpl implements ContactManager {
 		if (contact == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (!model.getContacts().contains(contact)) {
+		if (!getModel().getContacts().contains(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 		// Filter on contact and date, sort on date
-		Stream<PastMeeting> pastMeetingStream = model.getMeetings().stream()
+		Stream<PastMeeting> pastMeetingStream = getModel().getMeetings().stream()
 			.filter((m) -> m.getContacts().contains(contact))
 			.filter((m) -> isPastDate(m.getDate()))
 			.sorted((m1,m2) -> m1.getDate().compareTo(m2.getDate()))
@@ -128,19 +141,19 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null || text == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		if (contacts.isEmpty() || !model.getContacts().containsAll(contacts)) {
+		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
 		if (isFutureDate(date)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-		model.addMeeting(date, contacts, text);
+		getModel().addMeeting(date, contacts, text);
 	}
 
 	@Override
 	public PastMeeting addMeetingNotes(int id, String text) {
 
-		ModelMeeting m = model.getMeeting(id);
+		ModelMeeting m = getModel().getMeeting(id);
 		if (m == null)  {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
@@ -151,8 +164,8 @@ public class ContactManagerImpl implements ContactManager {
 			throw new IllegalStateException(ILLEGAL_STATE_MSG);
 		}
 		m.addNotes(text);
-		model.updateMeeting(m);
-		return cloneAsPastMeeting(model.getMeeting(id));
+		getModel().updateMeeting(m);
+		return cloneAsPastMeeting(getModel().getMeeting(id));
 	}
 
 	@Override
@@ -161,13 +174,13 @@ public class ContactManagerImpl implements ContactManager {
 		if (name == null || notes == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		return model.addContact(name, notes);
+		return getModel().addContact(name, notes);
 	}
 
 	@Override
 	public Set<Contact> getContacts(int... ids) {
 		
-		Set<ModelContact> contacts = model.getContacts();
+		Set<ModelContact> contacts = getModel().getContacts();
 		if (contacts.isEmpty()) {
 			throw new IllegalArgumentException(INVALID_ID_MSG);
 		}
@@ -194,7 +207,7 @@ public class ContactManagerImpl implements ContactManager {
 		if (name == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		Stream<Contact> contactStream = model.getContacts().stream()
+		Stream<Contact> contactStream = getModel().getContacts().stream()
 			.filter((c) -> name.equals(c.getName()))
 			.map((c) -> cloneAsContact(c));
 		return  contactStream.collect(Collectors.toSet());
@@ -203,7 +216,8 @@ public class ContactManagerImpl implements ContactManager {
 
 	@Override
 	public void flush() {
-	throw new UnsupportedOperationException("Not implemented.");
+
+//		getModel().commit();
 	}
 	//
 	//	Convenience methods
@@ -245,6 +259,15 @@ public class ContactManagerImpl implements ContactManager {
 	private PastMeetingImpl getPastMeetingInstance(int id, Calendar date, Set<Contact> contacts, String notes) {
 
 		return new PastMeetingImpl(id, date, contacts, notes);
+	}
+
+	private ContactManagerModel getModel() {
+		
+		try {
+			return pUnit.getModel();
+		} catch(PersistenceUnitException e) {
+			throw new IllegalStateException(INVALID_PUNIT_STATE);
+		}		
 	}
 }
 
