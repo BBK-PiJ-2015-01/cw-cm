@@ -126,6 +126,28 @@ public class TestContactManagerAsApp {
 		assertEquals(expectedMeetingsSize, resultListSize);
 	}
 
+	@Test
+	public void getContactsById() {
+
+		// Create a unique Contact name
+		String expectedName = String.format("Name:%d", System.nanoTime());
+		// Add some Contacts
+		Set<Contact> expectedContacts = instance.getContacts(contactId);			
+		int expectedContactsSize = 5;
+		int[] contactIds = new int[expectedContactsSize];
+		for(int i = 0; i < expectedMeetingsSize ; i++) {
+			int contactId = instance.addNewContact(expectedName, "");
+			expectedContacts.add(instance.getContacts(contactId).stream().findFirst().get());
+			contactIds[i] = contactId;
+		}
+		// Flush and restart the app
+		instance.flush();
+		init();
+		// Search should return all the contacts added above
+		Set<Contact> resultContacts = instance.getContacts(contactIds);
+		assertTrue(resultContacts.containsAll(expectedContacts));
+	}
+
 
 	//	*********************************************************************************************
 	//	Convenience methods
