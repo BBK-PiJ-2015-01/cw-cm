@@ -80,7 +80,7 @@ public class TestContactManagerAsApp {
 	//	Test lists by date, name, contact etc.
 	//	*********************************************************************************************
 	@Test
-	public void getMeetingsByContact() {
+	public void getFutureMeetingsByContactName() {
 
 		// Create a unique Contact name
 		String expectedName = String.format("Name:%d", System.nanoTime());;
@@ -102,6 +102,29 @@ public class TestContactManagerAsApp {
 		List<Meeting> resultMeetings = instance.getFutureMeetingList(expectedContact);
 		assertTrue(resultMeetings.containsAll(addedMeetings));
 	}	
+
+	@Test
+	public void getPastMeetingsByContactName() {
+
+		// Create a unique Contact name
+		String expectedName = String.format("Name:%d", System.nanoTime());
+		int contactId = instance.addNewContact(expectedName, "");
+		Set<Contact> expectedContacts = instance.getContacts(contactId);
+		// Add some meetings using this Contact
+		Calendar expectedDate = getPastCalendar();	
+		int expectedMeetingsSize = 5;
+		for(int i = 0; i < expectedMeetingsSize ; i++) {
+			instance.addNewPastMeeting(expectedContacts, expectedDate, "Not interested in the meeting notes" );			
+		}
+		// Flush and restart the app
+		instance.flush();
+		init();
+		// Search should return all the meetings added above
+		Contact expectedContact = instance.getContacts(expectedName).stream().findFirst().get();
+		List<PastMeeting> resultMeetings = instance.getPastMeetingListFor(expectedContact);
+		int resultListSize = resultMeetings.size();
+		assertEquals(expectedMeetingsSize, resultListSize);
+	}
 
 
 	//	*********************************************************************************************
