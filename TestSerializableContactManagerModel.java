@@ -201,6 +201,32 @@ public class TestSerializableContactManagerModel {
 		boolean resultExists = instance.contactExists(expectedContact);		
 		assertEquals(expectedExists, resultExists);
 	}
+
+	@Test
+	public void contactExistsTest_Created() {
+
+		int contactId = instance.addContact("name","notes");
+		Contact expectedContact = instance.getContact(contactId);
+		boolean expectedExists = true;
+		boolean resultExists = instance.contactExists(expectedContact);		
+		assertEquals(expectedExists, resultExists);
+	}
+
+
+	@Test
+	public void contactExistsTest_Multiples() {
+
+		// Add a contact
+		int contactId = instance.addContact("name","notes");		
+		Contact expectedContact = instance.getContact(contactId);
+		// Add a few more
+		for (int i = 0; i < 5; i++) {
+			instance.addContact("name","notes");	
+		}
+		boolean expectedExists = true;
+		boolean resultExists = instance.contactExists(expectedContact);		
+		assertEquals(expectedExists, resultExists);
+	}
 	// *****************************************************************************************************************	
 	// Add Meeting and Get Meeting tests
 	// *****************************************************************************************************************	
