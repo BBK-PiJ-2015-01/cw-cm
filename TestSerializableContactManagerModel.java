@@ -233,6 +233,39 @@ public class TestSerializableContactManagerModel {
 
 		instance.contactsExist(null);		
 	}
+
+	@Test
+	public void contactsExistTest_Created() {
+
+		int contactId = instance.addContact("name","notes");
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(instance.getContact(contactId));
+		
+		boolean expectedExists = true;
+		boolean resultExists = instance.contactsExist(contacts);		
+		assertEquals(expectedExists, resultExists);
+	}
+
+	@Test
+	public void contactsExistTest_EmptySet() {
+
+		instance.addContact("name","notes");
+		boolean expectedExists = true;
+		boolean resultExists = instance.contactsExist(Collections.emptySet());		
+		assertEquals(expectedExists, resultExists);
+	}
+
+	@Test
+	public void contactsExistTest_PopulatedSet() {
+
+		instance.addContact("name","notes");
+		int expectedContactId = instance.addContact("Another name","More notes");		
+		Set<Contact> lookFor = new HashSet<>();
+		lookFor.add(new ContactImpl(Integer.MAX_VALUE, "", ""));
+		boolean expectedExists = false;
+		boolean resultExists = instance.contactsExist(lookFor);		
+		assertEquals(expectedExists, resultExists);
+	}
 	// *****************************************************************************************************************	
 	// Add Meeting and Get Meeting tests
 	// *****************************************************************************************************************	

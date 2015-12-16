@@ -146,7 +146,8 @@ public class SerializableContactManagerModel implements ContactManagerModel, Ser
 		if (contacts == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-		return false;
+		lazyInstantiateContacts();	
+		return this.contacts.containsAll(contacts);
 	}
 	//	*****************************************************************************************************************************		
 	//	Utility methods
