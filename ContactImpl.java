@@ -1,8 +1,9 @@
 import java.util.*;
 
 /**
- *
  * 
+ *
+ * @author sbaird02
  */
 public class ContactImpl implements Contact {
 
@@ -10,6 +11,9 @@ public class ContactImpl implements Contact {
 	private String name;
 	private String notes;
 
+	/**
+	*
+	*/
 	public ContactImpl(int id, String name, String notes) {
 
 		if (name == null || notes == null) {
@@ -38,7 +42,6 @@ public class ContactImpl implements Contact {
 		this.name = name;
 		this.notes = notes;
 	}
-
 
 	@Override
 	public int getId() {
