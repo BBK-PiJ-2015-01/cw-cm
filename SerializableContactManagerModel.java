@@ -133,6 +133,9 @@ public class SerializableContactManagerModel implements ContactManagerModel, Ser
 	@Override
     	public boolean contactExists(Contact contact) {
 
+		if (contact == null) {
+			throw new NullPointerException(NULL_PARAM_MSG);
+		}
 		return false;
 	}
 	//	*****************************************************************************************************************************		

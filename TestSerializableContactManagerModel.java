@@ -187,8 +187,14 @@ public class TestSerializableContactManagerModel {
 	//	*********************************************************************************************
 	//	Test existence of Contact
 	//	*********************************************************************************************
+	@Test(expected=NullPointerException.class)
+	public void contactExistsTest_NullContact() {
+
+		instance.contactExists(null);		
+	}
+
 	@Test
-	public void contactExistsTest() {
+	public void contactExistsTest_NotCreated() {
 
 		Contact expectedContact = new ContactImpl(1, "Name");
 		boolean expectedExists = false;

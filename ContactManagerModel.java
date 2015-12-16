@@ -102,6 +102,7 @@ public interface ContactManagerModel {
      * 
      * @param contact a Contact to check for existence 
      * @return boolean if supplied Contact exists in the model
+     * @throws java.lang.NullPointerException - if the Contact is null
      */
     boolean contactExists(Contact contact);
 }
