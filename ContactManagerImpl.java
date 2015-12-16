@@ -40,7 +40,7 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
-		if (!date.after(Calendar.getInstance())) {
+		if (!isFutureDate(date)) {
 			throw new IllegalArgumentException(INVALID_DATE_MSG);
 		}
 		return getModel().addMeeting(date, contacts, null);
