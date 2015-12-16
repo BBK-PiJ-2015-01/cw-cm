@@ -1,80 +1,66 @@
 import java.util.*;
-
+import java.util.stream.*;
 /**
  *
  * 
  */
-public class MeetingImpl implements Meeting {
+public abstract class MeetingImpl implements Meeting {
+	
+	private final int id;	
+	private final Calendar date;
+	private List<Contact> contactBackingList;
+	private Set<Contact> contacts;	
 
-	protected final ModelMeeting model;		
-	private final String NULL_MODEL_MSG = "Supplied model was null";	
-	private final String INVALID_CONTACTS = "The Set of contacts must not be null or empty";
+	public MeetingImpl(int id, Calendar date, Set<Contact> contacts) {
 
-	public MeetingImpl(ModelMeeting model) {
-
-		if (model == null) {
-			throw new IllegalArgumentException(NULL_MODEL_MSG);
+		if (date == null || contacts == null) {
+			throw new NullPointerException();
 		}
-		this.model = model;
+		if (id < 1) {
+			throw new IllegalArgumentException();
+		}
+		if (contacts.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		this.id = id;
+		// clone the date
+		this.date = (Calendar) date.clone();
+		//
+		safelyStoreContacts(contacts);
+	}
+
+	private void safelyStoreContacts(Set<Contact> contacts) {
+
+		// Copy the contacts into a backing list
+		Stream<Contact> contactsStream = contacts.stream().map((c) -> new ContactImpl(c.getId(), c.getName(), c.getNotes()));
+		contactBackingList = contactsStream.collect(Collectors.toList());
+		this.contacts = contacts;	
 	}
 
 	@Override
 	public int getId() {
 
-		return model.getId();
+		return id;
 	}
 
 	@Override
 	public Calendar getDate() {
 	
 		// Make a defensive copy
-		return model.getDate() == null ? null : (Calendar) model.getDate().clone();
+		return (Calendar) date.clone();
 	}
 
-	/**
-	* Set the date of the meeting.
-	*     
-	* @param the date of the meeting. Null values are permitted
-	*/
-	public void setDate(Calendar date) {
-
-		// Make a defensive copy
-		model.setDate(date == null ? null : (Calendar) date.clone());
-	}
-
-	/**
-	* Set the contacts. The Set must not be null or empty
-	*     
-	* @param the Set of contacts
-	*/
-	public void setContacts(Set<Contact> contacts) {
-
-		if (contacts == null || contacts.isEmpty()) {
-			throw new IllegalArgumentException(INVALID_CONTACTS); 
-		}
-		//
-		//	Save the Set contacts in a List. This ensures that the 
-		//	contact Set will be the same class as supplied but
-		//	will be immutable from the perpective of this class
-		//
-//		backingList = new ArrayList<>(contacts);
-		model.setContacts(contacts);
-	}
 	/**
 	* Get the contacts. This will return a reference to the Set used in the
-	* setter with the same content. If this pointer has been used elsewhere
-	* then it will also reflect the values at the time of the setter.
+	* constructor with the same content. If this pointer has been used elsewhere
+	* then it will now also reflect the values at the time of the constructor.
 	*/
 	@Override
 	public Set<Contact> getContacts() {
 
-//		if (model.getContacts() == null) {
-//			return null;
-//		}
-//		//	Return a defensive copy
-//		contacts.clear();
-//		contacts.addAll(backingList);
-		return model.getContacts();
+		contacts.clear();
+		contacts.addAll(contactBackingList);
+		return contacts;
 	}  
 
 	/**
@@ -84,20 +70,18 @@ public class MeetingImpl implements Meeting {
 	@Override
 	public boolean equals(Object other) {
 
-//		if (other == null || this.getClass() != other.getClass()) {
-//		    return false;
-//		}
-//		MeetingImpl otherMeetingImpl = (MeetingImpl) other;
-//		return this.getId() == otherMeetingImpl.getId();
-		return model.equals(other);
+		if (other == null || !(other instanceof Meeting)) {
+		    return false;
+		}
+		Meeting otherMeeting = (Meeting) other;
+		return this.getId() == otherMeeting.getId();
 	}
 
 	@Override
 	public int hashCode() {
 
-//		int hash = 16381;
-//		hash = 107 * hash + Objects.hashCode(model);
-//		return hash;
-		return model.hashCode();
+		int hash = 16383;
+		hash = 137 * hash + id;
+		return hash;
 	}
 }

@@ -6,13 +6,43 @@ public class TestMeetingImpl {
 
 	protected MeetingImpl instance;
 	protected int defaultId;
+	protected Contact defaultContact;
 	protected Random r = new Random();
 	
 	@Before
 	public void init() {
 		
-//		instance = new MeetingImpl(generateDefaultId());
 		instance = getInstance(generateDefaultId());
+	}
+
+	@Test(expected=NullPointerException.class)
+	public void constructor_nullDate() {
+
+		new DefaultMeetingImpl(1, null, Collections.emptySet());
+	}
+
+	@Test(expected=NullPointerException.class)
+	public void constructor_nullContacts() {
+
+		new DefaultMeetingImpl(1, Calendar.getInstance(), null);
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void constructor_zeroId() {
+
+		new DefaultMeetingImpl(0, Calendar.getInstance(), Collections.emptySet());
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void constructor_negativeId() {
+
+		new DefaultMeetingImpl(-1, Calendar.getInstance(), Collections.emptySet());
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void constructor_emptyContacts() {
+
+		new DefaultMeetingImpl(1, Calendar.getInstance(), Collections.emptySet());
 	}
 	
 	@Test
@@ -23,158 +53,95 @@ public class TestMeetingImpl {
 		assertEquals(expectedId, resultId);
 	}
 
-	
 	@Test
-	public void getDateNotSetTest() {
-	
-		Calendar resultDate = instance.getDate();
-		assertNull(resultDate);
-	}
-
-	@Test
-	public void setDateWithNullTest() {
-	
-		Calendar expectedDate = null;
-		instance.setDate(expectedDate);
-		Calendar resultDate = instance.getDate();
-		assertEquals(expectedDate, resultDate);
-	}
-
-	@Test
-	public void setDateWithNonNullTest() {
+	public void detDateTest() {
 	
 		Calendar expectedDate = Calendar.getInstance();
-		instance.setDate(expectedDate);
+		instance = new DefaultMeetingImpl(generateDefaultId(), expectedDate, getContactSet(defaultId));
 		Calendar resultDate = instance.getDate();
 		assertEquals(expectedDate, resultDate);
+	}
+
+	@Test
+	public void dateImmutabilityTest() {
+	
+		Calendar expectedDate = Calendar.getInstance();
+		instance = new DefaultMeetingImpl(generateDefaultId(), expectedDate, getContactSet(defaultId));
+		long expectedTimeInMillis = expectedDate.getTimeInMillis();
+		//
+		//	Clear the date
+		//
+		expectedDate.clear();
+		//
+		Calendar resultDate = instance.getDate();
+		long resultTimeInMillis = resultDate.getTimeInMillis();
+		assertEquals(expectedTimeInMillis, resultTimeInMillis);
 	}
 
 	@Test
 	public void getDateImmutabilityTest() {
 	
-		//
-		//	Create 2 equal dates
-		//
 		Calendar expectedDate = Calendar.getInstance();
-		Calendar copyDate = (Calendar) expectedDate.clone();
-		assertEquals(expectedDate, copyDate);
+		instance = new DefaultMeetingImpl(generateDefaultId(), expectedDate, getContactSet(defaultId));
+		long expectedTimeInMillis = expectedDate.getTimeInMillis();
 		//
-		//	Set the date using the copy
+		//	Get and clear the date
 		//
-		instance.setDate(copyDate);
 		Calendar resultDate = instance.getDate();
-		assertEquals(expectedDate, resultDate);
-		//
-		//	Clear the returned date
-		//
 		resultDate.clear();
 		//
-		resultDate = instance.getDate();
-		assertEquals(expectedDate, resultDate);
+		long resultTimeInMillis = instance.getDate().getTimeInMillis();
+		assertEquals(expectedTimeInMillis, resultTimeInMillis);
 	}
 
 	@Test
-	public void setDateImmutabilityTest() {
+	public void getContactsTest() {
+	
+		Contact contact = getContactInstance(generateDefaultId());
+		Set<Contact> expectedContacts = new HashSet<>();
+		expectedContacts.add(contact);
+		instance = new DefaultMeetingImpl(generateDefaultId(), Calendar.getInstance(), expectedContacts);		
+		//
+		Set<Contact> resultContacts = instance.getContacts();
+		assertEquals(expectedContacts, resultContacts);
+	}
+
+	@Test
+	public void getContactsImmutabilityAfterConstructorTest() {
+	
+		Contact contact = getContactInstance(generateDefaultId());
+		Set<Contact> expectedContacts = new HashSet<>();
+		expectedContacts.add(contact);
+		instance = new DefaultMeetingImpl(generateDefaultId(), Calendar.getInstance(), expectedContacts);	
+		//
+		//	Clear the contacts set
+		//
+		expectedContacts.clear();
+		//
+		Set<Contact> resultContacts = instance.getContacts();
+		assertFalse(resultContacts.isEmpty());	
+	}
+
+	@Test
+	public void getContactsImmutabilityAfterGetterTest() {
 	
 		//
-		//	Create 2 equal dates
-		//
-		Calendar expectedDate = Calendar.getInstance();
-		Calendar copyDate = (Calendar) expectedDate.clone();
-		assertEquals(expectedDate, copyDate);
-		//
-		//	Set the date using the copy
-		//
-		instance.setDate(copyDate);
-		Calendar resultDate = instance.getDate();
-		assertEquals(expectedDate, resultDate);
-		//
-		//	Clear the date used in the setter 
-		//
-		copyDate.clear();
-		//
-		resultDate = instance.getDate();
-		assertEquals(expectedDate, resultDate);
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void setContactsWithNullValueTest() {
-		
-		instance.setContacts(null);
-	}
-
-
-	@Test(expected=IllegalArgumentException.class)
-	public void setContactsWithEmptyValueTest() {
-		
-		Set<Contact> contacts = new HashSet<>();
-		instance.setContacts(contacts);
-	}
-
-	@Test
-	public void setContactsTest() {
-		
+		Contact contact = getContactInstance(generateDefaultId());
 		Set<Contact> expectedContacts = new HashSet<>();
-		expectedContacts.add(getContactInstance(1));
-		instance.setContacts(expectedContacts);
-		Set<Contact> resultContacts = instance.getContacts();
-		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());	
-	}
-
-	@Test
-	public void getContactsImmutabilityTest() {
-	
+		expectedContacts.add(contact);
+		instance = new DefaultMeetingImpl(generateDefaultId(), Calendar.getInstance(), expectedContacts);
 		//
-		//	Create 2 equal contacts Sets
+		//	Get and clear the contacts set
 		//
-		Set<Contact> expectedContacts = new HashSet<>();
-		Set<Contact> copyContacts = new HashSet<>();
-		Contact singleContact = getContactInstance(1);
-		expectedContacts.add(singleContact);
-		copyContacts.add(singleContact);
-		assertArrayEquals(expectedContacts.toArray(), copyContacts.toArray());
-		//
-		//	Set the contacts using the copy
-		//
-		instance.setContacts(copyContacts);
-		Set<Contact> resultContacts = instance.getContacts();
-		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());	
-		//
-		//	Clear the returned contacts
-		//
+		Set<Contact> resultContacts = instance.getContacts();	
 		resultContacts.clear();
 		//
+		//	Get the contacts again and ensure they have not been changed
+		//
 		resultContacts = instance.getContacts();
 		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());	
 	}
 	
-	@Test
-	public void setContactsImmutabilityTest() {
-	
-		//
-		//	Create 2 equal contacts Sets
-		//
-		Set<Contact> expectedContacts = new HashSet<>();
-		Set<Contact> copyContacts = new HashSet<>();
-		Contact singleContact = getContactInstance(1);
-		expectedContacts.add(singleContact);
-		copyContacts.add(singleContact);
-		assertArrayEquals(expectedContacts.toArray(), copyContacts.toArray());
-		//
-		//	Set the contacts using the copy
-		//
-		instance.setContacts(copyContacts);
-		Set<Contact> resultContacts = instance.getContacts();
-		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());
-		//
-		//	Clear the contacts used in the setter 
-		//
-		copyContacts.clear();
-		//
-		resultContacts = instance.getContacts();
-		assertArrayEquals(expectedContacts.toArray(), resultContacts.toArray());
-	}
-
 	@Test
 	public void testMeetingListContainsMeeting() {
 
@@ -194,8 +161,7 @@ public class TestMeetingImpl {
 
 	protected MeetingImpl getInstance(int id) {
 
-		ModelMeeting model = new DefaultModelMeeting(id);
-		return new MeetingImpl(model);
+		return new DefaultMeetingImpl(id, Calendar.getInstance(), getContactSet(id));
 	}
 
 	protected int generateDefaultId() {
@@ -206,8 +172,23 @@ public class TestMeetingImpl {
 
 	protected ContactImpl getContactInstance(int id) {
 
-		ModelContact model = new DefaultModelContact(id);
-		return new ContactImpl(model);
+		return new ContactImpl(id, "");
+	}
+
+	protected Set<Contact> getContactSet(int id) {
+
+		Contact contact = getContactInstance(id);
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(contact);
+		return contacts;
+	}
+
+	private class DefaultMeetingImpl extends MeetingImpl {
+
+		public DefaultMeetingImpl(int id, Calendar date, Set<Contact> contacts) {
+		
+			super(id, date, contacts);				
+		}
 	}
 }
 

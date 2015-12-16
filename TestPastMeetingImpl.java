@@ -1,56 +1,38 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
-public class TestPastMeetingImpl extends TestMeetingImpl {
+public class TestPastMeetingImpl {
 
-	private PastMeetingImpl thisInstance;
+	private PastMeetingImpl instance;
 
-	@Before
-	public void init() {
-		
-		instance = getInstance(generateDefaultId());
-		thisInstance = (PastMeetingImpl) instance;
+
+	@Test(expected=NullPointerException.class)
+	public void constructor_nullNotes() {
+
+		new PastMeetingImpl(1, Calendar.getInstance(), getContactSet(1), null);
 	}
 
 	@Test
-	public void getNotesNotSetTest() {
+	public void getNotesNoValueTest() {
 
 		String expectedNotes = new String();
-		String resultNotes = thisInstance.getNotes();
+		instance = new PastMeetingImpl(1, Calendar.getInstance(), getContactSet(1), expectedNotes);
+		String resultNotes = instance.getNotes();
 		assertEquals(expectedNotes, resultNotes);
 	}
 
-	@Test
-	public void setNotesNullValueTest() {
+	protected ContactImpl getContactInstance(int id) {
 
-		String expectedNotes = new String();
-		thisInstance.setNotes(null);
-		String resultNotes = thisInstance.getNotes();
-		assertEquals(expectedNotes, resultNotes);
+		return new ContactImpl(id, "");
 	}
 
-	@Test
-	public void setNotesEmptyValueTest() {
+	protected Set<Contact> getContactSet(int id) {
 
-		String expectedNotes = new String();
-		thisInstance.setNotes(expectedNotes);
-		String resultNotes = thisInstance.getNotes();
-		assertEquals(expectedNotes, resultNotes);
+		Contact contact = getContactInstance(id);
+		Set<Contact> contacts = new HashSet<>();
+		contacts.add(contact);
+		return contacts;
 	}
-
-	@Test
-	public void setNotesValidValueTest() {
-
-		String expectedNotes = "PastMeetingImpl";
-		thisInstance.setNotes(expectedNotes);
-		String resultNotes = thisInstance.getNotes();
-		assertEquals(expectedNotes, resultNotes);
-	}
-
-	protected MeetingImpl getInstance(int id) {
-
-		ModelMeeting model = new DefaultModelMeeting(id);
-		return new PastMeetingImpl(model);
-	}
-
 }
+
+

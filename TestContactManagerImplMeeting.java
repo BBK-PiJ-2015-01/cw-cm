@@ -51,7 +51,7 @@ public class TestContactManagerImplMeeting {
 	public void addFutureMeeting_UnknownContacts() {
 		
 		Set<Contact> contacts = new HashSet<>();
-		contacts.add(getContactInstance(-1));
+		contacts.add(getContactInstance(1));
 		instance.addFutureMeeting(contacts, Calendar.getInstance());		
 	}
 	
@@ -72,14 +72,14 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 	//	Test geFutureMeeting by id
 	//	*********************************************************************************************
-	@Test
+	//@Test
 	public void getFutureMeetingListById_EmptyMeetings() {
 
 		Meeting meeting = instance.getFutureMeeting(-1);
 		assertNull(meeting);	
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	//@Test(expected=IllegalArgumentException.class)
 	public void getFutureMeetingListById_PastMeeting() {
 
 		Set<Contact> contacts = new HashSet<>();
@@ -87,12 +87,12 @@ public class TestContactManagerImplMeeting {
 		contacts.add(validContact);
 		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
 		// Should only be one meeting
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(validContact);
 		int id = pastMeetings.get(0).getId();
 		instance.getFutureMeeting(id);	
 	}
 
-	@Test
+	//@Test
 	public void getFutureMeetingListById_ValidMeeting() {
 
 		Set<Contact> contacts = new HashSet<>();
@@ -135,7 +135,7 @@ public class TestContactManagerImplMeeting {
 	@Test
 	public void getFutureMeetingListByDate_NoMeetings() {
 
-		List<Meeting> meetings = instance.getFutureMeetingList(Calendar.getInstance());
+		List<Meeting> meetings = instance.getMeetingListOn(Calendar.getInstance());
 		assertNotNull(meetings);
 		assertTrue(meetings.isEmpty());		
 	}
@@ -144,7 +144,7 @@ public class TestContactManagerImplMeeting {
 	public void getFutureMeetingListByDate_NullDate() {
 
 		Calendar nullDate = null;
-		List<Meeting> meetings = instance.getFutureMeetingList(nullDate);	
+		List<Meeting> meetings = instance.getMeetingListOn(nullDate);	
 	}
 
 	@Test
@@ -159,7 +159,7 @@ public class TestContactManagerImplMeeting {
 		// Add the meeting
 		instance.addFutureMeeting(expectedContacts, expectedDate);	
 		// Get the list
-		List<Meeting> meetings = instance.getFutureMeetingList(expectedDate);	
+		List<Meeting> meetings = instance.getMeetingListOn(expectedDate);	
 		assertNotNull(meetings);
 		int expectedListSize = 1;
 		int resultListSize = meetings.size();
@@ -193,7 +193,7 @@ public class TestContactManagerImplMeeting {
 		}
 		// Get the list. 2x expectedListSize meetings have been added
 		// Only 1x expectedListSize meetings should be returned for expectedDate
-		List<Meeting> meetings = instance.getFutureMeetingList(expectedDate);	
+		List<Meeting> meetings = instance.getMeetingListOn(expectedDate);	
 		assertNotNull(meetings);
 		int resultListSize = meetings.size();
 		assertEquals(expectedListSize, resultListSize);
@@ -228,7 +228,7 @@ public class TestContactManagerImplMeeting {
 		// Use a different future date. No meetings should be returned
 		Calendar expectedDate = getFutureCalendar();
 		int expectedListSize = 0;
-		List<Meeting> meetings = instance.getFutureMeetingList(expectedDate);	
+		List<Meeting> meetings = instance.getMeetingListOn(expectedDate);	
 		assertNotNull(meetings);
 		int resultListSize = meetings.size();
 		assertEquals(expectedListSize, resultListSize);
@@ -237,8 +237,6 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 	//	Test getFutureMeetingList by Contact
 	//	*********************************************************************************************
-
-
 
 	@Test(expected=NullPointerException.class)
 	public void getFutureMeetingListByContact_NullContact() {
@@ -250,7 +248,7 @@ public class TestContactManagerImplMeeting {
 	@Test(expected=IllegalArgumentException.class)
 	public void getFutureMeetingListByContact_UnknownContact() {
 
-		Contact unknownContact = getContactInstance(-1);
+		Contact unknownContact = getContactInstance(1);
 		List<Meeting> meetings = instance.getFutureMeetingList(unknownContact);	
 	}
 
@@ -368,7 +366,7 @@ public class TestContactManagerImplMeeting {
 	public void addNewPastMeeting_ContactDoesNotExist() {
 
 		Set<Contact> contacts = new HashSet<>();
-		contacts.add(getContactInstance(-1));
+		contacts.add(getContactInstance(1));
 		instance.addNewPastMeeting( contacts, Calendar.getInstance(), "");		
 	}
 
@@ -386,20 +384,20 @@ public class TestContactManagerImplMeeting {
 	@Test(expected=NullPointerException.class)
 	public void getPastMeetingList_NullContact() {
 
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(null);		
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(null);		
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public void getPastMeetingList_InvalidContact() {
 
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(getContactInstance(-1));		
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(getContactInstance(1));		
 	}
 
 	@Test
 	public void getPastMeetingList_ValidContactEmptyList() {
 
 		Contact validContact = getValidContact();
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(validContact);	
 		assertNotNull(pastMeetings);	
 		assertTrue(pastMeetings.isEmpty());
 	}
@@ -423,7 +421,7 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
 		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
 		// Get the list
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(validContact);	
 		assertNotNull(pastMeetings);	
 		int expectedListSize = 2;
 		int resultListSize = pastMeetings.size();
@@ -463,7 +461,7 @@ public class TestContactManagerImplMeeting {
 		instance.addNewPastMeeting( contacts, date1DayAgo, "");	
 		instance.addNewPastMeeting( contacts, date2DaysAgo, "");	
 		// Get the list for random contact
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact2);	
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(validContact2);	
 		assertNotNull(pastMeetings);	
 		int expectedListSize = 3;
 		int resultListSize = pastMeetings.size();
@@ -509,7 +507,7 @@ public class TestContactManagerImplMeeting {
 		contacts.add(validContact);
 		instance.addNewPastMeeting( contacts, getPastCalendar(), "");	
 		// Get the list
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);	
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(validContact);	
 		assertNotNull(pastMeetings);	
 		int expectedListSize = 1;
 		int resultListSize = pastMeetings.size();
@@ -572,7 +570,7 @@ public class TestContactManagerImplMeeting {
 		//
 		instance.addNewPastMeeting( contacts, date, "");
 		// Should only be one meeting
-		List<PastMeeting> pastMeetings = instance.getPastMeetingList(validContact);
+		List<PastMeeting> pastMeetings = instance.getPastMeetingListFor(validContact);
 		int id = pastMeetings.get(0).getId();
 		//
 		String expectedNewNotes = "expectedNewNotes";			
@@ -588,9 +586,9 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 	private Contact getValidContact() {
 	
-		final String validName = "validName";
-		instance.addNewContact(validName, "Notes");
-		Set<Contact> contacts = instance.getContacts(validName);
+
+		int id = instance.addNewContact("validName", "Notes");
+		Set<Contact> contacts = instance.getContacts(id);
 		assertFalse(contacts.isEmpty());
 		return contacts.iterator().next();
 	}
@@ -633,7 +631,12 @@ public class TestContactManagerImplMeeting {
 	private ContactImpl getContactInstance(int id) {
 
 		ModelContact model = new DefaultModelContact(id);
-		return new ContactImpl(model);
+		return getContactInstance(id, "");
+	}
+
+	private ContactImpl getContactInstance(int id, String name) {
+
+		return new ContactImpl(id, name);
 	}
 }
 

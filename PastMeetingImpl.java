@@ -8,19 +8,31 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
 	private String notes;
 
-	public PastMeetingImpl(ModelMeeting model) {
+	public PastMeetingImpl(int id, Calendar date, Set<Contact> contacts, String notes) {
 
-		super(model);
+		super(id, date, contacts);
+		if (notes == null ) {
+			throw new NullPointerException();
+		}
+		this.notes = notes;
 	}
+
+
+
+//	public PastMeetingImpl(ModelMeeting model) {
+
+//		super(model);
+//	}
 
 	@Override
 	public String getNotes() {
-
-		return model.getNotes() == null ? new String() : model.getNotes();
+		
+		return notes;
+//		return model.getNotes() == null ? new String() : model.getNotes();
 	}
 
-	public void setNotes(String notes) {
+//	public void setNotes(String notes) {
 
-		model.addNotes(notes);
-	}
+//		model.addNotes(notes);
+//	}
 }
