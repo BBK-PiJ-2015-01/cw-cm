@@ -72,14 +72,14 @@ public class TestContactManagerImplMeeting {
 	//	*********************************************************************************************
 	//	Test geFutureMeeting by id
 	//	*********************************************************************************************
-	//@Test
+	@Test
 	public void getFutureMeetingListById_EmptyMeetings() {
 
 		Meeting meeting = instance.getFutureMeeting(-1);
 		assertNull(meeting);	
 	}
 
-	//@Test(expected=IllegalArgumentException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void getFutureMeetingListById_PastMeeting() {
 
 		Set<Contact> contacts = new HashSet<>();
@@ -92,7 +92,7 @@ public class TestContactManagerImplMeeting {
 		instance.getFutureMeeting(id);	
 	}
 
-	//@Test
+	@Test
 	public void getFutureMeetingListById_ValidMeeting() {
 
 		Set<Contact> contacts = new HashSet<>();
