@@ -130,6 +130,11 @@ public class SerializableContactManagerModel implements ContactManagerModel, Ser
 		meetings.add(meeting.clone());
 	}
 
+	@Override
+    	public boolean contactExists(Contact contact) {
+
+		return false;
+	}
 	//	*****************************************************************************************************************************		
 	//	Utility methods
 	//	*****************************************************************************************************************************		

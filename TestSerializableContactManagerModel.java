@@ -184,7 +184,17 @@ public class TestSerializableContactManagerModel {
 		assertNull(removedContact);
 				
 	}
-	
+	//	*********************************************************************************************
+	//	Test existence of Contact
+	//	*********************************************************************************************
+	@Test
+	public void contactExistsTest() {
+
+		Contact expectedContact = new ContactImpl(1, "Name");
+		boolean expectedExists = false;
+		boolean resultExists = instance.contactExists(expectedContact);		
+		assertEquals(expectedExists, resultExists);
+	}
 	// *****************************************************************************************************************	
 	// Add Meeting and Get Meeting tests
 	// *****************************************************************************************************************	

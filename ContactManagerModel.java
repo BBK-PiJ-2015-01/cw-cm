@@ -95,5 +95,14 @@ public interface ContactManagerModel {
      * @throws java.lang.IllegalStateException - if the meeting does not exists in the model
      */
     void updateMeeting(ModelMeeting meeting);
+
+    /**
+     * Convenience method to check for the existence of a Contact. Using getContacts() to check
+     * results in a cloned Set every time which is time consuming. 
+     * 
+     * @param contact a Contact to check for existence 
+     * @return boolean if supplied Contact exists in the model
+     */
+    boolean contactExists(Contact contact);
 }
 

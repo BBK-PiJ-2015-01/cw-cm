@@ -184,6 +184,45 @@ public class TestContactManagerAsApp {
 		addedContact = instance.getContacts(contactId).stream().findFirst().get();
 		assertEquals(expectedNotes, addedContact.getNotes());		
 	}
+	//	*********************************************************************************************
+	//	Test scalability
+	//	*********************************************************************************************
+//	@Test
+	public void addLargeNumberOfContacts() {
+
+		String expectedName = String.format("Name:%d", System.nanoTime());
+		int expectedContactsSize = 1000000;
+		for(int i = 0; i < expectedContactsSize; i++) {
+			instance.addNewContact(expectedName, "Not notable");			
+		}
+		// Flush and restart the app
+		instance.flush();
+		init();
+		// Check that all Contacts found
+		Set<Contact> resultContacts = instance.getContacts(expectedName);
+		int resultContactsSize = resultContacts.size();
+		assertEquals(expectedContactsSize, resultContactsSize);
+	}
+
+//	@Test
+	public void addLargeNumberOfFutureMeetings() {
+
+		String expectedName = String.format("Name:%d", System.nanoTime());
+		int contactId = instance.addNewContact(expectedName, "Not notable");	
+		Set<Contact> contacts = instance.getContacts(contactId);
+		Calendar expectedDate = getFutureCalendar();
+		int expectedMeetingsSize = 1000000;
+		for(int i = 0; i < expectedMeetingsSize; i++) {
+			instance.addFutureMeeting(contacts, expectedDate);			
+		}
+		// Flush and restart the app
+		instance.flush();
+		init();
+		// Check that all Contacts found
+		List<Meeting> resultMeetings = instance.getMeetingListOn(expectedDate);
+		int resultMeetingsSize = resultMeetings.size();
+		assertEquals(expectedMeetingsSize, resultMeetingsSize);
+	}
 
 	//	*********************************************************************************************
 	//	Convenience methods

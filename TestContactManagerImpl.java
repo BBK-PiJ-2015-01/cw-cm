@@ -193,9 +193,6 @@ public class TestContactManagerImpl {
 		int resultSetSize = resultSet.size();
 		assertEquals(expectedSetSize, resultSetSize);
 	}
-	//	*********************************************************************************************
-	//	Tests for Meetings
-	//	*********************************************************************************************
 
 	//
 	//	Utility methods
