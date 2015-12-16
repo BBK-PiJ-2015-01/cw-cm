@@ -6,7 +6,6 @@ import java.util.stream.*;
  */
 public class ContactManagerImpl implements ContactManager {
 
-
 	private final String NULL_PARAM_MSG = "A null param was supplied";
 	private final String INVALID_ID_MSG = "Supplied id was invalid";
 	private final String INVALID_DATE_MSG = "Supplied date was invalid";
@@ -14,19 +13,24 @@ public class ContactManagerImpl implements ContactManager {
 	private final String ILLEGAL_STATE_MSG = "Supplied params we not valid for this operation";
 	private final String INVALID_PUNIT_STATE = "An error occurred with the persistence unit";
 	private final TimeZone tz = new SimpleTimeZone(0, "GMT");
-
-	PersistenceUnit pUnit;
-//	ContactManagerModel model = new SerializableContactManagerModel();
+	// TODO: Convert to factory implmentation or dependency injection
+	private PersistenceUnit pUnit;
 	
-	public ContactManagerImpl() {
+	public ContactManagerImpl(String fileName) {
 		
 		try {
-			pUnit = new SerializableFilePersistenceUnit(ContactManagerDomain.FILENAME);
+			pUnit = new SerializableFilePersistenceUnit(fileName == null ? ContactManagerDomain.FILENAME : fileName);
 		} catch(PersistenceUnitException e) {
 
 			throw new IllegalStateException(INVALID_PUNIT_STATE);
 		}
 	}
+
+	public ContactManagerImpl() {
+
+		this(ContactManagerDomain.FILENAME);
+	}
+
 	@Override
 	public int addFutureMeeting(Set<Contact> contacts, Calendar date) {
 	
@@ -186,10 +190,10 @@ public class ContactManagerImpl implements ContactManager {
 		Set<Contact> returnContacts = new HashSet<>();
 		for(int id : ids) {
 			boolean found = false;
-			for (Contact contact: contacts) {
+			for (ModelContact contact: contacts) {
 				if (id == contact.getId()) {
 					found = true;
-					returnContacts.add(contact);
+					returnContacts.add(cloneAsContact(contact));
 					break;
 				}
 			}

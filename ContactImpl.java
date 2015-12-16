@@ -85,8 +85,8 @@ public class ContactImpl implements Contact {
 	@Override
 	public int hashCode() {
 
-		int hash = 4849;
-		hash = 131 * hash + id;
+		int hash = 78125;
+		hash = 103 * hash + id;
 		return hash;
 	}
 }

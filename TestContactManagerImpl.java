@@ -6,11 +6,13 @@ import java.util.*;
 public class TestContactManagerImpl {
 
 	protected ContactManagerImpl instance;
+	private String fileName;
 	
 	@Before
 	public void init() {
 		
-		instance = new ContactManagerImpl();
+		fileName = String.format("%d.txt", System.nanoTime());
+		instance = new ContactManagerImpl(fileName);
 	}
 
 	//	*********************************************************************************************

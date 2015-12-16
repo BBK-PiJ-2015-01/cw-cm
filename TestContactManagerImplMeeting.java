@@ -10,7 +10,7 @@ public class TestContactManagerImplMeeting {
 	@Before
 	public void init() {
 		
-		instance = new ContactManagerImpl();
+		instance = new ContactManagerImpl(String.format("%d.txt", System.nanoTime()));
 	}
 
 	//	*********************************************************************************************
