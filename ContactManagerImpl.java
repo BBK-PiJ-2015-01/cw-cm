@@ -1,9 +1,10 @@
 import java.util.*;
 import java.util.stream.*;
 /**
- * Implementation of the ContactManager interface. Persistence of application state is handled
- * by the PersistenceUnit. The location of the stored state can be supplied at construction or
- * defaulted to the FILENAME value in the ContactManagerDomain class.
+ * Implementation of the <code>ContactManager</code> interface. Persistence of
+ * of application state is handled by the <code>PersistenceUnit</code>. 
+ * The location of the stored state can be supplied at construction or
+ * defaulted to the FILENAME value in the <code>ContactManagerDomain</code> class.
  * @author Simon Baird
  */
 public class ContactManagerImpl implements ContactManager {
@@ -37,7 +38,7 @@ public class ContactManagerImpl implements ContactManager {
 	/**
 	*
 	* Create using a the default resource name. This is defined as FILENAME 
-	* from ContactManagerDomain class.
+	* from <code>ContactManagerDomain</code> class.
 	*
 	* @throws IllegalStateException if persistence unit cannot be loaded
 	* using the resource.

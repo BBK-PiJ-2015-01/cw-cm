@@ -2,8 +2,7 @@ import java.util.*;
 import java.io.*;
 /**
  * A simple implementation of the ModelMeeting interface. This is used in the
- * SerializableFilePersistenceUnit class as Serializable content.
- * the data to be stored.
+ * <code>SerializableFilePersistenceUnit</code> class as Serializable content.
  *
  * @author sbaird02
  */
