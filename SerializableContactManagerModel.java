@@ -1,8 +1,9 @@
 import java.util.*;
 import java.io.*;
 /**
- * 
- *
+ * An implementation of <code>ContactManagerModel</code> that 
+ * uses <code>Serializable</code> model elements. Data supplied to and from 
+ * the model is cloned to enforce immutability.
  * @author sbaird02
  */
 public class SerializableContactManagerModel implements ContactManagerModel, Serializable {

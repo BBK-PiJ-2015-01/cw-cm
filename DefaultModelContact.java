@@ -1,12 +1,24 @@
 import java.util.*;
 import java.io.*;
-
+/**
+ * A simple implementation of the ModelContact interface. This is used in the
+ * SerializableFilePersistenceUnit class as Serializable content.
+ * the data to be stored.
+ *
+ * @author sbaird02
+ */
 public class DefaultModelContact implements ModelContact, Cloneable, Serializable {
 
 	private final int id;
 	private String name;
 	private String notes;
 
+	/**
+	* Create supplying unique identifier.
+	*
+	* @param id the unique Contact identifier. 
+	*
+	*/
 	public DefaultModelContact (int id) {
 
 		this.id = id;
@@ -42,7 +54,10 @@ public class DefaultModelContact implements ModelContact, Cloneable, Serializabl
 
 		this.notes = notes;
 	}
-    
+    	/**
+	* Implementation of clone to allow object isolation within a model.
+	*
+	*/
 	public DefaultModelContact clone() {
 
 		DefaultModelContact clone = new DefaultModelContact(id);
@@ -55,7 +70,11 @@ public class DefaultModelContact implements ModelContact, Cloneable, Serializabl
 		return clone;
 	}
 	/**
-	*	Allow equality on id
+	* Test for equality on id. Any Object implementing
+	* the Contact interface will  be considered equal if
+	* it has the same id.
+	*
+	* @param other the Object to test for equality.	
 	*
 	*/
 	@Override
@@ -68,7 +87,11 @@ public class DefaultModelContact implements ModelContact, Cloneable, Serializabl
 		Contact otherContactImpl = (Contact) other;
 		return this.getId() == otherContactImpl.getId();
 	}
-
+	/**
+	* Hashing based on id.
+	*
+	*
+	*/
 	@Override
 	public int hashCode() {
 

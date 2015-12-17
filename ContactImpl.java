@@ -12,6 +12,11 @@ public class ContactImpl implements Contact {
 	private String notes;
 
 	/**
+	* Create supplying name and notes.
+	*
+	* @param id the unique Contact identifier. 
+	* @param name the name of Contact.
+	* @param notes the notes made about the Contact.
 	*
 	*/
 	public ContactImpl(int id, String name, String notes) {
@@ -24,7 +29,13 @@ public class ContactImpl implements Contact {
 		}
 		construct(id, name, notes);
 	}
-
+	/**
+	* Create supplying notes only.
+	*
+	* @param id the unique Contact identifier. 
+	* @param name the name of Contact.
+	*
+	*/
 	public ContactImpl(int id, String name) {
 
 		if (name == null ) {
@@ -68,7 +79,11 @@ public class ContactImpl implements Contact {
 	}
 
 	/**
-	*	Allow equality on id
+	* Test for equality on id. Any Object implementing
+	* the Contact interface will  be considered equal if
+	* it has the same id.
+	*
+	* @param other the Object to test for equality.	
 	*
 	*/
 	@Override
@@ -82,6 +97,11 @@ public class ContactImpl implements Contact {
 		return this.getId() == otherContactImpl.getId();
 	}
 
+	/**
+	* Hashing based on id. 
+	*
+	*
+	*/
 	@Override
 	public int hashCode() {
 

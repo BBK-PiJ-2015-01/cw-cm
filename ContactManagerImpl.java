@@ -1,7 +1,9 @@
 import java.util.*;
 import java.util.stream.*;
 /**
- *
+ * Implementation of the ContactManager interface. Persistence of application state is handled
+ * by the PersistenceUnit. The location of the stored state can be supplied at construction or
+ * defaulted to the FILENAME value in the ContactManagerDomain class.
  * @author Simon Baird
  */
 public class ContactManagerImpl implements ContactManager {
@@ -11,21 +13,35 @@ public class ContactManagerImpl implements ContactManager {
 	private final String INVALID_DATE_MSG = "Supplied date was invalid";
 	private final String INVALID_PARAM_MSG = "Supplied param was invalid";
 	private final String ILLEGAL_STATE_MSG = "Supplied params we not valid for this operation";
-	private final String INVALID_PUNIT_STATE = "An error occurred with the persistence unit";
+	private final String INVALID_PUNIT_STATE = "An error occurred creating the persistence unit: ";
 	private final TimeZone tz = new SimpleTimeZone(0, "GMT");
+
 	// TODO: Convert to factory implmentation or dependency injection
 	private PersistenceUnit pUnit;
-	
-	public ContactManagerImpl(String fileName) {
+
+	/**
+	* Create using a supplied resource name.
+	*
+	* @param resourceName the name of persistence unit storage location.
+	*
+	* @throws IllegalStateException if persistence unit cannot be loaded
+	*/
+	public ContactManagerImpl(String resourceName) {
 		
 		try {
-			pUnit = new SerializableFilePersistenceUnit(fileName == null ? ContactManagerDomain.FILENAME : fileName);
+			pUnit = new SerializableFilePersistenceUnit(resourceName == null ? ContactManagerDomain.FILENAME : resourceName);
 		} catch(PersistenceUnitException e) {
-
-			throw new IllegalStateException(INVALID_PUNIT_STATE);
+			throw new IllegalStateException(INVALID_PUNIT_STATE + e.getMessage());
 		}
 	}
-
+	/**
+	*
+	* Create using a the default resource name. This is defined as FILENAME 
+	* from ContactManagerDomain class.
+	*
+	* @throws IllegalStateException if persistence unit cannot be loaded
+	* using the resource.
+	*/
 	public ContactManagerImpl() {
 
 		this(ContactManagerDomain.FILENAME);
@@ -37,7 +53,6 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-//		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
 		if (contacts.isEmpty() || !getModel().contactsExist(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
@@ -89,7 +104,6 @@ public class ContactManagerImpl implements ContactManager {
 		if (contact == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-//		if (!getModel().getContacts().contains(contact)) {
 		if (!getModel().contactExists(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
@@ -127,7 +141,6 @@ public class ContactManagerImpl implements ContactManager {
 		if (contact == null ) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-//		if (!getModel().getContacts().contains(contact)) {
 		if (!getModel().contactExists(contact)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
@@ -147,7 +160,6 @@ public class ContactManagerImpl implements ContactManager {
 		if (contacts == null || date == null || text == null) {
 			throw new NullPointerException(NULL_PARAM_MSG);
 		}
-//		if (contacts.isEmpty() || !getModel().getContacts().containsAll(contacts)) {
 		if (contacts.isEmpty() || !getModel().contactsExist(contacts)) {
 			throw new IllegalArgumentException(INVALID_PARAM_MSG);
 		}
@@ -255,18 +267,17 @@ public class ContactManagerImpl implements ContactManager {
 
 		return getContactInstance(c.getId(), c.getName(), c.getNotes());
 	}
-
+	// TODO: Convert to factory implmentation or dependency injection
 	private ContactImpl getContactInstance(int id, String name, String notes) {
 
 		return notes == null ? new ContactImpl(id, name) : new ContactImpl(id, name, notes);
 	}
-
-
+	// TODO: Convert to factory implmentation or dependency injection
 	private FutureMeetingImpl getFutureMeetingInstance(int id, Calendar date , Set<Contact> contacts) {
 
 		return new FutureMeetingImpl(id, date, contacts);
 	}
-
+	// TODO: Convert to factory implmentation or dependency injection
 	private PastMeetingImpl getPastMeetingInstance(int id, Calendar date, Set<Contact> contacts, String notes) {
 
 		return new PastMeetingImpl(id, date, contacts, notes);
@@ -277,7 +288,7 @@ public class ContactManagerImpl implements ContactManager {
 		try {
 			return pUnit.getModel();
 		} catch(PersistenceUnitException e) {
-			throw new IllegalStateException(INVALID_PUNIT_STATE);
+			throw new IllegalStateException(e.getMessage());
 		}		
 	}
 }

@@ -191,7 +191,7 @@ public class TestContactManagerAsApp {
 	public void addLargeNumberOfContacts() {
 
 		String expectedName = String.format("Name:%d", System.nanoTime());
-		int expectedContactsSize = 1000000;
+		int expectedContactsSize = 100000;
 		for(int i = 0; i < expectedContactsSize; i++) {
 			instance.addNewContact(expectedName, "Not notable");			
 		}
@@ -211,7 +211,7 @@ public class TestContactManagerAsApp {
 		int contactId = instance.addNewContact(expectedName, "Not notable");	
 		Set<Contact> contacts = instance.getContacts(contactId);
 		Calendar expectedDate = getFutureCalendar();
-		int expectedMeetingsSize = 1000000;
+		int expectedMeetingsSize = 100000;
 		for(int i = 0; i < expectedMeetingsSize; i++) {
 			instance.addFutureMeeting(contacts, expectedDate);			
 		}

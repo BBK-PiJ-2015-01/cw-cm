@@ -1,5 +1,6 @@
 /**
- *
+ * Used to indicate a problem during any of the <code>PersistencUnit</code> 
+ * operations.
  * @author sbaird02
  */
 public class PersistenceUnitException extends Exception {

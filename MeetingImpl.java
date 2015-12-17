@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.stream.*;
 /**
  *
- * 
+ * @author sbaird02
  */
 public abstract class MeetingImpl implements Meeting {
 	
@@ -10,7 +10,16 @@ public abstract class MeetingImpl implements Meeting {
 	private final Calendar date;
 	private List<Contact> contactBackingList;
 	private Set<Contact> contacts;	
-
+	/**
+	* Create with meeting data. Mutable objects will be cloned during
+	* construction to enforce immutability.
+	*
+	* @param id the unique Meeting identifier. 
+	* @param date the date on which the meeting is to take place. 
+	* @param contacts a Set containing at least one valid Contact.. 
+	* @throws NullPointerException if date or contacts are null
+	* @throws IllegalArgumentException if id is invalid or contacts is empty
+	*/
 	public MeetingImpl(int id, Calendar date, Set<Contact> contacts) {
 
 		if (date == null || contacts == null) {
@@ -54,6 +63,8 @@ public abstract class MeetingImpl implements Meeting {
 	* Get the contacts. This will return a reference to the Set used in the
 	* constructor with the same content. If this pointer has been used elsewhere
 	* then it will now also reflect the values at the time of the constructor.
+	*
+	* @return a Set of copies of the Contacts used in construction 
 	*/
 	@Override
 	public Set<Contact> getContacts() {
@@ -64,7 +75,11 @@ public abstract class MeetingImpl implements Meeting {
 	}  
 
 	/**
-	*	Allow equality on id
+	* Test for equality on id. Any Object implementing
+	* the Meeting interface will  be considered equal if
+	* it has the same id.
+	*
+	* @param other the Object to test for equality.	
 	*
 	*/
 	@Override
@@ -76,7 +91,10 @@ public abstract class MeetingImpl implements Meeting {
 		Meeting otherMeeting = (Meeting) other;
 		return this.getId() == otherMeeting.getId();
 	}
-
+	/**
+	* Hashing based on id.
+	*
+	*/
 	@Override
 	public int hashCode() {
 

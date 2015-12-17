@@ -3,7 +3,8 @@ import java.util.*;
 
 /**
  * A model representing the Contacts and Meetings for the ContactManager
- * application. 
+ * application. This is used in the PersistenceUnit class as the base for
+ * the data to be stored.
  *
  * @author sbaird02
  */

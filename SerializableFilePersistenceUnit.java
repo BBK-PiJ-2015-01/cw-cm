@@ -1,6 +1,7 @@
 import java.io.*;
 /**
- *
+ * An implementation of <code>PersistenceUnit</code> that
+ * stores <code>ContactManagerModel</code> in  a file in serialized format.
  * @author sbaird02
  */
 public class SerializableFilePersistenceUnit implements PersistenceUnit {
@@ -11,7 +12,13 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 	private final String NOT_LOADED_MSG = "The load() method was not successfully executed";
 	private boolean loaded = false;
 	private ContactManagerModel model;
-
+	/**
+	* Create with a resource file name.
+	*
+	* @param fileName the identifier of the file where the data is stored.
+	* The file will be created if it does not exist.
+	* @throws PersistenceUnitException if the file cannot be loaded.
+	*/
 	public SerializableFilePersistenceUnit(String fileName) throws PersistenceUnitException{
 	
 		if (fileName == null || fileName.isEmpty()) {
@@ -20,13 +27,21 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 		this.fileName = fileName;	
 		performLoad();
 	}
-
+	/**
+	* Load the contents of the file into the <code>ContactManagerModel</code>.
+	*
+	* @throws PersistenceUnitException if the file cannot be loaded.
+	*/
 	@Override
 	public void load() throws PersistenceUnitException {
 
 		performLoad();
 	}
-
+	/**
+	* Persist the <code>ContactManagerModel</code> in the file
+	*
+	* @throws PersistenceUnitException if the file cannot be written.
+	*/
 	@Override
 	public void commit() throws PersistenceUnitException {
 
@@ -44,7 +59,11 @@ public class SerializableFilePersistenceUnit implements PersistenceUnit {
 			throw new PersistenceUnitException(ex.getMessage()); 
 		}
 	}
-
+	/**
+	* Return the <code>ContactManagerModel</code>
+	*
+	* @throws PersistenceUnitException if the file has not been loaded.
+	*/
 	@Override
 	public ContactManagerModel getModel() throws PersistenceUnitException {
 

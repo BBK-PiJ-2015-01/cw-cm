@@ -1,8 +1,11 @@
 import java.util.*;
 import java.io.*;
 /**
+ * A simple implementation of the ModelMeeting interface. This is used in the
+ * SerializableFilePersistenceUnit class as Serializable content.
+ * the data to be stored.
  *
- * @author Simon Baird
+ * @author sbaird02
  */
 public class DefaultModelMeeting implements ModelMeeting, Cloneable, Serializable {
 
@@ -11,6 +14,11 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable, Serializabl
 	private String notes;
 	private Set<ModelContact> contacts;
 
+	/**
+	* Create with default model meeting data. 
+	*
+	* @param id the unique Meeting identifier. 
+	*/
 	public DefaultModelMeeting(int id) {
 
 		this.id = id;
@@ -71,7 +79,10 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable, Serializabl
 
 		this.notes = notes;
 	}
-
+    	/**
+	* Implementation of clone to allow object isolation within a model. 
+	* This will call clone() on member variables where applicable.
+	*/
 	public DefaultModelMeeting clone() {
 		
 		DefaultModelMeeting clone = new DefaultModelMeeting(id);
@@ -97,7 +108,11 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable, Serializabl
 	}
 
 	/**
-	*	Allow equality on id
+	* Test for equality on id. Any Object implementing
+	* the Meeting interface will  be considered equal if
+	* it has the same id.
+	*
+	* @param other the Object to test for equality.	
 	*
 	*/
 	@Override
@@ -110,13 +125,16 @@ public class DefaultModelMeeting implements ModelMeeting, Cloneable, Serializabl
 		return this.getId() == otherMeeting.getId();
 	}
 
+	/**
+	* Hashing based on id.
+	*
+	*/
 	@Override
 	public int hashCode() {
 
-		int hash = 2047;
-		hash = 113 * hash + id;
-//		return hash;
-		return id;
+		int hash = 16383;
+		hash = 137 * hash + id;
+		return hash;
 	}
 }
 
