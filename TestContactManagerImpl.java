@@ -36,6 +36,20 @@ public class TestContactManagerImpl {
 	}
 
 	@Test(expected=IllegalArgumentException.class)
+	public void getContactsByIdNull() {
+
+		int[] ids = null;
+		Set<Contact> resultSet = instance.getContacts(ids);		
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void getContactsByIdEmpty() {
+
+		int[] ids = new int[0];
+		Set<Contact> resultSet = instance.getContacts(ids);		
+	}
+
+	@Test(expected=IllegalArgumentException.class)
 	public void getContactsByIdNotSetTest() {
 
 		int id = 1;
